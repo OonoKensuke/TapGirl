@@ -1,0 +1,321 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8AD7111B17841DBC0010DBB9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AD7111A17841DBC0010DBB9 /* UIKit.framework */; };
+		8AD7111D17841DBC0010DBB9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AD7111C17841DBC0010DBB9 /* Foundation.framework */; };
+		8AD7111F17841DBC0010DBB9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AD7111E17841DBC0010DBB9 /* CoreGraphics.framework */; };
+		8AD7112517841DBC0010DBB9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8AD7112317841DBC0010DBB9 /* InfoPlist.strings */; };
+		8AD7112717841DBC0010DBB9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AD7112617841DBC0010DBB9 /* main.m */; };
+		8AD7112B17841DBC0010DBB9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AD7112A17841DBC0010DBB9 /* AppDelegate.m */; };
+		8AD7112D17841DBC0010DBB9 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AD7112C17841DBC0010DBB9 /* Default.png */; };
+		8AD7112F17841DBC0010DBB9 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AD7112E17841DBC0010DBB9 /* Default@2x.png */; };
+		8AD7113117841DBC0010DBB9 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AD7113017841DBC0010DBB9 /* Default-568h@2x.png */; };
+		8AD7113417841DBC0010DBB9 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AD7113317841DBC0010DBB9 /* MasterViewController.m */; };
+		8AD7113717841DBC0010DBB9 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AD7113617841DBC0010DBB9 /* DetailViewController.m */; };
+		8AD7113A17841DBC0010DBB9 /* MasterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8AD7113817841DBC0010DBB9 /* MasterViewController.xib */; };
+		8AD7113D17841DBC0010DBB9 /* DetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8AD7113B17841DBC0010DBB9 /* DetailViewController.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		8AD7111717841DBC0010DBB9 /* TapGirl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TapGirl.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8AD7111A17841DBC0010DBB9 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		8AD7111C17841DBC0010DBB9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		8AD7111E17841DBC0010DBB9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		8AD7112217841DBC0010DBB9 /* TapGirl-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TapGirl-Info.plist"; sourceTree = "<group>"; };
+		8AD7112417841DBC0010DBB9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		8AD7112617841DBC0010DBB9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		8AD7112817841DBC0010DBB9 /* TapGirl-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TapGirl-Prefix.pch"; sourceTree = "<group>"; };
+		8AD7112917841DBC0010DBB9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		8AD7112A17841DBC0010DBB9 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		8AD7112C17841DBC0010DBB9 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		8AD7112E17841DBC0010DBB9 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		8AD7113017841DBC0010DBB9 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		8AD7113217841DBC0010DBB9 /* MasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
+		8AD7113317841DBC0010DBB9 /* MasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
+		8AD7113517841DBC0010DBB9 /* DetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
+		8AD7113617841DBC0010DBB9 /* DetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
+		8AD7113917841DBC0010DBB9 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MasterViewController.xib; sourceTree = "<group>"; };
+		8AD7113C17841DBC0010DBB9 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DetailViewController.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8AD7111417841DBC0010DBB9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8AD7111B17841DBC0010DBB9 /* UIKit.framework in Frameworks */,
+				8AD7111D17841DBC0010DBB9 /* Foundation.framework in Frameworks */,
+				8AD7111F17841DBC0010DBB9 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		8AD7110E17841DBC0010DBB9 = {
+			isa = PBXGroup;
+			children = (
+				8AD7112017841DBC0010DBB9 /* TapGirl */,
+				8AD7111917841DBC0010DBB9 /* Frameworks */,
+				8AD7111817841DBC0010DBB9 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		8AD7111817841DBC0010DBB9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8AD7111717841DBC0010DBB9 /* TapGirl.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8AD7111917841DBC0010DBB9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8AD7111A17841DBC0010DBB9 /* UIKit.framework */,
+				8AD7111C17841DBC0010DBB9 /* Foundation.framework */,
+				8AD7111E17841DBC0010DBB9 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8AD7112017841DBC0010DBB9 /* TapGirl */ = {
+			isa = PBXGroup;
+			children = (
+				8AD7112917841DBC0010DBB9 /* AppDelegate.h */,
+				8AD7112A17841DBC0010DBB9 /* AppDelegate.m */,
+				8AD7113217841DBC0010DBB9 /* MasterViewController.h */,
+				8AD7113317841DBC0010DBB9 /* MasterViewController.m */,
+				8AD7113517841DBC0010DBB9 /* DetailViewController.h */,
+				8AD7113617841DBC0010DBB9 /* DetailViewController.m */,
+				8AD7113817841DBC0010DBB9 /* MasterViewController.xib */,
+				8AD7113B17841DBC0010DBB9 /* DetailViewController.xib */,
+				8AD7112117841DBC0010DBB9 /* Supporting Files */,
+			);
+			path = TapGirl;
+			sourceTree = "<group>";
+		};
+		8AD7112117841DBC0010DBB9 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				8AD7112217841DBC0010DBB9 /* TapGirl-Info.plist */,
+				8AD7112317841DBC0010DBB9 /* InfoPlist.strings */,
+				8AD7112617841DBC0010DBB9 /* main.m */,
+				8AD7112817841DBC0010DBB9 /* TapGirl-Prefix.pch */,
+				8AD7112C17841DBC0010DBB9 /* Default.png */,
+				8AD7112E17841DBC0010DBB9 /* Default@2x.png */,
+				8AD7113017841DBC0010DBB9 /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8AD7111617841DBC0010DBB9 /* TapGirl */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8AD7114017841DBC0010DBB9 /* Build configuration list for PBXNativeTarget "TapGirl" */;
+			buildPhases = (
+				8AD7111317841DBC0010DBB9 /* Sources */,
+				8AD7111417841DBC0010DBB9 /* Frameworks */,
+				8AD7111517841DBC0010DBB9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TapGirl;
+			productName = TapGirl;
+			productReference = 8AD7111717841DBC0010DBB9 /* TapGirl.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		8AD7110F17841DBC0010DBB9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = oono;
+			};
+			buildConfigurationList = 8AD7111217841DBC0010DBB9 /* Build configuration list for PBXProject "TapGirl" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 8AD7110E17841DBC0010DBB9;
+			productRefGroup = 8AD7111817841DBC0010DBB9 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8AD7111617841DBC0010DBB9 /* TapGirl */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8AD7111517841DBC0010DBB9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8AD7112517841DBC0010DBB9 /* InfoPlist.strings in Resources */,
+				8AD7112D17841DBC0010DBB9 /* Default.png in Resources */,
+				8AD7112F17841DBC0010DBB9 /* Default@2x.png in Resources */,
+				8AD7113117841DBC0010DBB9 /* Default-568h@2x.png in Resources */,
+				8AD7113A17841DBC0010DBB9 /* MasterViewController.xib in Resources */,
+				8AD7113D17841DBC0010DBB9 /* DetailViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8AD7111317841DBC0010DBB9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8AD7112717841DBC0010DBB9 /* main.m in Sources */,
+				8AD7112B17841DBC0010DBB9 /* AppDelegate.m in Sources */,
+				8AD7113417841DBC0010DBB9 /* MasterViewController.m in Sources */,
+				8AD7113717841DBC0010DBB9 /* DetailViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		8AD7112317841DBC0010DBB9 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8AD7112417841DBC0010DBB9 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		8AD7113817841DBC0010DBB9 /* MasterViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8AD7113917841DBC0010DBB9 /* en */,
+			);
+			name = MasterViewController.xib;
+			sourceTree = "<group>";
+		};
+		8AD7113B17841DBC0010DBB9 /* DetailViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8AD7113C17841DBC0010DBB9 /* en */,
+			);
+			name = DetailViewController.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		8AD7113E17841DBC0010DBB9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		8AD7113F17841DBC0010DBB9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		8AD7114117841DBC0010DBB9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TapGirl/TapGirl-Prefix.pch";
+				INFOPLIST_FILE = "TapGirl/TapGirl-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		8AD7114217841DBC0010DBB9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TapGirl/TapGirl-Prefix.pch";
+				INFOPLIST_FILE = "TapGirl/TapGirl-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		8AD7111217841DBC0010DBB9 /* Build configuration list for PBXProject "TapGirl" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8AD7113E17841DBC0010DBB9 /* Debug */,
+				8AD7113F17841DBC0010DBB9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8AD7114017841DBC0010DBB9 /* Build configuration list for PBXNativeTarget "TapGirl" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8AD7114117841DBC0010DBB9 /* Debug */,
+				8AD7114217841DBC0010DBB9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 8AD7110F17841DBC0010DBB9 /* Project object */;
+}
