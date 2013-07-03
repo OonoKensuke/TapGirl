@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 
 #import "MasterViewController.h"
+#import "MyGLViewController.h"
 
 @implementation AppDelegate
 
@@ -24,9 +25,11 @@
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Override point for customization after application launch.
 
-	MasterViewController *masterViewController = [[[MasterViewController alloc] initWithNibName:@"MasterViewController" bundle:nil] autorelease];
-	self.navigationController = [[[UINavigationController alloc] initWithRootViewController:masterViewController] autorelease];
+	//MasterViewController *masterViewController = [[[MasterViewController alloc] initWithNibName:@"MasterViewController" bundle:nil] autorelease];
+	MyGLViewController *controller = [[[MyGLViewController alloc] initWithNibName:@"MyGLViewController" bundle:nil] autorelease];
+	self.navigationController = [[[UINavigationController alloc] initWithRootViewController:controller] autorelease];
 	self.window.rootViewController = self.navigationController;
+	self.navigationController.navigationBarHidden = YES;
     [self.window makeKeyAndVisible];
     return YES;
 }

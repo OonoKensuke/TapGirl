@@ -20,6 +20,8 @@
 		8AD7113717841DBC0010DBB9 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AD7113617841DBC0010DBB9 /* DetailViewController.m */; };
 		8AD7113A17841DBC0010DBB9 /* MasterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8AD7113817841DBC0010DBB9 /* MasterViewController.xib */; };
 		8AD7113D17841DBC0010DBB9 /* DetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8AD7113B17841DBC0010DBB9 /* DetailViewController.xib */; };
+		8AD711471784272F0010DBB9 /* MyGLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AD711451784272F0010DBB9 /* MyGLViewController.m */; };
+		8AD711481784272F0010DBB9 /* MyGLViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8AD711461784272F0010DBB9 /* MyGLViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +44,9 @@
 		8AD7113617841DBC0010DBB9 /* DetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		8AD7113917841DBC0010DBB9 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MasterViewController.xib; sourceTree = "<group>"; };
 		8AD7113C17841DBC0010DBB9 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DetailViewController.xib; sourceTree = "<group>"; };
+		8AD711441784272F0010DBB9 /* MyGLViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyGLViewController.h; path = viewController/MyGLViewController.h; sourceTree = "<group>"; };
+		8AD711451784272F0010DBB9 /* MyGLViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyGLViewController.m; path = viewController/MyGLViewController.m; sourceTree = "<group>"; };
+		8AD711461784272F0010DBB9 /* MyGLViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MyGLViewController.xib; path = viewController/MyGLViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,14 +93,9 @@
 		8AD7112017841DBC0010DBB9 /* TapGirl */ = {
 			isa = PBXGroup;
 			children = (
+				8AD711431784249D0010DBB9 /* ViewAndViewController */,
 				8AD7112917841DBC0010DBB9 /* AppDelegate.h */,
 				8AD7112A17841DBC0010DBB9 /* AppDelegate.m */,
-				8AD7113217841DBC0010DBB9 /* MasterViewController.h */,
-				8AD7113317841DBC0010DBB9 /* MasterViewController.m */,
-				8AD7113517841DBC0010DBB9 /* DetailViewController.h */,
-				8AD7113617841DBC0010DBB9 /* DetailViewController.m */,
-				8AD7113817841DBC0010DBB9 /* MasterViewController.xib */,
-				8AD7113B17841DBC0010DBB9 /* DetailViewController.xib */,
 				8AD7112117841DBC0010DBB9 /* Supporting Files */,
 			);
 			path = TapGirl;
@@ -113,6 +113,22 @@
 				8AD7113017841DBC0010DBB9 /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		8AD711431784249D0010DBB9 /* ViewAndViewController */ = {
+			isa = PBXGroup;
+			children = (
+				8AD7113217841DBC0010DBB9 /* MasterViewController.h */,
+				8AD7113317841DBC0010DBB9 /* MasterViewController.m */,
+				8AD7113517841DBC0010DBB9 /* DetailViewController.h */,
+				8AD7113617841DBC0010DBB9 /* DetailViewController.m */,
+				8AD7113817841DBC0010DBB9 /* MasterViewController.xib */,
+				8AD7113B17841DBC0010DBB9 /* DetailViewController.xib */,
+				8AD711441784272F0010DBB9 /* MyGLViewController.h */,
+				8AD711451784272F0010DBB9 /* MyGLViewController.m */,
+				8AD711461784272F0010DBB9 /* MyGLViewController.xib */,
+			);
+			name = ViewAndViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -172,6 +188,7 @@
 				8AD7113117841DBC0010DBB9 /* Default-568h@2x.png in Resources */,
 				8AD7113A17841DBC0010DBB9 /* MasterViewController.xib in Resources */,
 				8AD7113D17841DBC0010DBB9 /* DetailViewController.xib in Resources */,
+				8AD711481784272F0010DBB9 /* MyGLViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -186,6 +203,7 @@
 				8AD7112B17841DBC0010DBB9 /* AppDelegate.m in Sources */,
 				8AD7113417841DBC0010DBB9 /* MasterViewController.m in Sources */,
 				8AD7113717841DBC0010DBB9 /* DetailViewController.m in Sources */,
+				8AD711471784272F0010DBB9 /* MyGLViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
