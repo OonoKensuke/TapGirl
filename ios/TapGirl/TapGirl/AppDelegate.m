@@ -8,7 +8,6 @@
 
 #import "AppDelegate.h"
 
-#import "MasterViewController.h"
 #import "MyGLViewController.h"
 
 @implementation AppDelegate
