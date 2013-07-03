@@ -20,6 +20,8 @@
 		8AD711481784272F0010DBB9 /* MyGLViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8AD711461784272F0010DBB9 /* MyGLViewController.xib */; };
 		8AD7114F17842AF00010DBB9 /* icon1111.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AD7114E17842AF00010DBB9 /* icon1111.png */; };
 		8AD7115117842AF70010DBB9 /* icon2222.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AD7115017842AF70010DBB9 /* icon2222.png */; };
+		8AD71161178434E80010DBB9 /* facebook1.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AD7115F178434E80010DBB9 /* facebook1.png */; };
+		8AD71162178434E80010DBB9 /* twitter1.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AD71160178434E80010DBB9 /* twitter1.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +45,8 @@
 		8AD7114C17842A160010DBB9 /* icon2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon2.png; sourceTree = "<group>"; };
 		8AD7114E17842AF00010DBB9 /* icon1111.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon1111.png; sourceTree = "<group>"; };
 		8AD7115017842AF70010DBB9 /* icon2222.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon2222.png; sourceTree = "<group>"; };
+		8AD7115F178434E80010DBB9 /* facebook1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = facebook1.png; sourceTree = "<group>"; };
+		8AD71160178434E80010DBB9 /* twitter1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = twitter1.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,8 +133,35 @@
 		8AD71149178429350010DBB9 /* resource */ = {
 			isa = PBXGroup;
 			children = (
+				8AD7115C178434E80010DBB9 /* graphic */,
 			);
 			name = resource;
+			sourceTree = "<group>";
+		};
+		8AD7115C178434E80010DBB9 /* graphic */ = {
+			isa = PBXGroup;
+			children = (
+				8AD7115D178434E80010DBB9 /* interface */,
+			);
+			name = graphic;
+			path = resource/graphic;
+			sourceTree = "<group>";
+		};
+		8AD7115D178434E80010DBB9 /* interface */ = {
+			isa = PBXGroup;
+			children = (
+				8AD7115E178434E80010DBB9 /* buttons */,
+			);
+			path = interface;
+			sourceTree = "<group>";
+		};
+		8AD7115E178434E80010DBB9 /* buttons */ = {
+			isa = PBXGroup;
+			children = (
+				8AD7115F178434E80010DBB9 /* facebook1.png */,
+				8AD71160178434E80010DBB9 /* twitter1.png */,
+			);
+			path = buttons;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -191,6 +222,8 @@
 				8AD711481784272F0010DBB9 /* MyGLViewController.xib in Resources */,
 				8AD7114F17842AF00010DBB9 /* icon1111.png in Resources */,
 				8AD7115117842AF70010DBB9 /* icon2222.png in Resources */,
+				8AD71161178434E80010DBB9 /* facebook1.png in Resources */,
+				8AD71162178434E80010DBB9 /* twitter1.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
