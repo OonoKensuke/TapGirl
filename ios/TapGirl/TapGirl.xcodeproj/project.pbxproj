@@ -13,6 +13,7 @@
 		8A4E02321785726800D3F403 /* IGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8A4E02311785726800D3F403 /* IGLView.mm */; };
 		8A4E02351785734800D3F403 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A4E02341785734800D3F403 /* OpenGLES.framework */; };
 		8A4E02381785750C00D3F403 /* IGLImage.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8A4E02371785750C00D3F403 /* IGLImage.mm */; };
+		8A4E023B1785765800D3F403 /* IGLShader.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8A4E023A1785765800D3F403 /* IGLShader.mm */; };
 		8A7B4272178563B00023AD49 /* CMatrix.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8A7B4270178563B00023AD49 /* CMatrix.mm */; };
 		8AD7111B17841DBC0010DBB9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AD7111A17841DBC0010DBB9 /* UIKit.framework */; };
 		8AD7111D17841DBC0010DBB9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AD7111C17841DBC0010DBB9 /* Foundation.framework */; };
@@ -43,6 +44,8 @@
 		8A4E02341785734800D3F403 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		8A4E02361785750C00D3F403 /* IGLImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IGLImage.h; path = lib/IGLImage.h; sourceTree = "<group>"; };
 		8A4E02371785750C00D3F403 /* IGLImage.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = IGLImage.mm; path = lib/IGLImage.mm; sourceTree = "<group>"; };
+		8A4E02391785765800D3F403 /* IGLShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IGLShader.h; path = lib/IGLShader.h; sourceTree = "<group>"; };
+		8A4E023A1785765800D3F403 /* IGLShader.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = IGLShader.mm; path = lib/IGLShader.mm; sourceTree = "<group>"; };
 		8A7B426F17855CD60023AD49 /* CVec2D.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CVec2D.h; path = lib/CVec2D.h; sourceTree = "<group>"; };
 		8A7B4270178563B00023AD49 /* CMatrix.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CMatrix.mm; path = lib/CMatrix.mm; sourceTree = "<group>"; };
 		8A7B4271178563B00023AD49 /* CMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CMatrix.h; path = lib/CMatrix.h; sourceTree = "<group>"; };
@@ -101,6 +104,8 @@
 				8A4E02331785733400D3F403 /* IGLKit.h */,
 				8A4E02361785750C00D3F403 /* IGLImage.h */,
 				8A4E02371785750C00D3F403 /* IGLImage.mm */,
+				8A4E02391785765800D3F403 /* IGLShader.h */,
+				8A4E023A1785765800D3F403 /* IGLShader.mm */,
 			);
 			name = lib;
 			sourceTree = "<group>";
@@ -287,6 +292,7 @@
 				8A4E022D1785711E00D3F403 /* IGL.mm in Sources */,
 				8A4E02321785726800D3F403 /* IGLView.mm in Sources */,
 				8A4E02381785750C00D3F403 /* IGLImage.mm in Sources */,
+				8A4E023B1785765800D3F403 /* IGLShader.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
