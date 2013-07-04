@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8A7B4272178563B00023AD49 /* CMatrix.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8A7B4270178563B00023AD49 /* CMatrix.mm */; };
 		8AD7111B17841DBC0010DBB9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AD7111A17841DBC0010DBB9 /* UIKit.framework */; };
 		8AD7111D17841DBC0010DBB9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AD7111C17841DBC0010DBB9 /* Foundation.framework */; };
 		8AD7111F17841DBC0010DBB9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AD7111E17841DBC0010DBB9 /* CoreGraphics.framework */; };
@@ -26,6 +27,8 @@
 
 /* Begin PBXFileReference section */
 		8A7B426F17855CD60023AD49 /* CVec2D.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CVec2D.h; path = lib/CVec2D.h; sourceTree = "<group>"; };
+		8A7B4270178563B00023AD49 /* CMatrix.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CMatrix.mm; path = lib/CMatrix.mm; sourceTree = "<group>"; };
+		8A7B4271178563B00023AD49 /* CMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CMatrix.h; path = lib/CMatrix.h; sourceTree = "<group>"; };
 		8AD7111717841DBC0010DBB9 /* TapGirl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TapGirl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8AD7111A17841DBC0010DBB9 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		8AD7111C17841DBC0010DBB9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -68,6 +71,8 @@
 			isa = PBXGroup;
 			children = (
 				8A7B426F17855CD60023AD49 /* CVec2D.h */,
+				8A7B4270178563B00023AD49 /* CMatrix.mm */,
+				8A7B4271178563B00023AD49 /* CMatrix.h */,
 			);
 			name = lib;
 			sourceTree = "<group>";
@@ -247,6 +252,7 @@
 				8AD7112717841DBC0010DBB9 /* main.m in Sources */,
 				8AD7112B17841DBC0010DBB9 /* AppDelegate.m in Sources */,
 				8AD711471784272F0010DBB9 /* MyGLViewController.m in Sources */,
+				8A7B4272178563B00023AD49 /* CMatrix.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

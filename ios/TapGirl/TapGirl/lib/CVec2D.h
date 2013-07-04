@@ -24,7 +24,7 @@ public:
 		struct {
 			float width;
 			float height;
-		}
+		};
 	};
 	
 public:
@@ -73,7 +73,7 @@ public:
 	//x,yの設定
 	inline void set(float X,float Y);
 	//x,yの設定
-	inline void set(const Vector& vec);
+	inline void set(const CVec2D& vec);
 	//ベクトルの長さ
 	inline float getLength() const;
 	//ベクトルの長さの２乗
@@ -103,101 +103,101 @@ public:
 	inline float getAngle() const { return atan2f(y,x); }
 	//XY平面での２つのベクトル角度を求める(v1-v2)
 	//@return 角度（単位：ラジアン）。
-	static inline float getAngle(const Vector& v1, const Vector& v2){
+	static inline float getAngle(const CVec2D& v1, const CVec2D& v2){
 		return v1.getAngle() - v2.getAngle();
 	}
 	//単位ベクトルの取得(長さ０のときはx軸方向の単位ベクトル）
 	//@param outSuccess 長さ０でコールした場合false。NULL可
-	inline Vector getNormal(bool* outSuccess) const;
+	inline CVec2D getNormal(bool* outSuccess) const;
 	//代入
-	inline Vector& operator=(const Vector& vctr);
+	inline CVec2D& operator=(const CVec2D& vctr);
 	//加算
-	inline Vector operator+(const Vector& vctr) const;
+	inline CVec2D operator+(const CVec2D& vctr) const;
 	//加算（代入）
-	inline Vector& operator+=(const Vector& vctr);
+	inline CVec2D& operator+=(const CVec2D& vctr);
 	//加算（代入）
 	inline void add(float X, float Y){x+=X; y+=Y;}
 	//-1倍
-	inline Vector operator-() const;
+	inline CVec2D operator-() const;
 	//減算
-	inline Vector operator-(const Vector& vctr) const;
+	inline CVec2D operator-(const CVec2D& vctr) const;
 	//減算（代入）
-	inline Vector& operator-=(const Vector& vctr);
+	inline CVec2D& operator-=(const CVec2D& vctr);
 	//減算（代入）
 	inline void subtract(float X, float Y){x-=X; y-=Y;}
 	//スカラー乗算
-	inline Vector operator*(float val) const;
+	inline CVec2D operator*(float val) const;
 	//スカラー乗算（代入）
-	inline Vector& operator*=(float val);
+	inline CVec2D& operator*=(float val);
 	//スカラー商
-	inline Vector operator/(float val) const;
+	inline CVec2D operator/(float val) const;
 	//スカラー商（代入）
-	inline Vector& operator/=(float val);
+	inline CVec2D& operator/=(float val);
 	//比較
-	inline bool operator==(const Vector& vctr) const;
+	inline bool operator==(const CVec2D& vctr) const;
 	//比較（NOT）
-	inline bool operator!=(const Vector& vctr) const;
+	inline bool operator!=(const CVec2D& vctr) const;
 	//内積
-	inline float dot(const Vector& vctr) const;
+	inline float dot(const CVec2D& vctr) const;
 	//外積（2次元の外積はスカラー）
-	inline float exterior(const Vector& vctr) const {
+	inline float exterior(const CVec2D& vctr) const {
 		return x*vctr.y-y*vctr.x;
 	}
 	//行列との乗算
-	inline Vector operator*(const Matrix& mtrx) const;
+	inline CVec2D operator*(const CMatrix& mtrx) const;
 	//行列との乗算（代入）
-	inline Vector& operator*=(const Matrix& mtrx);
+	inline CVec2D& operator*=(const CMatrix& mtrx);
 	//スカラー×ベクトル
-	friend Vector operator*(float val, const Vector& vctr);
+	friend CVec2D operator*(float val, const CVec2D& vctr);
 	//このベクトルと指定した位置ベクトルとの距離
-	float getDistance(const Vector& v) const{
+	float getDistance(const CVec2D& v) const{
 		float dx = v.x - x, dy = v.y - y;
 		return sqrtf(dx * dx + dy * dy);
 	}
 	//このベクトルと指定した位置ベクトルとの距離の２乗
-	float getDistanceSq(const Vector& v) const{
+	float getDistanceSq(const CVec2D& v) const{
 		float dx = v.x - x, dy = v.y - y;
 		return dx * dx + dy * dy;
 	}
 	//２つの位置ベクトルの距離
-	static inline float getDistance(const Vector& v1,const Vector& v2){
+	static inline float getDistance(const CVec2D& v1,const CVec2D& v2){
 		return (v2-v1).getLength();
 	}
 	//２つの位置ベクトルの距離の２乗
-	static inline float getDistanceSq(const Vector& v1, const Vector& v2){
+	static inline float getDistanceSq(const CVec2D& v1, const CVec2D& v2){
 		return (v2-v1).getLengthSq();
 	}
 	//２つの位置ベクトルの間を補完した位置を求める
 	//@param t 補完パラメータ。0を指定するとv1。1を指定するとv2。(0～1)を指定するとその間
-	static inline Vector getMix(const Vector& v1, const Vector v2, float t){
+	static inline CVec2D getMix(const CVec2D& v1, const CVec2D v2, float t){
 		return v1 * (1 - t) + v2 * t;
 	}
 	
 };
 //x,y,zで設定
-inline void Vector::set(float X,float Y){
+inline void CVec2D::set(float X,float Y){
 	x=X;
 	y=Y;
 }
 
 //x,y,zで設定
-inline void Vector::set(const Vector& vec){
+inline void CVec2D::set(const CVec2D& vec){
 	x=vec.x;
 	y=vec.y;
 }
 
 //ベクトルの長さ
-inline float Vector::getLength() const{
+inline float CVec2D::getLength() const{
 	return sqrtf(x*x +y*y);
 }
 
 //ベクトルの長さの２乗
-inline float Vector::getLengthSq() const{
+inline float CVec2D::getLengthSq() const{
 	return x*x + y*y;
 }
 
 //単位ベクトル化(長さ０のときはx軸方向の単位ベクトル）
-inline bool Vector::normalize(){
+inline bool CVec2D::normalize(){
 	float	len = getLength();
 	if(len!=float(0.0)){
 		x /= len;
@@ -211,24 +211,24 @@ inline bool Vector::normalize(){
 }
 
 //単位ベクトルの取得（長さ０のときはx軸方向のベクトル）
-inline Vector Vector::getNormal(bool* outSuccess) const
+inline CVec2D CVec2D::getNormal(bool* outSuccess) const
 {
 	float	len = getLength();
 	if(len!=float(0.0)){
 		if(outSuccess){
 			*outSuccess=true;
 		}
-		return Vector(x/len,y/len);
+		return CVec2D(x/len,y/len);
 	} else {
 		if(outSuccess){
 			*outSuccess=false;
 		}
-		return Vector(1.0f,0.0f);
+		return CVec2D(1.0f,0.0f);
 	}
 }
 
 //代入
-inline Vector& Vector::operator=(const Vector& vctr)
+inline CVec2D& CVec2D::operator=(const CVec2D& vctr)
 {
 	x = vctr.x;
 	y = vctr.y;
@@ -236,51 +236,51 @@ inline Vector& Vector::operator=(const Vector& vctr)
 }
 
 //加算
-inline Vector Vector::operator+(const Vector& vctr) const
+inline CVec2D CVec2D::operator+(const CVec2D& vctr) const
 {
-	return Vector(
+	return CVec2D(
 				  x + vctr.x,
 				  y + vctr.y);
 }
 
 //加算（代入）
-inline Vector& Vector::operator+=(const Vector& vctr){
+inline CVec2D& CVec2D::operator+=(const CVec2D& vctr){
 	x+=vctr.x;
 	y+=vctr.y;
 	return *this;
 }
 
 //-1倍
-inline Vector Vector::operator-() const
+inline CVec2D CVec2D::operator-() const
 {
-	return Vector(-x, -y);
+	return CVec2D(-x, -y);
 }
 
 //減算
-inline Vector Vector::operator-(const Vector& vctr) const //fixed by kamiyan
+inline CVec2D CVec2D::operator-(const CVec2D& vctr) const //fixed by kamiyan
 {
-	return Vector(
+	return CVec2D(
 				  x - vctr.x,
 				  y - vctr.y);
 }
 
 //減算（代入）
-inline Vector& Vector::operator-=(const Vector& vctr){
+inline CVec2D& CVec2D::operator-=(const CVec2D& vctr){
 	x-=vctr.x;
 	y-=vctr.y;
 	return *this;
 }
 
 //スカラー乗算
-inline Vector Vector::operator*(float val) const
+inline CVec2D CVec2D::operator*(float val) const
 {
-	return Vector(
+	return CVec2D(
 				  x * val,
 				  y * val);
 }
 
 //スカラー乗算（代入）
-inline Vector& Vector::operator*=(float val)
+inline CVec2D& CVec2D::operator*=(float val)
 {
 	x*=val;
 	y*=val;
@@ -288,15 +288,15 @@ inline Vector& Vector::operator*=(float val)
 }
 
 //スカラー商
-inline Vector Vector::operator/(float val) const
+inline CVec2D CVec2D::operator/(float val) const
 {
-	return Vector(
+	return CVec2D(
 				  x / val,
 				  y / val);
 }
 
 //スカラー商（代入）
-inline Vector& Vector::operator/=(float val)
+inline CVec2D& CVec2D::operator/=(float val)
 {
 	x/=val;
 	y/=val;
@@ -304,7 +304,7 @@ inline Vector& Vector::operator/=(float val)
 }
 
 //比較
-inline bool Vector::operator==(const Vector& vctr) const
+inline bool CVec2D::operator==(const CVec2D& vctr) const
 {
 	for(int row=0; row<2; row++){
 		if(element[row]!=vctr.element[row]){
@@ -315,21 +315,21 @@ inline bool Vector::operator==(const Vector& vctr) const
 }
 
 //比較（NOT）
-inline bool Vector::operator!=(const Vector& vctr) const
+inline bool CVec2D::operator!=(const CVec2D& vctr) const
 {
 	return !((*this)==vctr);
 }
 
 //内積
-inline float Vector::dot(const Vector& vctr) const
+inline float CVec2D::dot(const CVec2D& vctr) const
 {
 	return x*vctr.x +y*vctr.y;
 }
 
 //スカラー×ベクトル
-inline Vector operator*(float val, const Vector& vctr)
+inline CVec2D operator*(float val, const CVec2D& vctr)
 {
-	return Vector(
+	return CVec2D(
 				  val * vctr.x,
 				  val * vctr.y);
 }
