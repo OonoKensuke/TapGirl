@@ -25,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8A7B426F17855CD60023AD49 /* CVec2D.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CVec2D.h; path = lib/CVec2D.h; sourceTree = "<group>"; };
 		8AD7111717841DBC0010DBB9 /* TapGirl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TapGirl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8AD7111A17841DBC0010DBB9 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		8AD7111C17841DBC0010DBB9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -63,6 +64,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8A7B426E17855CC20023AD49 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				8A7B426F17855CD60023AD49 /* CVec2D.h */,
+			);
+			name = lib;
+			sourceTree = "<group>";
+		};
 		8AD7110E17841DBC0010DBB9 = {
 			isa = PBXGroup;
 			children = (
@@ -97,6 +106,7 @@
 		8AD7112017841DBC0010DBB9 /* TapGirl */ = {
 			isa = PBXGroup;
 			children = (
+				8A7B426E17855CC20023AD49 /* lib */,
 				8AD71149178429350010DBB9 /* resource */,
 				8AD711431784249D0010DBB9 /* ViewAndViewController */,
 				8AD7112917841DBC0010DBB9 /* AppDelegate.h */,
