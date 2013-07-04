@@ -14,6 +14,8 @@
 		8A4E02351785734800D3F403 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A4E02341785734800D3F403 /* OpenGLES.framework */; };
 		8A4E02381785750C00D3F403 /* IGLImage.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8A4E02371785750C00D3F403 /* IGLImage.mm */; };
 		8A4E023B1785765800D3F403 /* IGLShader.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8A4E023A1785765800D3F403 /* IGLShader.mm */; };
+		8A4E023E178579F200D3F403 /* MyGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8A4E023D178579F200D3F403 /* MyGLView.mm */; };
+		8A4E024117857A3D00D3F403 /* MyGLShader.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8A4E024017857A3C00D3F403 /* MyGLShader.mm */; };
 		8A7B4272178563B00023AD49 /* CMatrix.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8A7B4270178563B00023AD49 /* CMatrix.mm */; };
 		8AD7111B17841DBC0010DBB9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AD7111A17841DBC0010DBB9 /* UIKit.framework */; };
 		8AD7111D17841DBC0010DBB9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AD7111C17841DBC0010DBB9 /* Foundation.framework */; };
@@ -46,6 +48,10 @@
 		8A4E02371785750C00D3F403 /* IGLImage.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = IGLImage.mm; path = lib/IGLImage.mm; sourceTree = "<group>"; };
 		8A4E02391785765800D3F403 /* IGLShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IGLShader.h; path = lib/IGLShader.h; sourceTree = "<group>"; };
 		8A4E023A1785765800D3F403 /* IGLShader.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = IGLShader.mm; path = lib/IGLShader.mm; sourceTree = "<group>"; };
+		8A4E023C178579F200D3F403 /* MyGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyGLView.h; path = viewController/MyGLView.h; sourceTree = "<group>"; };
+		8A4E023D178579F200D3F403 /* MyGLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MyGLView.mm; path = viewController/MyGLView.mm; sourceTree = "<group>"; };
+		8A4E023F17857A3C00D3F403 /* MyGLShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyGLShader.h; sourceTree = "<group>"; };
+		8A4E024017857A3C00D3F403 /* MyGLShader.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyGLShader.mm; sourceTree = "<group>"; };
 		8A7B426F17855CD60023AD49 /* CVec2D.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CVec2D.h; path = lib/CVec2D.h; sourceTree = "<group>"; };
 		8A7B4270178563B00023AD49 /* CMatrix.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CMatrix.mm; path = lib/CMatrix.mm; sourceTree = "<group>"; };
 		8A7B4271178563B00023AD49 /* CMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CMatrix.h; path = lib/CMatrix.h; sourceTree = "<group>"; };
@@ -152,6 +158,8 @@
 				8AD7112917841DBC0010DBB9 /* AppDelegate.h */,
 				8AD7112A17841DBC0010DBB9 /* AppDelegate.m */,
 				8AD7112117841DBC0010DBB9 /* Supporting Files */,
+				8A4E023F17857A3C00D3F403 /* MyGLShader.h */,
+				8A4E024017857A3C00D3F403 /* MyGLShader.mm */,
 			);
 			path = TapGirl;
 			sourceTree = "<group>";
@@ -176,6 +184,8 @@
 				8AD711441784272F0010DBB9 /* MyGLViewController.h */,
 				8AD711451784272F0010DBB9 /* MyGLViewController.m */,
 				8AD711461784272F0010DBB9 /* MyGLViewController.xib */,
+				8A4E023C178579F200D3F403 /* MyGLView.h */,
+				8A4E023D178579F200D3F403 /* MyGLView.mm */,
 			);
 			name = ViewAndViewController;
 			sourceTree = "<group>";
@@ -293,6 +303,8 @@
 				8A4E02321785726800D3F403 /* IGLView.mm in Sources */,
 				8A4E02381785750C00D3F403 /* IGLImage.mm in Sources */,
 				8A4E023B1785765800D3F403 /* IGLShader.mm in Sources */,
+				8A4E023E178579F200D3F403 /* MyGLView.mm in Sources */,
+				8A4E024117857A3D00D3F403 /* MyGLShader.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
