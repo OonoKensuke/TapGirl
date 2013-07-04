@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8A4E022A17856CAF00D3F403 /* CColor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8A4E022817856CAF00D3F403 /* CColor.mm */; };
+		8A4E022D1785711E00D3F403 /* IGL.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8A4E022C1785711E00D3F403 /* IGL.mm */; };
 		8A7B4272178563B00023AD49 /* CMatrix.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8A7B4270178563B00023AD49 /* CMatrix.mm */; };
 		8AD7111B17841DBC0010DBB9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AD7111A17841DBC0010DBB9 /* UIKit.framework */; };
 		8AD7111D17841DBC0010DBB9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AD7111C17841DBC0010DBB9 /* Foundation.framework */; };
@@ -29,6 +30,8 @@
 /* Begin PBXFileReference section */
 		8A4E022817856CAF00D3F403 /* CColor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CColor.mm; path = lib/CColor.mm; sourceTree = "<group>"; };
 		8A4E022917856CAF00D3F403 /* CColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CColor.h; path = lib/CColor.h; sourceTree = "<group>"; };
+		8A4E022B1785711E00D3F403 /* IGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IGL.h; path = lib/IGL.h; sourceTree = "<group>"; };
+		8A4E022C1785711E00D3F403 /* IGL.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = IGL.mm; path = lib/IGL.mm; sourceTree = "<group>"; };
 		8A7B426F17855CD60023AD49 /* CVec2D.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CVec2D.h; path = lib/CVec2D.h; sourceTree = "<group>"; };
 		8A7B4270178563B00023AD49 /* CMatrix.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CMatrix.mm; path = lib/CMatrix.mm; sourceTree = "<group>"; };
 		8A7B4271178563B00023AD49 /* CMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CMatrix.h; path = lib/CMatrix.h; sourceTree = "<group>"; };
@@ -78,6 +81,8 @@
 				8A7B4271178563B00023AD49 /* CMatrix.h */,
 				8A4E022817856CAF00D3F403 /* CColor.mm */,
 				8A4E022917856CAF00D3F403 /* CColor.h */,
+				8A4E022B1785711E00D3F403 /* IGL.h */,
+				8A4E022C1785711E00D3F403 /* IGL.mm */,
 			);
 			name = lib;
 			sourceTree = "<group>";
@@ -259,6 +264,7 @@
 				8AD711471784272F0010DBB9 /* MyGLViewController.m in Sources */,
 				8A7B4272178563B00023AD49 /* CMatrix.mm in Sources */,
 				8A4E022A17856CAF00D3F403 /* CColor.mm in Sources */,
+				8A4E022D1785711E00D3F403 /* IGL.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
