@@ -38,18 +38,17 @@ enum UniformLocation {
 		"	gl_Position = u_matrix * vec4(a_position, 0.0, 1.0);\n"
 		"	v_texCoord = a_texCoord;\n"
 		"}\n";
-		self.fragmentShader = /*@""
-							   "precision mediump float;\n"
-							   "varying vec2 v_texCoord;\n"
-							   "uniform lowp vec4 u_color;\n"
-							   "uniform lowp float u_alpha;\n"
-							   "uniform sampler2D u_texture;\n"
-							   "void main(){\n"
-							   "	gl_FragColor = texture2D(u_texture, v_texCoord) * u_alpha;\n"
-							   "}\n";*/
-		@"float v = sin(v_texCoord.x * 3.14);\n"
-		"gl_FragColor = vec4(v,v,v,1);\n";
-		
+		self.fragmentShader = @""
+		"precision mediump float;\n"
+		"varying vec2 v_texCoord;\n"
+		"uniform lowp vec4 u_color;\n"
+		"uniform lowp float u_alpha;\n"
+		"uniform sampler2D u_texture;\n"
+		"void main(){\n"
+		//http://www.slideshare.net/kamiyan2/opengl-es-20
+		//初期状態。テクスチャをそのまま
+		"	gl_FragColor = texture2D(u_texture, v_texCoord);\n"
+		"}\n";
 	}
 	return self;
 }
