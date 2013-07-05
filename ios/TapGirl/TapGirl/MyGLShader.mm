@@ -46,12 +46,12 @@ enum UniformLocation {
 		"uniform sampler2D u_texture;\n"
 		"void main(){\n"
 		//http://www.slideshare.net/kamiyan2/opengl-es-20
-#if 0
+#if 1
 		//初期状態。テクスチャをそのまま
 		"	gl_FragColor = texture2D(u_texture, v_texCoord);\n"
 #endif
 		//ぼんやり乗算（縁黒）
-#if 1	//iphone4で17fps
+#if 0	//iphone4で17fps
 		"	float v = min(sin(v_texCoord.x * 3.14) * sin(v_texCoord.y * 3.14) * 5.0, 1.0);\n"
 		"	vec4 col = vec4(v,v,v,1);\n"
 		"	gl_FragColor = texture2D(u_texture, v_texCoord) * col;\n"
