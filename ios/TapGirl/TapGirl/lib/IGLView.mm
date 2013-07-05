@@ -109,6 +109,7 @@
 // サブビューをレイアウト
 - (void)layoutSubviews {
 	NSLog(@"%s", __PRETTY_FUNCTION__);
+	[super layoutSubviews];
 	glBindRenderbuffer(GL_RENDERBUFFER, colorRenderbuffer);CHECK_GL_ERROR();
 	[context renderbufferStorage:GL_RENDERBUFFER fromDrawable:(CAEAGLLayer*)self.layer];
 	glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &_width);CHECK_GL_ERROR();
