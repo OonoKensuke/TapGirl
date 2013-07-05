@@ -46,8 +46,47 @@ enum UniformLocation {
 		"uniform sampler2D u_texture;\n"
 		"void main(){\n"
 		//http://www.slideshare.net/kamiyan2/opengl-es-20
+#if 0
 		//初期状態。テクスチャをそのまま
 		"	gl_FragColor = texture2D(u_texture, v_texCoord);\n"
+#endif
+		//ぼんやり乗算（縁黒）
+#if 1	//iphone4で17fps
+		"	float v = min(sin(v_texCoord.x * 3.14) * sin(v_texCoord.y * 3.14) * 5.0, 1.0);\n"
+		"	vec4 col = vec4(v,v,v,1);\n"
+		"	gl_FragColor = texture2D(u_texture, v_texCoord) * col;\n"
+#endif
+		//カラー＋グレースケール(animation)
+#if 0	//iphone4で15fps弱
+		"	float v1 = sin(v_texCoord.x * 3.14) * sin(v_texCoord.y * 3.14);\n"
+		"	vec4 col = texture2D(u_texture, v_texCoord);\n"
+		"	float v = dot(col,vec4(0.3, 0.6, 0.1, 0));\n"
+		"	vec4 gray = vec4(v,v,v,1)\n;"
+		"	gl_FragColor = mix(gray, col, u_alpha) * vec4(v1, v1, v1, 1);\n"
+#endif
+		//グレースケール+Alpha
+#if 0	//iphone4で50fps強
+		"	vec4 col = texture2D(u_texture, v_texCoord);\n"
+		"	float v = dot(col,vec4(0.3, 0.6, 0.1, 0));\n"
+		"	float red = (v * u_alpha) + (col.r * (1.0 - u_alpha));\n"
+		"	float blue = (v * u_alpha) + (col.b * (1.0 - u_alpha));\n"
+		"	float green = (v * u_alpha) + (col.g * (1.0 - u_alpha));\n"
+		"	gl_FragColor = vec4(red,green,blue,1);\n"
+#endif
+		//セピア
+#if 0	//iphone4で60fps
+		"	vec4 col = texture2D(u_texture, v_texCoord);\n"
+		"	float v = dot(col,vec4(0.3, 0.6, 0.1, 0));\n"
+		"	gl_FragColor = vec4(v,v * 0.87,v * 0.75,1);\n"
+#endif
+		//テクスチャに色を乗算
+#if 0
+		"	gl_FragColor = texture2D(u_texture, v_texCoord) * u_color;\n"
+#endif
+		//テクスチャのフェードインアウト
+#if 0
+		"	gl_FragColor = texture2D(u_texture, v_texCoord) * u_alpha;\n"
+#endif
 		"}\n";
 	}
 	return self;
