@@ -27,7 +27,7 @@
 		8AD7112D17841DBC0010DBB9 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AD7112C17841DBC0010DBB9 /* Default.png */; };
 		8AD7112F17841DBC0010DBB9 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AD7112E17841DBC0010DBB9 /* Default@2x.png */; };
 		8AD7113117841DBC0010DBB9 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AD7113017841DBC0010DBB9 /* Default-568h@2x.png */; };
-		8AD711471784272F0010DBB9 /* MyGLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AD711451784272F0010DBB9 /* MyGLViewController.m */; };
+		8AD711471784272F0010DBB9 /* MyGLViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8AD711451784272F0010DBB9 /* MyGLViewController.mm */; };
 		8AD711481784272F0010DBB9 /* MyGLViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8AD711461784272F0010DBB9 /* MyGLViewController.xib */; };
 		8AD7114F17842AF00010DBB9 /* icon1111.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AD7114E17842AF00010DBB9 /* icon1111.png */; };
 		8AD7115117842AF70010DBB9 /* icon2222.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AD7115017842AF70010DBB9 /* icon2222.png */; };
@@ -71,7 +71,7 @@
 		8AD7112E17841DBC0010DBB9 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		8AD7113017841DBC0010DBB9 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		8AD711441784272F0010DBB9 /* MyGLViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyGLViewController.h; path = viewController/MyGLViewController.h; sourceTree = "<group>"; };
-		8AD711451784272F0010DBB9 /* MyGLViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyGLViewController.m; path = viewController/MyGLViewController.m; sourceTree = "<group>"; };
+		8AD711451784272F0010DBB9 /* MyGLViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MyGLViewController.mm; path = viewController/MyGLViewController.mm; sourceTree = "<group>"; };
 		8AD711461784272F0010DBB9 /* MyGLViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MyGLViewController.xib; path = viewController/MyGLViewController.xib; sourceTree = "<group>"; };
 		8AD7114A178429E60010DBB9 /* icon1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon1.png; sourceTree = "<group>"; };
 		8AD7114C17842A160010DBB9 /* icon2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon2.png; sourceTree = "<group>"; };
@@ -192,7 +192,7 @@
 			isa = PBXGroup;
 			children = (
 				8AD711441784272F0010DBB9 /* MyGLViewController.h */,
-				8AD711451784272F0010DBB9 /* MyGLViewController.m */,
+				8AD711451784272F0010DBB9 /* MyGLViewController.mm */,
 				8AD711461784272F0010DBB9 /* MyGLViewController.xib */,
 				8A4E023C178579F200D3F403 /* MyGLView.h */,
 				8A4E023D178579F200D3F403 /* MyGLView.mm */,
@@ -308,7 +308,7 @@
 			files = (
 				8AD7112717841DBC0010DBB9 /* main.m in Sources */,
 				8AD7112B17841DBC0010DBB9 /* AppDelegate.m in Sources */,
-				8AD711471784272F0010DBB9 /* MyGLViewController.m in Sources */,
+				8AD711471784272F0010DBB9 /* MyGLViewController.mm in Sources */,
 				8A7B4272178563B00023AD49 /* CMatrix.mm in Sources */,
 				8A4E022A17856CAF00D3F403 /* CColor.mm in Sources */,
 				8A4E022D1785711E00D3F403 /* IGL.mm in Sources */,
