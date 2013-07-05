@@ -41,7 +41,7 @@
 {
 	debug_NSLog(@"%s", __PRETTY_FUNCTION__);
 	[super viewWillAppear:animated];
-	self.glView.shader.fragmentShader = self.fshSource;
+	//self.glView.shader.fragmentShader = self.fshSource;
 	NSString* error = [self.glView.shader build];
 	if (error != nil) {
 		debug_NSLog(@"%@", error);
