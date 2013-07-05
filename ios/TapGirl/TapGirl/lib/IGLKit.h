@@ -31,6 +31,12 @@ if (err != GL_NO_ERROR) { debug_NSLog(@"glGetError() = 0x%x\n", err); glGetError
 #define CHECK_GL_ERROR()
 
 #endif
-
+#import "IGL.h"
+#import "IGLImage.h"
+#import "IGLShader.h"
+#import "IGLView.h"
+#import "CColor.h"
+#import "CMatrix.h"
+#import "CVec2D.h"
 
 #endif

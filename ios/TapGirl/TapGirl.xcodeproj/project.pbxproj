@@ -23,7 +23,7 @@
 		8AD7111F17841DBC0010DBB9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AD7111E17841DBC0010DBB9 /* CoreGraphics.framework */; };
 		8AD7112517841DBC0010DBB9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8AD7112317841DBC0010DBB9 /* InfoPlist.strings */; };
 		8AD7112717841DBC0010DBB9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AD7112617841DBC0010DBB9 /* main.m */; };
-		8AD7112B17841DBC0010DBB9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AD7112A17841DBC0010DBB9 /* AppDelegate.m */; };
+		8AD7112B17841DBC0010DBB9 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8AD7112A17841DBC0010DBB9 /* AppDelegate.mm */; };
 		8AD7112D17841DBC0010DBB9 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AD7112C17841DBC0010DBB9 /* Default.png */; };
 		8AD7112F17841DBC0010DBB9 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AD7112E17841DBC0010DBB9 /* Default@2x.png */; };
 		8AD7113117841DBC0010DBB9 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AD7113017841DBC0010DBB9 /* Default-568h@2x.png */; };
@@ -66,7 +66,7 @@
 		8AD7112617841DBC0010DBB9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8AD7112817841DBC0010DBB9 /* TapGirl-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TapGirl-Prefix.pch"; sourceTree = "<group>"; };
 		8AD7112917841DBC0010DBB9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		8AD7112A17841DBC0010DBB9 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		8AD7112A17841DBC0010DBB9 /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
 		8AD7112C17841DBC0010DBB9 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		8AD7112E17841DBC0010DBB9 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		8AD7113017841DBC0010DBB9 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -166,7 +166,7 @@
 				8AD71149178429350010DBB9 /* resource */,
 				8AD711431784249D0010DBB9 /* ViewAndViewController */,
 				8AD7112917841DBC0010DBB9 /* AppDelegate.h */,
-				8AD7112A17841DBC0010DBB9 /* AppDelegate.m */,
+				8AD7112A17841DBC0010DBB9 /* AppDelegate.mm */,
 				8AD7112117841DBC0010DBB9 /* Supporting Files */,
 				8A4E023F17857A3C00D3F403 /* MyGLShader.h */,
 				8A4E024017857A3C00D3F403 /* MyGLShader.mm */,
@@ -307,7 +307,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8AD7112717841DBC0010DBB9 /* main.m in Sources */,
-				8AD7112B17841DBC0010DBB9 /* AppDelegate.m in Sources */,
+				8AD7112B17841DBC0010DBB9 /* AppDelegate.mm in Sources */,
 				8AD711471784272F0010DBB9 /* MyGLViewController.mm in Sources */,
 				8A7B4272178563B00023AD49 /* CMatrix.mm in Sources */,
 				8A4E022A17856CAF00D3F403 /* CColor.mm in Sources */,

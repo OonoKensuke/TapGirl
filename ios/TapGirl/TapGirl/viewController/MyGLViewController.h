@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MyGLView.h"
 
 @interface MyGLViewController : UIViewController
+{
+	
+}
+@property (retain, nonatomic) IBOutlet MyGLView *glView;
 
 @end
