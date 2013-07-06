@@ -8,9 +8,11 @@
 
 #import <math.h>
 #import "MyGLView.h"
+#import "MyGLViewController.h"
 #import "IGLImage.h"
 #import "CColor.h"
 #import "CVec2D.h"
+#import "IGLKit.h"
 
 #define _GR_WIDTH 603
 #define _GR_HEIGHT 820
@@ -107,8 +109,83 @@
 						color:color alpha:alpha];
 	[self drawFps];
 }
+#pragma mark -touch events
+- (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	debug_NSLog(@"%s", __PRETTY_FUNCTION__);
+	@try {
+		int count = 0;
+		{
+			for (UITouch *touch in touches)
+			{
+				count++;
+				CGPoint clickPos = [touch locationInView:self];
+				{
+					NSLog(@"x:%f, y:%f", clickPos.x, clickPos.y);
+					NSLog(@"cange to x:%f, y:%f", clickPos.x, clickPos.y);
+				}
+				
+				break;
+			}
+			NSLog(@"touch count:%d", count);
+		}
+		[MyGLViewController getInstance].countLabel.text = @"touchBegan";
+	}
+	@catch (NSException * e) {
+		NSLog(@"%s Caught %@: %@", __FUNCTION__,[e name], [e reason]);
+	}
+}
 
+- (void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	debug_NSLog(@"%s", __PRETTY_FUNCTION__);
+	@try {
+		int count = 0;
+		{
+			for (UITouch *touch in touches)
+			{
+				count++;
+				CGPoint clickPos = [touch locationInView:self];
+				{
+					NSLog(@"x:%f, y:%f", clickPos.x, clickPos.y);
+					NSLog(@"cange to x:%f, y:%f", clickPos.x, clickPos.y);
+				}
+				
+				break;
+			}
+			NSLog(@"touch count:%d", count);
+		}
+		[MyGLViewController getInstance].countLabel.text = @"touchEnd";
+	}
+	@catch (NSException * e) {
+		NSLog(@"%s Caught %@: %@", __FUNCTION__,[e name], [e reason]);
+	}
+}
 
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	@try {
+		int count = 0;
+		{
+			for (UITouch *touch in touches)
+			{
+				count++;
+				CGPoint clickPos = [touch locationInView:self];
+				{
+					NSLog(@"x:%f, y:%f", clickPos.x, clickPos.y);
+					NSLog(@"cange to x:%f, y:%f", clickPos.x, clickPos.y);
+				}
+				
+				break;
+			}
+			NSLog(@"touch count:%d", count);
+		}
+		[MyGLViewController getInstance].countLabel.text = @"touchMove";
+	}
+	@catch (NSException * e) {
+		NSLog(@"%s Caught %@: %@", __FUNCTION__,[e name], [e reason]);
+	}
+}
 
 /*
 // Only override drawRect: if you perform custom drawing.
