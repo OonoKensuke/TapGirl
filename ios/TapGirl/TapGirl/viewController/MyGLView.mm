@@ -24,6 +24,8 @@
 #define _PIX_PER_CM	((float)_PPI / _CM_PER_INCH)
 //スコアに換算する最低距離(cm)
 #define _MIN_LEN	0.3
+//目標タッチ距離（cm）
+#define _OBJECTIVE_LENGTH 1000
 
 
 // プライベート
@@ -148,7 +150,7 @@
 		if (_MIN_LEN < curLen) {
 			self.touchLength += curLen;
 			_posTouch = posUpdate;
-			int iLength = (int)(self.touchLength);
+			int iLength = _OBJECTIVE_LENGTH - (int)(self.touchLength);
 			NSString* strTouch = [NSString stringWithFormat:@"%i", iLength];
 			[MyGLViewController getInstance].countLabel.text = strTouch;
 		}
