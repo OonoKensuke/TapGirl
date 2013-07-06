@@ -14,9 +14,16 @@
 
 @end
 
+static MyGLViewController* s_Instance = nil;
+
 @implementation MyGLViewController
 @synthesize glView = _glView;
 @synthesize fshSource = _fshSource;
+
++(MyGLViewController*) getInstance
+{
+	return s_Instance;
+}
 
 #pragma mark -view life cycle
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -35,6 +42,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 	self.glView.contentScaleFactor = [UIScreen mainScreen].scale;
+	s_Instance = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -66,6 +74,7 @@
 	debug_NSLog(@"%s", __PRETTY_FUNCTION__);
 	[_glView release];
     [_countLabel release];
+	s_Instance = nil;
 	[super dealloc];
 }
 - (void)viewDidUnload {
