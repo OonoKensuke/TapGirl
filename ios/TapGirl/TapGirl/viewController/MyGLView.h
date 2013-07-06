@@ -14,5 +14,6 @@
 -(void)drawMain;
 // シェーダー
 @property(strong, nonatomic) MyGLShader* shader;
+@property(assign, nonatomic) float touchLength;
 
 @end

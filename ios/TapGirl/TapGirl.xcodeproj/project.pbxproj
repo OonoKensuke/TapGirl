@@ -37,8 +37,8 @@
 
 /* Begin PBXFileReference section */
 		8A0A09871786E4730043678E /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		8A0A09891786E48F0043678E /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/MyGLViewController.xib; sourceTree = "<group>"; };
-		8A0A098B1786E4950043678E /* ja */ = {isa = PBXFileReference; lastKnownFileType = file; name = ja; path = ja.lproj/MyGLViewController.xib; sourceTree = "<group>"; };
+		8A0A09891786E48F0043678E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MyGLViewController.xib; sourceTree = "<group>"; };
+		8A0A098B1786E4950043678E /* ja */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ja; path = ja.lproj/MyGLViewController.xib; sourceTree = "<group>"; };
 		8A4E022817856CAF00D3F403 /* CColor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CColor.mm; path = lib/CColor.mm; sourceTree = "<group>"; };
 		8A4E022917856CAF00D3F403 /* CColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CColor.h; path = lib/CColor.h; sourceTree = "<group>"; };
 		8A4E022B1785711E00D3F403 /* IGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IGL.h; path = lib/IGL.h; sourceTree = "<group>"; };
@@ -164,14 +164,13 @@
 		8AD7112017841DBC0010DBB9 /* TapGirl */ = {
 			isa = PBXGroup;
 			children = (
+				8AE2604A178817BD008FFA86 /* OtherSource */,
 				8A7B426E17855CC20023AD49 /* lib */,
 				8AD71149178429350010DBB9 /* resource */,
 				8AD711431784249D0010DBB9 /* ViewAndViewController */,
 				8AD7112917841DBC0010DBB9 /* AppDelegate.h */,
 				8AD7112A17841DBC0010DBB9 /* AppDelegate.mm */,
 				8AD7112117841DBC0010DBB9 /* Supporting Files */,
-				8A4E023F17857A3C00D3F403 /* MyGLShader.h */,
-				8A4E024017857A3C00D3F403 /* MyGLShader.mm */,
 			);
 			path = TapGirl;
 			sourceTree = "<group>";
@@ -235,6 +234,15 @@
 				8AD71160178434E80010DBB9 /* twitter1.png */,
 			);
 			path = buttons;
+			sourceTree = "<group>";
+		};
+		8AE2604A178817BD008FFA86 /* OtherSource */ = {
+			isa = PBXGroup;
+			children = (
+				8A4E023F17857A3C00D3F403 /* MyGLShader.h */,
+				8A4E024017857A3C00D3F403 /* MyGLShader.mm */,
+			);
+			name = OtherSource;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

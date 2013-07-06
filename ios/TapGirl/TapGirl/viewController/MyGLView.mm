@@ -16,12 +16,24 @@
 
 #define _GR_WIDTH 603
 #define _GR_HEIGHT 820
+//iphone(非RetinaのPPI　タッチ座標はRetinaでもこの値)
+#define _PPI	163
+//１インチ＝2.54cm
+#define _CM_PER_INCH	2.54
+//1cm当たりのピクセル数
+#define _PIX_PER_CM	((float)_PPI / _CM_PER_INCH)
+//スコアに換算する最低距離(cm)
+#define _MIN_LEN	0.3
+
+
 // プライベート
 @interface MyGLView() {
 	// 位置
 	CVec2D positions[4];
 	// テクスチャ座用
 	CVec2D texCoords[4];
+	//タッチ距離を測るための座標
+	CGPoint _posTouch;
 }
 // メインテクスチャ
 @property(strong, nonatomic) IGLImage* picture;
@@ -31,6 +43,7 @@
 @implementation MyGLView
 @synthesize shader = _shader;
 @synthesize picture = _picture;
+@synthesize touchLength = _touchLength;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -50,6 +63,8 @@
 		self.shader = [[MyGLShader alloc] init];
 		UIImage *img = [UIImage imageNamed:@"hiroin1_texture.jpg"];
 		self.picture = [[IGLImage alloc] initWithUIImage:img];
+		self.touchLength = 0.0f;
+		NSLog(@"pix per cm = %f", _PIX_PER_CM);
     }
     return self;
 }
@@ -109,6 +124,39 @@
 						color:color alpha:alpha];
 	[self drawFps];
 }
+#pragma mark -Game Method
+- (void)clearPosTouch
+{
+	_posTouch.x = _posTouch.y = -1.0f;
+}
+
+- (void)reqUpdateTouchPos:(CGPoint)posUpdate
+{
+	if ((_posTouch.x < 0.0f) && (_posTouch.y < 0.0f)) {
+		_posTouch = posUpdate;
+	}
+	else {
+		float curLen = 0.0f;
+		{
+			float curLenX = _posTouch.x - posUpdate.x;
+			curLenX *= curLenX;
+			float curLenY = _posTouch.y - posUpdate.y;
+			curLenY *= curLenY;
+			curLen = sqrtf(curLenX + curLenY);
+			curLen /= _PIX_PER_CM;
+		}
+		if (_MIN_LEN < curLen) {
+			self.touchLength += curLen;
+			_posTouch = posUpdate;
+			int iLength = (int)(self.touchLength);
+			NSString* strTouch = [NSString stringWithFormat:@"%i", iLength];
+			[MyGLViewController getInstance].countLabel.text = strTouch;
+		}
+		else {
+			//debug_NSLog(@"距離が短すぎる:%f", curLen);
+		}
+	}
+}
 #pragma mark -touch events
 - (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
@@ -119,43 +167,15 @@
 			for (UITouch *touch in touches)
 			{
 				count++;
-				CGPoint clickPos = [touch locationInView:self];
+				_posTouch = [touch locationInView:self];
 				{
-					NSLog(@"x:%f, y:%f", clickPos.x, clickPos.y);
-					NSLog(@"cange to x:%f, y:%f", clickPos.x, clickPos.y);
+					//NSLog(@"x:%f, y:%f", _posTouch.x, _posTouch.y);
 				}
 				
 				break;
 			}
-			NSLog(@"touch count:%d", count);
+			//NSLog(@"touch count:%d", count);
 		}
-		[MyGLViewController getInstance].countLabel.text = @"touchBegan";
-	}
-	@catch (NSException * e) {
-		NSLog(@"%s Caught %@: %@", __FUNCTION__,[e name], [e reason]);
-	}
-}
-
-- (void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-{
-	debug_NSLog(@"%s", __PRETTY_FUNCTION__);
-	@try {
-		int count = 0;
-		{
-			for (UITouch *touch in touches)
-			{
-				count++;
-				CGPoint clickPos = [touch locationInView:self];
-				{
-					NSLog(@"x:%f, y:%f", clickPos.x, clickPos.y);
-					NSLog(@"cange to x:%f, y:%f", clickPos.x, clickPos.y);
-				}
-				
-				break;
-			}
-			NSLog(@"touch count:%d", count);
-		}
-		[MyGLViewController getInstance].countLabel.text = @"touchEnd";
 	}
 	@catch (NSException * e) {
 		NSLog(@"%s Caught %@: %@", __FUNCTION__,[e name], [e reason]);
@@ -172,20 +192,44 @@
 				count++;
 				CGPoint clickPos = [touch locationInView:self];
 				{
-					NSLog(@"x:%f, y:%f", clickPos.x, clickPos.y);
-					NSLog(@"cange to x:%f, y:%f", clickPos.x, clickPos.y);
+					//NSLog(@"x:%f, y:%f", clickPos.x, clickPos.y);
+					//NSLog(@"change to x:%f, y:%f", clickPos.x, clickPos.y);
 				}
-				
+				[self reqUpdateTouchPos:clickPos];
 				break;
 			}
-			NSLog(@"touch count:%d", count);
+			//NSLog(@"touch count:%d", count);
 		}
-		[MyGLViewController getInstance].countLabel.text = @"touchMove";
 	}
 	@catch (NSException * e) {
 		NSLog(@"%s Caught %@: %@", __FUNCTION__,[e name], [e reason]);
 	}
 }
+- (void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	debug_NSLog(@"%s", __PRETTY_FUNCTION__);
+	@try {
+		int count = 0;
+		{
+			for (UITouch *touch in touches)
+			{
+				count++;
+				CGPoint clickPos = [touch locationInView:self];
+				{
+					//NSLog(@"x:%f, y:%f", clickPos.x, clickPos.y);
+				}
+				[self reqUpdateTouchPos:clickPos];
+				[self clearPosTouch];
+				break;
+			}
+			//NSLog(@"touch count:%d", count);
+		}
+	}
+	@catch (NSException * e) {
+		NSLog(@"%s Caught %@: %@", __FUNCTION__,[e name], [e reason]);
+	}
+}
+
 
 /*
 // Only override drawRect: if you perform custom drawing.
