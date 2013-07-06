@@ -14,5 +14,6 @@
 	
 }
 @property (retain, nonatomic) IBOutlet MyGLView *glView;
+@property (retain, nonatomic) IBOutlet UILabel *countLabel;
 
 @end

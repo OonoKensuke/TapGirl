@@ -65,11 +65,13 @@
 - (void)dealloc {
 	debug_NSLog(@"%s", __PRETTY_FUNCTION__);
 	[_glView release];
+    [_countLabel release];
 	[super dealloc];
 }
 - (void)viewDidUnload {
 	debug_NSLog(@"%s", __PRETTY_FUNCTION__);
 	[self setGlView:nil];
+    [self setCountLabel:nil];
 	[super viewDidUnload];
 	self.glView = nil;
 }
