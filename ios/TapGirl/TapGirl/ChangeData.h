@@ -28,6 +28,7 @@ typedef struct {
 	
 }
 @property (readonly, nonatomic) float restLength;
+@property (readonly, nonatomic) float objectiveLength;
 
 - (id)initWithTouchLength:(float)length;
 - (float)requestAddTouchLength:(float)length;

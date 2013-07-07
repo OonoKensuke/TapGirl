@@ -70,7 +70,7 @@ const static CHANGE_PARAM s_ChangeParams[] = {
 	},
 	{
 		//切り替えのきっかけとなる残りの距離 最後のデータは必ず０で終わる事
-		0.1f,
+		0.0f,
 		//切り替えるイメージの番号
 		3,
 		//切り替える時のSE
@@ -116,6 +116,11 @@ const static CHANGE_PARAM s_ChangeParams[] = {
 	return self;
 }
 
+- (void)dealloc
+{
+	NSLog(@"%s", __PRETTY_FUNCTION__);
+	[super dealloc];
+}
 - (float)requestAddTouchLength:(float)length
 {
 	//lengthが複数の変更にまたがった時、1つめの変更のみを処理して、残りを返す
@@ -141,6 +146,10 @@ const static CHANGE_PARAM s_ChangeParams[] = {
 	return &s_ChangeParams[self.indexOfData];
 }
 
+- (float)objectiveLength
+{
+	return s_ChangeParams[0].restLength;
+}
 
 
 

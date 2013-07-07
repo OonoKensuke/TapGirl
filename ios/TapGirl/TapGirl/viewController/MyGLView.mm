@@ -13,6 +13,7 @@
 #import "CColor.h"
 #import "CVec2D.h"
 #import "IGLKit.h"
+#import "ChangeData.h"
 
 #define _GR_WIDTH 603
 #define _GR_HEIGHT 820
@@ -24,8 +25,6 @@
 #define _PIX_PER_CM	((float)_PPI / _CM_PER_INCH)
 //スコアに換算する最低距離(cm)
 #define _MIN_LEN	0.3
-//目標タッチ距離（cm）
-#define _OBJECTIVE_LENGTH 1000
 
 typedef struct {
 	// 位置
@@ -51,6 +50,8 @@ typedef struct {
 //@property(strong, nonatomic) MyGLShader* shader;
 //
 @property(strong, nonatomic) NSMutableArray* arrayShader;
+
+@property(assign, nonatomic) ChangeData* changeData;
 @end
 
 
@@ -61,6 +62,7 @@ typedef struct {
 @synthesize textureNext = _textureNext;
 @synthesize touchLength = _touchLength;
 @synthesize arrayShader = _arrayShader;
+@synthesize changeData = _changeData;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -85,15 +87,20 @@ typedef struct {
 				[self.arrayShader addObject:shader];
 			}
 		}
-		[self loadTextureFromIndex:1 toCurrent:true];
 		self.touchLength = 0.0f;
-		NSLog(@"pix per cm = %f", _PIX_PER_CM);
+		//NSLog(@"pix per cm = %f", _PIX_PER_CM);
+		self.changeData = [[ChangeData alloc] initWithTouchLength:self.touchLength];
+		const CHANGE_PARAM *pChangeParam = [self.changeData getChangeParam];
+		[self loadTextureFromIndex:pChangeParam->indexImage toCurrent:true];
     }
     return self;
 }
 
 - (void)dealloc
 {
+	[self.textureCurrent release];
+	[self.textureNext release];
+	[self.changeData release];
 	[self.arrayShader release];
 	[super dealloc];
 }
@@ -161,14 +168,7 @@ typedef struct {
 	float alpha = (float)((sin(M_PI * time / 2.0) + 1.0) / 2.0);
 	CColor color;
 	color.setHue((float)fmod(time / 8.0, 1.0) * 360.f, 1.f);
-	// 位置
-	/*
-	 float w = fminf(self.width, self.height);
-	 positions[0] = Vector(0, 0);
-	 positions[1] = Vector(w, 0);
-	 positions[2] = Vector(0, w);
-	 positions[3] = Vector(w, w);
-	 */
+
 	[self drawTextureCurrent:true withAlpha:alpha withColor:color];
 	[self drawFps];
 }
@@ -176,17 +176,20 @@ typedef struct {
 - (void)drawTextureCurrent:(BOOL)isCurrent withAlpha:(float)alpha withColor:(CColor&)color
 {
 	_PRIMITIVE *prim = nil;
+	IGLImage *texture = nil;
 	if (isCurrent) {
 		prim = &_primCurrent;
+		texture = self.textureCurrent;
 	}
 	else {
 		prim = &_primNext;
+		texture = self.textureNext;
 	}
 	float drawWidth = _GR_WIDTH;
 	float drawHeight = _GR_HEIGHT;
 	// テクスチャ座標
-	float u = (float)_GR_WIDTH / (float)self.textureCurrent.width;
-	float v = (float)_GR_HEIGHT / (float)self.textureCurrent.height;
+	float u = (float)_GR_WIDTH / (float)texture.width;
+	float v = (float)_GR_HEIGHT / (float)texture.height;
 	
 	BOOL bResize = false;
 	if (drawWidth > self.width) {
@@ -218,7 +221,7 @@ typedef struct {
 	prim->texCoords[3] = CVec2D(u,v);
 	MyGLShader* shader = [self.arrayShader objectAtIndex:(int)FRSH_NORMAL];
 	[shader drawArraysMy:GL_TRIANGLE_STRIP positions:(float*)(prim->positions)
-				 glImage:self.textureCurrent texCoords:(float*)(prim->texCoords) count:4
+				 glImage:texture texCoords:(float*)(prim->texCoords) count:4
 				   color:color alpha:alpha];
 	
 }
@@ -246,8 +249,9 @@ typedef struct {
 		}
 		if (_MIN_LEN < curLen) {
 			self.touchLength += curLen;
+			self.touchLength = MIN(self.touchLength, self.changeData.objectiveLength);
 			_posTouch = posUpdate;
-			int iLength = _OBJECTIVE_LENGTH - (int)(self.touchLength);
+			int iLength = self.changeData.objectiveLength - (int)(self.touchLength);
 			NSString* strTouch = [NSString stringWithFormat:@"%i", iLength];
 			[MyGLViewController getInstance].countLabel.text = strTouch;
 		}
