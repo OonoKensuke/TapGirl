@@ -39,6 +39,8 @@
 }
 // メインテクスチャ
 @property(strong, nonatomic) IGLImage* picture;
+// シェーダー
+@property(strong, nonatomic) MyGLShader* shader;
 @end
 
 
@@ -70,6 +72,13 @@
     }
     return self;
 }
+#pragma mark -public Method
+-(NSString*)buildShader
+{
+	NSString *error = [self.shader build];
+	return error;
+}
+
 
 // 描画
 -(void)drawMain {

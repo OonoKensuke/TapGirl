@@ -50,7 +50,7 @@ static MyGLViewController* s_Instance = nil;
 	debug_NSLog(@"%s", __PRETTY_FUNCTION__);
 	[super viewWillAppear:animated];
 	//self.glView.shader.fragmentShader = self.fshSource;
-	NSString* error = [self.glView.shader build];
+	NSString* error = [self.glView buildShader];
 	if (error != nil) {
 		debug_NSLog(@"%@", error);
 	}

@@ -12,8 +12,8 @@
 @interface MyGLView : IGLView
 // 描画
 -(void)drawMain;
-// シェーダー
-@property(strong, nonatomic) MyGLShader* shader;
+-(NSString*)buildShader;
+
 @property(assign, nonatomic) float touchLength;
 
 @end
