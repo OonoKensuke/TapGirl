@@ -20,6 +20,7 @@
 		8A4E024417857DA900D3F403 /* hiroin1_texture.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8A4E024317857DA900D3F403 /* hiroin1_texture.jpg */; };
 		8A7B4272178563B00023AD49 /* CMatrix.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8A7B4270178563B00023AD49 /* CMatrix.mm */; };
 		8A8956C317891FF500DBE095 /* shader_normal.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8A8956C217891FF500DBE095 /* shader_normal.txt */; };
+		8A8956C51789271F00DBE095 /* shader_fade.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8A8956C41789271F00DBE095 /* shader_fade.txt */; };
 		8AD7111B17841DBC0010DBB9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AD7111A17841DBC0010DBB9 /* UIKit.framework */; };
 		8AD7111D17841DBC0010DBB9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AD7111C17841DBC0010DBB9 /* Foundation.framework */; };
 		8AD7111F17841DBC0010DBB9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AD7111E17841DBC0010DBB9 /* CoreGraphics.framework */; };
@@ -80,6 +81,7 @@
 		8A7B4270178563B00023AD49 /* CMatrix.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CMatrix.mm; path = lib/CMatrix.mm; sourceTree = "<group>"; };
 		8A7B4271178563B00023AD49 /* CMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CMatrix.h; path = lib/CMatrix.h; sourceTree = "<group>"; };
 		8A8956C217891FF500DBE095 /* shader_normal.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = shader_normal.txt; path = resource/src/shader_normal.txt; sourceTree = "<group>"; };
+		8A8956C41789271F00DBE095 /* shader_fade.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = shader_fade.txt; path = resource/src/shader_fade.txt; sourceTree = "<group>"; };
 		8AD7111717841DBC0010DBB9 /* TapGirl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TapGirl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8AD7111A17841DBC0010DBB9 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		8AD7111C17841DBC0010DBB9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -175,6 +177,7 @@
 		8A8956C117891FE300DBE095 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				8A8956C41789271F00DBE095 /* shader_fade.txt */,
 				8A8956C217891FF500DBE095 /* shader_normal.txt */,
 			);
 			name = src;
@@ -400,6 +403,7 @@
 				8AE2606F17882DBC008FFA86 /* image02.jpg in Resources */,
 				8AE2607017882DBC008FFA86 /* image03.jpg in Resources */,
 				8A8956C317891FF500DBE095 /* shader_normal.txt in Resources */,
+				8A8956C51789271F00DBE095 /* shader_fade.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
