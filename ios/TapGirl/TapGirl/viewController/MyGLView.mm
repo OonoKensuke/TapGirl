@@ -38,7 +38,9 @@
 	CGPoint _posTouch;
 }
 // メインテクスチャ
-@property(strong, nonatomic) IGLImage* picture;
+//@property(strong, nonatomic) IGLImage* picture;
+@property(assign, nonatomic) IGLImage* textureCurrent;
+@property(assign, nonatomic) IGLImage* textureNext;
 // シェーダー
 //@property(strong, nonatomic) MyGLShader* shader;
 //
@@ -48,7 +50,9 @@
 
 @implementation MyGLView
 //@synthesize shader = _shader;
-@synthesize picture = _picture;
+//@synthesize picture = _picture;
+@synthesize textureCurrent = _textureCurrent;
+@synthesize textureNext = _textureNext;
 @synthesize touchLength = _touchLength;
 @synthesize arrayShader = _arrayShader;
 
@@ -75,8 +79,7 @@
 				[self.arrayShader addObject:shader];
 			}
 		}
-		UIImage *img = [UIImage imageNamed:@"hiroin1_texture.jpg"];
-		self.picture = [[IGLImage alloc] initWithUIImage:img];
+		[self loadTextureFromIndex:1 toCurrent:true];
 		self.touchLength = 0.0f;
 		NSLog(@"pix per cm = %f", _PIX_PER_CM);
     }
@@ -87,6 +90,30 @@
 {
 	[self.arrayShader release];
 	[super dealloc];
+}
+
+- (BOOL)loadTextureFromIndex:(int)index toCurrent:(BOOL)bLoadCurrent
+{
+	BOOL result = false;
+	@try {
+		NSString* nameFile = [NSString stringWithFormat:@"image%02d.jpg", index];
+		NSString* strPath = [[NSBundle mainBundle] pathForResource:nameFile ofType:nil];
+		if ([[NSFileManager defaultManager] fileExistsAtPath:strPath]) {
+			UIImage *img = [UIImage imageNamed:nameFile];
+			if (bLoadCurrent) {
+				self.textureCurrent = [[IGLImage alloc] initWithUIImage:img];
+			}
+			else {
+				self.textureNext = [[IGLImage alloc] initWithUIImage:img];
+			}
+			result = true;
+		}
+	}
+	@catch (NSException *exception) {
+		debug_NSLog(@"%@", [exception reason]);
+		assert(false);
+	}
+	return result;
 }
 #pragma mark -public Method
 -(NSString*)buildShader
@@ -139,8 +166,8 @@
 	float drawWidth = _GR_WIDTH;
 	float drawHeight = _GR_HEIGHT;
 	// テクスチャ座標
-	float u = (float)_GR_WIDTH / (float)self.picture.width;
-	float v = (float)_GR_HEIGHT / (float)self.picture.height;
+	float u = (float)_GR_WIDTH / (float)self.textureCurrent.width;
+	float v = (float)_GR_HEIGHT / (float)self.textureCurrent.height;
 	
 	BOOL bResize = false;
 	if (drawWidth > self.width) {
@@ -172,7 +199,7 @@
 	texCoords[3] = CVec2D(u,v);
 	MyGLShader* shader = [self.arrayShader objectAtIndex:(int)FRSH_NORMAL];
 	[shader drawArraysMy:GL_TRIANGLE_STRIP positions:(float*)positions
-					  glImage:self.picture texCoords:(float*)texCoords count:4
+					  glImage:self.textureCurrent texCoords:(float*)texCoords count:4
 						color:color alpha:alpha];
 	[self drawFps];
 }
