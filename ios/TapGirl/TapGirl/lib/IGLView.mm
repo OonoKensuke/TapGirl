@@ -157,7 +157,7 @@
 	double elapsedTime = nowTime - beforeTime;
 	static float frameRate = 0.0f;
 	frames++;
-	if (elapsedTime > 1.0f) {
+	if (elapsedTime > 10.0f) {
 		frameRate = (float)((double) frames / elapsedTime);
 		beforeTime = nowTime;
 		frames = 0;

@@ -96,12 +96,13 @@ const static CHANGE_PARAM s_ChangeParams[] = {
 @synthesize indexOfData = _indexOfData;
 @synthesize restLength = _restLength;
 @synthesize countData = _countData;
+@synthesize isChange = _isChange;
 
 - (id)initWithTouchLength:(float)length
 {
 	self = [super init];
 	if (self != nil) {
-		_restLength = 1000.0f;
+		_restLength = s_ChangeParams[0].restLength;
 		_countData = sizeof(s_ChangeParams) / sizeof(s_ChangeParams[0]);
 		const CHANGE_PARAM *pLast = &s_ChangeParams[self.countData - 1];
 		//最後のデータは必ず０で終わる事
@@ -112,6 +113,7 @@ const static CHANGE_PARAM s_ChangeParams[] = {
 		while (restLength) {
 			restLength = [self requestAddTouchLength:restLength];
 		}
+		self.isChange = false;
 	}
 	return self;
 }
@@ -127,14 +129,16 @@ const static CHANGE_PARAM s_ChangeParams[] = {
 	float len = 0.0f;
 	if (self.indexOfData < (self.countData - 1)) {
 		if (length > 0.0f) {
+			_restLength -= length;
 			const CHANGE_PARAM *pCur = &s_ChangeParams[self.indexOfData];
-			float curOffset = self.restLength - pCur->restLength;
+			float curOffset =  pCur->restLength - self.restLength;
 			const CHANGE_PARAM *pNext = &s_ChangeParams[self.indexOfData + 1];
 			float distance = pCur->restLength - pNext->restLength;
-			if (curOffset > distance) {
+			if (curOffset >= distance) {
 				_indexOfData++;
 				_restLength = pNext->restLength;
 				len = curOffset - distance;
+				self.isChange = true;				
 			}
 		}
 	}
@@ -145,10 +149,15 @@ const static CHANGE_PARAM s_ChangeParams[] = {
 {
 	return &s_ChangeParams[self.indexOfData];
 }
-
+#pragma mark -property method
 - (float)objectiveLength
 {
 	return s_ChangeParams[0].restLength;
+}
+
+- (void)setIsChange:(BOOL)isChange
+{
+	_isChange = isChange;
 }
 
 

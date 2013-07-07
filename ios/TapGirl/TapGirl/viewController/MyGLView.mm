@@ -25,6 +25,8 @@
 #define _PIX_PER_CM	((float)_PPI / _CM_PER_INCH)
 //スコアに換算する最低距離(cm)
 #define _MIN_LEN	0.3
+//浮動小数点で誤差が生じる可能性があるとき、十分小さな値として使う
+#define _NEAR0	(float)(1.0f / 65536.0f)
 
 typedef struct {
 	// 位置
@@ -32,6 +34,17 @@ typedef struct {
 	// テクスチャ座用
 	CVec2D texCoords[4];
 }_PRIMITIVE;
+
+typedef enum  {
+	//初期化
+	STEP_INIT = 0,
+	//通常表示
+	STEP_NORMAL,
+	//画像変更前半
+	STEP_CHANGE_IN,
+	//画像変更後半
+	STEP_CHANGE_OUT,
+}_STEP;
 
 
 // プライベート
@@ -52,6 +65,8 @@ typedef struct {
 @property(strong, nonatomic) NSMutableArray* arrayShader;
 
 @property(assign, nonatomic) ChangeData* changeData;
+
+@property(assign, nonatomic) _STEP step;
 @end
 
 
@@ -63,6 +78,7 @@ typedef struct {
 @synthesize touchLength = _touchLength;
 @synthesize arrayShader = _arrayShader;
 @synthesize changeData = _changeData;
+@synthesize step = _step;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -92,6 +108,7 @@ typedef struct {
 		self.changeData = [[ChangeData alloc] initWithTouchLength:self.touchLength];
 		const CHANGE_PARAM *pChangeParam = [self.changeData getChangeParam];
 		[self loadTextureFromIndex:pChangeParam->indexImage toCurrent:true];
+		self.step = STEP_INIT;
     }
     return self;
 }
@@ -169,7 +186,42 @@ typedef struct {
 	CColor color;
 	color.setHue((float)fmod(time / 8.0, 1.0) * 360.f, 1.f);
 
-	[self drawTextureCurrent:true withAlpha:alpha withColor:color];
+	switch (self.step) {
+		case STEP_INIT:
+		{
+			[self drawTextureCurrent:true withAlpha:alpha withColor:color];
+			self.step = STEP_NORMAL;
+		}
+			break;
+		case STEP_NORMAL:
+		{
+			float processedLenght = self.changeData.objectiveLength - self.changeData.restLength;
+			float restTemp = self.touchLength - processedLenght;
+			if (restTemp > _NEAR0) {
+				float len = [self.changeData requestAddTouchLength:restTemp];
+				if (self.changeData.isChange) {
+					self.changeData.isChange = false;
+					len = 0;
+					debug_NSLog(@"at change");
+				}
+			}
+			[self drawTextureCurrent:true withAlpha:alpha withColor:color];
+		}
+			break;
+		case STEP_CHANGE_IN:
+		{
+			
+		}
+			break;
+		case STEP_CHANGE_OUT:
+		{
+			
+		}
+			break;
+			
+		default:
+			break;
+	}
 	[self drawFps];
 }
 
