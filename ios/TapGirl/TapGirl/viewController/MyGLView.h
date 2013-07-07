@@ -13,6 +13,8 @@
 // 描画
 -(void)drawMain;
 -(NSString*)buildShader;
+-(BOOL)loadShaders;
+
 
 @property(assign, nonatomic) float touchLength;
 

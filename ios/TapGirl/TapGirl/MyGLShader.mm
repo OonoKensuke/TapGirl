@@ -38,7 +38,9 @@ enum UniformLocation {
 		"	gl_Position = u_matrix * vec4(a_position, 0.0, 1.0);\n"
 		"	v_texCoord = a_texCoord;\n"
 		"}\n";
-		self.fragmentShader = @""
+		self.fragmentShader = nil;
+#if 0
+		@""
 		"precision mediump float;\n"
 		"varying vec2 v_texCoord;\n"
 		"uniform lowp vec4 u_color;\n"
@@ -88,8 +90,30 @@ enum UniformLocation {
 		"	gl_FragColor = texture2D(u_texture, v_texCoord) * u_alpha;\n"
 #endif
 		"}\n";
+#endif
 	}
 	return self;
+}
+//シェーダーをロード
+-(BOOL)loadFragShader:(FRAG_SHADER)frgShader
+{
+	BOOL result = false;
+	@try {
+		const char *shaders[] = {
+			"shader_normal",
+		};
+		NSString* nameFile = [NSString stringWithFormat:@"%s", shaders[(int)frgShader]];
+		NSString* fCodePath = [[NSBundle mainBundle] pathForResource:nameFile ofType:@"txt"];
+		self.fragmentShader = [[NSString alloc] initWithContentsOfFile:fCodePath
+															  encoding:NSUTF8StringEncoding
+																 error:nil];
+		result = true;
+	}
+	@catch (NSException *exception) {
+		NSLog(@"%@", [exception reason]);
+		assert(false);
+	}
+	return result;
 }
 
 

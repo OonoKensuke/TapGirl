@@ -9,7 +9,13 @@
 #import "IGLShader.h"
 #import "IGLImage.h"
 
+enum FRAG_SHADER {
+	FRSH_NORMAL = 0,
+	};
+
 @interface MyGLShader : IGLShader
+//シェーダーをロード
+-(BOOL)loadFragShader:(FRAG_SHADER)frgShader;
 //ビルド
 -(NSString*)build;
 //描画

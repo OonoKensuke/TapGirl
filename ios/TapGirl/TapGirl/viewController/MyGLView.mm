@@ -41,6 +41,8 @@
 @property(strong, nonatomic) IGLImage* picture;
 // シェーダー
 @property(strong, nonatomic) MyGLShader* shader;
+//
+@property(strong, nonatomic) NSMutableArray* arrayShader;
 @end
 
 
@@ -48,6 +50,7 @@
 @synthesize shader = _shader;
 @synthesize picture = _picture;
 @synthesize touchLength = _touchLength;
+@synthesize arrayShader = _arrayShader;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -77,6 +80,13 @@
 {
 	NSString *error = [self.shader build];
 	return error;
+}
+
+-(BOOL)loadShaders
+{
+	BOOL result = false;
+	result = [self.shader loadFragShader:FRSH_NORMAL];
+	return result;
 }
 
 
