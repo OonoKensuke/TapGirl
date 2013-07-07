@@ -101,6 +101,7 @@ enum UniformLocation {
 	@try {
 		const char *shaders[] = {
 			"shader_normal",
+			"shader_fade",
 		};
 		NSString* nameFile = [NSString stringWithFormat:@"%s", shaders[(int)frgShader]];
 		NSString* fCodePath = [[NSBundle mainBundle] pathForResource:nameFile ofType:@"txt"];

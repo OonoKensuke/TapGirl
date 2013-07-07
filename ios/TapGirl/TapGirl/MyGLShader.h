@@ -11,6 +11,9 @@
 
 enum FRAG_SHADER {
 	FRSH_NORMAL = 0,
+	FRSH_FADE,
+	
+	FRSH_MAX,
 	};
 
 @interface MyGLShader : IGLShader

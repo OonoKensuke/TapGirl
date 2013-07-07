@@ -40,14 +40,14 @@
 // メインテクスチャ
 @property(strong, nonatomic) IGLImage* picture;
 // シェーダー
-@property(strong, nonatomic) MyGLShader* shader;
+//@property(strong, nonatomic) MyGLShader* shader;
 //
 @property(strong, nonatomic) NSMutableArray* arrayShader;
 @end
 
 
 @implementation MyGLView
-@synthesize shader = _shader;
+//@synthesize shader = _shader;
 @synthesize picture = _picture;
 @synthesize touchLength = _touchLength;
 @synthesize arrayShader = _arrayShader;
@@ -67,7 +67,14 @@
 	NSLog(@"%s", __PRETTY_FUNCTION__);
     self = [super initWithCoder:coder];
     if (self) {
-		self.shader = [[MyGLShader alloc] init];
+		//self.shader = [[MyGLShader alloc] init];
+		self.arrayShader = [[NSMutableArray alloc] init];
+		{
+			for (int index = 0; index < (int)FRSH_MAX; index++) {
+				MyGLShader *shader = [[MyGLShader alloc] init];
+				[self.arrayShader addObject:shader];
+			}
+		}
 		UIImage *img = [UIImage imageNamed:@"hiroin1_texture.jpg"];
 		self.picture = [[IGLImage alloc] initWithUIImage:img];
 		self.touchLength = 0.0f;
@@ -75,17 +82,40 @@
     }
     return self;
 }
+
+- (void)dealloc
+{
+	[self.arrayShader release];
+	[super dealloc];
+}
 #pragma mark -public Method
 -(NSString*)buildShader
 {
-	NSString *error = [self.shader build];
+	NSString *error = nil;
+	for (int index = 0; index < (int)FRSH_MAX; index++) {
+		MyGLShader* shader = [self.arrayShader objectAtIndex:(FRAG_SHADER)index];
+		error = [shader build];
+		if (error != nil) {
+			break;
+		}
+	}
 	return error;
 }
 
 -(BOOL)loadShaders
 {
 	BOOL result = false;
-	result = [self.shader loadFragShader:FRSH_NORMAL];
+	@try {
+		for (int index = 0; index < (int)FRSH_MAX; index++) {
+			MyGLShader* shader = [self.arrayShader objectAtIndex:index];
+			BOOL tmpResult = [shader loadFragShader:(FRAG_SHADER)index];
+			assert(tmpResult);
+		}
+		result = true;
+		
+	}
+	@catch (NSException *exception) {
+	}
 	return result;
 }
 
@@ -140,7 +170,8 @@
 	texCoords[1] = CVec2D(u,0);
 	texCoords[2] = CVec2D(0,v);
 	texCoords[3] = CVec2D(u,v);
-	[self.shader drawArraysMy:GL_TRIANGLE_STRIP positions:(float*)positions
+	MyGLShader* shader = [self.arrayShader objectAtIndex:(int)FRSH_NORMAL];
+	[shader drawArraysMy:GL_TRIANGLE_STRIP positions:(float*)positions
 					  glImage:self.picture texCoords:(float*)texCoords count:4
 						color:color alpha:alpha];
 	[self drawFps];
