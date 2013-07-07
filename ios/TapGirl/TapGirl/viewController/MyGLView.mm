@@ -27,15 +27,21 @@
 //目標タッチ距離（cm）
 #define _OBJECTIVE_LENGTH 1000
 
-
-// プライベート
-@interface MyGLView() {
+typedef struct {
 	// 位置
 	CVec2D positions[4];
 	// テクスチャ座用
 	CVec2D texCoords[4];
+}_PRIMITIVE;
+
+
+// プライベート
+@interface MyGLView() {
 	//タッチ距離を測るための座標
 	CGPoint _posTouch;
+	
+	_PRIMITIVE _primCurrent;
+	_PRIMITIVE _primNext;
 }
 // メインテクスチャ
 //@property(strong, nonatomic) IGLImage* picture;
@@ -146,7 +152,7 @@
 	return result;
 }
 
-
+#pragma mark -draw
 // 描画
 -(void)drawMain {
 	//NSLog(@"%s", __PRETTY_FUNCTION__);
@@ -163,6 +169,19 @@
 	 positions[2] = Vector(0, w);
 	 positions[3] = Vector(w, w);
 	 */
+	[self drawTextureCurrent:true withAlpha:alpha withColor:color];
+	[self drawFps];
+}
+
+- (void)drawTextureCurrent:(BOOL)isCurrent withAlpha:(float)alpha withColor:(CColor&)color
+{
+	_PRIMITIVE *prim = nil;
+	if (isCurrent) {
+		prim = &_primCurrent;
+	}
+	else {
+		prim = &_primNext;
+	}
 	float drawWidth = _GR_WIDTH;
 	float drawHeight = _GR_HEIGHT;
 	// テクスチャ座標
@@ -188,21 +207,22 @@
 			drawHeight *= ratioW;
 		}
 	}
-	
-	positions[0] = CVec2D(0, 0);
-	positions[1] = CVec2D(drawWidth, 0);
-	positions[2] = CVec2D(0, drawHeight);
-	positions[3] = CVec2D(drawWidth, drawHeight);
-	texCoords[0] = CVec2D(0,0);
-	texCoords[1] = CVec2D(u,0);
-	texCoords[2] = CVec2D(0,v);
-	texCoords[3] = CVec2D(u,v);
+	assert(prim != nil);
+	prim->positions[0] = CVec2D(0, 0);
+	prim->positions[1] = CVec2D(drawWidth, 0);
+	prim->positions[2] = CVec2D(0, drawHeight);
+	prim->positions[3] = CVec2D(drawWidth, drawHeight);
+	prim->texCoords[0] = CVec2D(0,0);
+	prim->texCoords[1] = CVec2D(u,0);
+	prim->texCoords[2] = CVec2D(0,v);
+	prim->texCoords[3] = CVec2D(u,v);
 	MyGLShader* shader = [self.arrayShader objectAtIndex:(int)FRSH_NORMAL];
-	[shader drawArraysMy:GL_TRIANGLE_STRIP positions:(float*)positions
-					  glImage:self.textureCurrent texCoords:(float*)texCoords count:4
-						color:color alpha:alpha];
-	[self drawFps];
+	[shader drawArraysMy:GL_TRIANGLE_STRIP positions:(float*)(prim->positions)
+				 glImage:self.textureCurrent texCoords:(float*)(prim->texCoords) count:4
+				   color:color alpha:alpha];
+	
 }
+
 #pragma mark -Game Method
 - (void)clearPosTouch
 {
