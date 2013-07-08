@@ -1,0 +1,12 @@
+precision mediump float;
+varying vec2 v_texCoord;
+uniform lowp vec4 u_color;
+uniform lowp float u_alpha;
+uniform sampler2D u_texture;
+void main(){
+	vec4 col = texture2D(u_texture, v_texCoord);
+	float red = (u_color.r * u_alpha) + (col.r * (1.0 - u_alpha));
+	float green = (u_color.g * u_alpha) + (col.g * (1.0 - u_alpha));
+	float blue = (u_color.b * u_alpha) + (col.b * (1.0 - u_alpha));
+	gl_FragColor = vec4(red,green,blue,1);
+}

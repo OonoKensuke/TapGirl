@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8A0A09881786E48F0043678E /* MyGLViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A0A098A1786E48F0043678E /* MyGLViewController.xib */; };
+		8A0DB695178AA17500191C35 /* shader_color_fade.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8A0DB694178AA17500191C35 /* shader_color_fade.txt */; };
 		8A4E022A17856CAF00D3F403 /* CColor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8A4E022817856CAF00D3F403 /* CColor.mm */; };
 		8A4E022D1785711E00D3F403 /* IGL.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8A4E022C1785711E00D3F403 /* IGL.mm */; };
 		8A4E022F1785723400D3F403 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A4E022E1785723400D3F403 /* QuartzCore.framework */; };
@@ -60,6 +61,7 @@
 		8A0A09871786E4730043678E /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8A0A09891786E48F0043678E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MyGLViewController.xib; sourceTree = "<group>"; };
 		8A0A098B1786E4950043678E /* ja */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ja; path = ja.lproj/MyGLViewController.xib; sourceTree = "<group>"; };
+		8A0DB694178AA17500191C35 /* shader_color_fade.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = shader_color_fade.txt; path = resource/src/shader_color_fade.txt; sourceTree = "<group>"; };
 		8A4E022817856CAF00D3F403 /* CColor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CColor.mm; path = lib/CColor.mm; sourceTree = "<group>"; };
 		8A4E022917856CAF00D3F403 /* CColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CColor.h; path = lib/CColor.h; sourceTree = "<group>"; };
 		8A4E022B1785711E00D3F403 /* IGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IGL.h; path = lib/IGL.h; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 		8A8956C117891FE300DBE095 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				8A0DB694178AA17500191C35 /* shader_color_fade.txt */,
 				8A8956C41789271F00DBE095 /* shader_fade.txt */,
 				8A8956C217891FF500DBE095 /* shader_normal.txt */,
 			);
@@ -409,6 +412,7 @@
 				8AE2607017882DBC008FFA86 /* image03.jpg in Resources */,
 				8A8956C317891FF500DBE095 /* shader_normal.txt in Resources */,
 				8A8956C51789271F00DBE095 /* shader_fade.txt in Resources */,
+				8A0DB695178AA17500191C35 /* shader_color_fade.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
