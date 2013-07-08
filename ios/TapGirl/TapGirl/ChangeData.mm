@@ -50,7 +50,7 @@ const static CHANGE_PARAM s_ChangeParams[] = {
 		//切り替えるイメージの番号
 		3,
 		//切り替える時のSE
-		1,
+		2,
 		//シェーダー
 		FRSH_FADE_COLOR,
 		//切り替え処理前半の時間（単位は秒）
@@ -64,7 +64,7 @@ const static CHANGE_PARAM s_ChangeParams[] = {
 		//切り替えるイメージの番号
 		1,
 		//切り替える時のSE
-		1,
+		3,
 		//シェーダー
 		FRSH_FADE_COLOR,
 		//切り替え処理前半の時間（単位は秒）
@@ -78,7 +78,7 @@ const static CHANGE_PARAM s_ChangeParams[] = {
 		//切り替えるイメージの番号
 		3,
 		//切り替える時のSE
-		1,
+		4,
 		//シェーダー
 		FRSH_FADE_COLOR,
 		//切り替え処理前半の時間（単位は秒）
@@ -153,6 +153,17 @@ const static CHANGE_PARAM s_ChangeParams[] = {
 {
 	return &s_ChangeParams[self.indexOfData];
 }
+
+- (int)getNextIndexOfSE
+{
+	int result = 0;
+	if (self.indexOfData < (self.countData - 1)) {
+		result = s_ChangeParams[self.indexOfData + 1].indexSE;
+	}
+	
+	return result;
+}
+
 #pragma mark -property method
 - (float)objectiveLength
 {

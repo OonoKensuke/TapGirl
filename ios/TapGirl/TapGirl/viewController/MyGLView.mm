@@ -14,6 +14,8 @@
 #import "CVec2D.h"
 #import "IGLKit.h"
 #import "ChangeData.h"
+#import <AudioToolbox/AudioToolbox.h>
+#import <AVFoundation/AVFoundation.h>
 
 #define _GR_WIDTH 603
 #define _GR_HEIGHT 820
@@ -44,6 +46,8 @@ typedef enum  {
 	STEP_CHANGE_IN,
 	//画像変更後半
 	STEP_CHANGE_OUT,
+	//音声終了待ち
+	STEP_WAIT_SE_END,
 }_STEP;
 
 typedef struct {
@@ -60,8 +64,10 @@ typedef struct {
 	
 	_PRIMITIVE _primCurrent;
 	_PRIMITIVE _primNext;
-	
+	//切り替え処理のワークエリア
 	_CHANGE_WORK _changeWork;
+	//切り替えのSEを鳴らすプレイヤー
+	AVAudioPlayer* _player;
 }
 // メインテクスチャ
 //@property(strong, nonatomic) IGLImage* picture;
@@ -116,6 +122,7 @@ typedef struct {
 		self.changeData = [[ChangeData alloc] initWithTouchLength:self.touchLength];
 		const CHANGE_PARAM *pChangeParam = [self.changeData getChangeParam];
 		[self loadTextureFromIndex:pChangeParam->indexImage toCurrent:true];
+		_player = nil;
 		self.step = STEP_INIT;
     }
     return self;
@@ -206,6 +213,13 @@ typedef struct {
 		{
 			float processedLenght = self.changeData.objectiveLength - self.changeData.restLength;
 			float restTemp = self.touchLength - processedLenght;
+			//いきなりSEを読むと音が途切れる可能性があるので、前もって読んでおく
+			if (_player == nil) {
+				int indexSE = [self.changeData getNextIndexOfSE];
+				if (indexSE > 0) {
+					[self loadAudioByIndex:indexSE];
+				}
+			}
 			if (restTemp > _NEAR0) {
 				[self.changeData requestAddTouchLength:restTemp];
 				if (self.changeData.isChange) {
@@ -218,6 +232,9 @@ typedef struct {
 					[self loadTextureFromIndex:_changeWork.pChangeParam->indexImage
 									 toCurrent:false];
 					self.step = STEP_CHANGE_IN;
+					//
+					_player.numberOfLoops = 0;
+					[_player play];
 				}
 			}
 			[self drawTextureCurrent:true withAlpha:alpha withColor:color withShader:FRSH_NORMAL];
@@ -274,13 +291,27 @@ typedef struct {
 						withShader:_changeWork.pChangeParam->shader];
 			
 			if (bChangeStep) {
-				self.step = STEP_NORMAL;
+				self.step = STEP_WAIT_SE_END;
+				_changeWork.timeBegin = time;
 				debug_NSLog(@"rc:%d", [self.textureCurrent retainCount]);
 				[self.textureCurrent release];
 				self.textureCurrent = self.textureNext;
 				self.textureNext = nil;
 			}
 			
+		}
+			break;
+			//音声終了待ち
+		case STEP_WAIT_SE_END:
+		{
+			//double pathTime = time - _changeWork.timeBegin;
+			//debug_NSLog(@"wait se end %f", pathTime);
+			if (!_player.isPlaying) {
+				[_player release];
+				_player = nil;
+				self.step = STEP_NORMAL;
+			}
+			[self drawTextureCurrent:true withAlpha:alpha withColor:color withShader:FRSH_NORMAL];
 		}
 			break;
 			
@@ -341,6 +372,15 @@ typedef struct {
 				 glImage:texture texCoords:(float*)(prim->texCoords) count:4
 				   color:color alpha:alpha];
 	
+}
+#pragma mark -Audio
+- (void)loadAudioByIndex:(int)indexSE
+{
+	NSString *fileName = [NSString stringWithFormat:@"%02d", indexSE];
+	NSString *path = [[NSBundle mainBundle] pathForResource:fileName ofType:@"wav"];
+	NSURL *url = [NSURL fileURLWithPath:path];
+	_player = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
+	[_player prepareToPlay];
 }
 
 #pragma mark -Game Method

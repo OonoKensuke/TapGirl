@@ -34,5 +34,6 @@ typedef struct {
 - (id)initWithTouchLength:(float)length;
 - (float)requestAddTouchLength:(float)length;
 - (const CHANGE_PARAM*)getChangeParam;
+- (int)getNextIndexOfSE;
 
 @end
