@@ -96,6 +96,8 @@ const static CHANGE_PARAM s_ChangeParams[] = {
 @property (assign, readonly, nonatomic) int countData;
 @end
 
+static ChangeData *s_Instance = nil;
+
 @implementation ChangeData
 @synthesize indexOfData = _indexOfData;
 @synthesize restLength = _restLength;
@@ -118,6 +120,7 @@ const static CHANGE_PARAM s_ChangeParams[] = {
 			restLength = [self requestAddTouchLength:restLength];
 		}
 		self.isChange = false;
+		s_Instance = self;
 	}
 	return self;
 }
@@ -125,6 +128,7 @@ const static CHANGE_PARAM s_ChangeParams[] = {
 - (void)dealloc
 {
 	NSLog(@"%s", __PRETTY_FUNCTION__);
+	s_Instance = nil;
 	[super dealloc];
 }
 - (float)requestAddTouchLength:(float)length
@@ -174,7 +178,11 @@ const static CHANGE_PARAM s_ChangeParams[] = {
 {
 	_isChange = isChange;
 }
-
+#pragma mark -class method
++ (ChangeData*)getInstance
+{
+	return s_Instance;
+}
 
 
 @end

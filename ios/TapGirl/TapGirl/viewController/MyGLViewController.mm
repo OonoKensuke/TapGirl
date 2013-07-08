@@ -8,6 +8,7 @@
 
 #import "MyGLViewController.h"
 #import "IGLKit.h"
+#import "ChangeData.h"
 
 @interface MyGLViewController ()
 @property(strong, nonatomic) NSString* fshSource;
@@ -56,6 +57,10 @@ static MyGLViewController* s_Instance = nil;
 	if (error != nil) {
 		debug_NSLog(@"%@", error);
 	}
+	ChangeData* changeData = [ChangeData getInstance];
+	const CHANGE_PARAM *pParam = [changeData getChangeParam];
+	int lenInit = (int)(pParam->restLength);
+	self.countLabel.text = [NSString stringWithFormat:@"%d", lenInit];
 }
 
 - (void)viewDidAppear:(BOOL)animated
