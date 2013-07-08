@@ -44,6 +44,7 @@
 
 // 破棄
 -(void)dealloc {
+	//debug_NSLog(@"%s", __PRETTY_FUNCTION__);
 	[self deleteBuffer];
 	[super dealloc];
 }
@@ -52,6 +53,7 @@
 // バッファ削除
 -(void)deleteBuffer {
 	if(self.textureId){
+		debug_NSLog(@"texuture id %d を解放します", _textureId);
 		glDeleteTextures(1, &_textureId);CHECK_GL_ERROR();
 		self.textureId = 0;
 	}
@@ -102,6 +104,7 @@
 // テクスチャ作成
 -(void)createTexture:(unsigned char*)data mipmap:(BOOL)createMipmap {
 	glGenTextures(1, &_textureId);CHECK_GL_ERROR();	//テクスチャ作成
+	debug_NSLog(@"texuture id %d を確保しました", _textureId);
 	glBindTexture(GL_TEXTURE_2D, self.textureId);CHECK_GL_ERROR();	//テクスチャのバインド
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, self.width, self.height, 0, GL_RGBA,

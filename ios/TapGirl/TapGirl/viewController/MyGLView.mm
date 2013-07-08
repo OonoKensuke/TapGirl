@@ -46,6 +46,12 @@ typedef enum  {
 	STEP_CHANGE_OUT,
 }_STEP;
 
+typedef struct {
+	const CHANGE_PARAM *pChangeParam;
+	//変更処理が開始される時刻（実際には１フレーム前）
+	double timeBegin;
+}_CHANGE_WORK;
+
 
 // プライベート
 @interface MyGLView() {
@@ -54,6 +60,8 @@ typedef enum  {
 	
 	_PRIMITIVE _primCurrent;
 	_PRIMITIVE _primNext;
+	
+	_CHANGE_WORK _changeWork;
 }
 // メインテクスチャ
 //@property(strong, nonatomic) IGLImage* picture;
@@ -127,6 +135,7 @@ typedef enum  {
 	BOOL result = false;
 	@try {
 		NSString* nameFile = [NSString stringWithFormat:@"image%02d.jpg", index];
+		debug_NSLog(@"%@ をテクスチャとして読み込みます", nameFile);
 		NSString* strPath = [[NSBundle mainBundle] pathForResource:nameFile ofType:nil];
 		if ([[NSFileManager defaultManager] fileExistsAtPath:strPath]) {
 			UIImage *img = [UIImage imageNamed:nameFile];
@@ -189,7 +198,7 @@ typedef enum  {
 	switch (self.step) {
 		case STEP_INIT:
 		{
-			[self drawTextureCurrent:true withAlpha:alpha withColor:color];
+			[self drawTextureCurrent:true withAlpha:alpha withColor:color withShader:FRSH_NORMAL];
 			self.step = STEP_NORMAL;
 		}
 			break;
@@ -198,23 +207,77 @@ typedef enum  {
 			float processedLenght = self.changeData.objectiveLength - self.changeData.restLength;
 			float restTemp = self.touchLength - processedLenght;
 			if (restTemp > _NEAR0) {
-				float len = [self.changeData requestAddTouchLength:restTemp];
+				[self.changeData requestAddTouchLength:restTemp];
 				if (self.changeData.isChange) {
 					self.changeData.isChange = false;
-					len = 0;
-					debug_NSLog(@"at change");
+					memset(&_changeWork, 0, sizeof(_changeWork));
+					//アルファなどの変更に使う基準となる現在時刻
+					_changeWork.timeBegin = time;
+					//次のテクスチャを読み込む
+					_changeWork.pChangeParam = [self.changeData getChangeParam];
+					[self loadTextureFromIndex:_changeWork.pChangeParam->indexImage
+									 toCurrent:false];
+					self.step = STEP_CHANGE_IN;
 				}
 			}
-			[self drawTextureCurrent:true withAlpha:alpha withColor:color];
+			[self drawTextureCurrent:true withAlpha:alpha withColor:color withShader:FRSH_NORMAL];
 		}
 			break;
 		case STEP_CHANGE_IN:
 		{
+			//切り替える時間なのかのチェック
+			BOOL bChangeStep = false;
+			double timeDelta = time - _changeWork.timeBegin;
+			if (timeDelta >= _changeWork.pChangeParam->delayIn) {
+				bChangeStep = true;
+			}
+			float theta = (M_PI_2 * timeDelta) / _changeWork.pChangeParam->delayIn;
+			alpha = cosf(theta);
+			if (bChangeStep) {
+				//切り替え時点の値に修正
+				alpha = 0.0f;
+			}
+			//debug_NSLog(@"time : %1.3f, theta : %1.4f, alpha = %1.3f", timeDelta, theta, alpha);
+			[self drawTextureCurrent:true
+						   withAlpha:alpha
+						   withColor:color
+						  withShader:_changeWork.pChangeParam->shader];
+			//debug_NSLog(@"%f", timeDelta);
+			if (bChangeStep) {
+				self.step = STEP_CHANGE_OUT;
+				_changeWork.timeBegin = time;
+			}
 			
 		}
 			break;
 		case STEP_CHANGE_OUT:
 		{
+			//切り替える時間なのかのチェック
+			BOOL bChangeStep = false;
+			double timeDelta = time - _changeWork.timeBegin;
+			if (timeDelta >= _changeWork.pChangeParam->delayOut) {
+				bChangeStep = true;
+			}
+			
+			float theta = (M_PI_2 * timeDelta) / _changeWork.pChangeParam->delayOut;
+			alpha = sinf(theta);
+			if (bChangeStep) {
+				//切り替え時点の値に修正
+				alpha = 1.0f;
+			}
+			//debug_NSLog(@"time : %1.3f, theta : %1.4f, alpha = %1.3f", timeDelta, theta, alpha);
+			[self drawTextureCurrent:false
+						   withAlpha:alpha
+						   withColor:color
+						  withShader:_changeWork.pChangeParam->shader];
+			
+			if (bChangeStep) {
+				self.step = STEP_NORMAL;
+				debug_NSLog(@"rc:%d", [self.textureCurrent retainCount]);
+				[self.textureCurrent release];
+				self.textureCurrent = self.textureNext;
+				self.textureNext = nil;
+			}
 			
 		}
 			break;
@@ -225,7 +288,7 @@ typedef enum  {
 	[self drawFps];
 }
 
-- (void)drawTextureCurrent:(BOOL)isCurrent withAlpha:(float)alpha withColor:(CColor&)color
+- (void)drawTextureCurrent:(BOOL)isCurrent withAlpha:(float)alpha withColor:(CColor&)color withShader:(FRAG_SHADER)shaderType
 {
 	_PRIMITIVE *prim = nil;
 	IGLImage *texture = nil;
@@ -271,7 +334,7 @@ typedef enum  {
 	prim->texCoords[1] = CVec2D(u,0);
 	prim->texCoords[2] = CVec2D(0,v);
 	prim->texCoords[3] = CVec2D(u,v);
-	MyGLShader* shader = [self.arrayShader objectAtIndex:(int)FRSH_NORMAL];
+	MyGLShader* shader = [self.arrayShader objectAtIndex:(int)shaderType];
 	[shader drawArraysMy:GL_TRIANGLE_STRIP positions:(float*)(prim->positions)
 				 glImage:texture texCoords:(float*)(prim->texCoords) count:4
 				   color:color alpha:alpha];

@@ -17,10 +17,10 @@ typedef struct {
 	int indexSE;
 	//シェーダー
 	FRAG_SHADER shader;
-	//切り替え処理前半の時間（単位はミリ秒）
-	int delayIn;
-	//切り替え処理後半の時間（単位はミリ秒）
-	int delayOut;
+	//切り替え処理前半の時間（単位は秒）
+	float delayIn;
+	//切り替え処理後半の時間（単位は秒）
+	float delayOut;
 }CHANGE_PARAM;
 
 @interface ChangeData : NSObject
