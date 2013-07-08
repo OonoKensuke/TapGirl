@@ -232,11 +232,12 @@ typedef struct {
 				bChangeStep = true;
 			}
 			float theta = (M_PI_2 * timeDelta) / _changeWork.pChangeParam->delayIn;
-			alpha = cosf(theta);
+			alpha = sinf(theta);
 			if (bChangeStep) {
 				//切り替え時点の値に修正
-				alpha = 0.0f;
+				alpha = 1.0f;
 			}
+			color.setByInt(0, 0, 0, 255);
 			//debug_NSLog(@"time : %1.3f, theta : %1.4f, alpha = %1.3f", timeDelta, theta, alpha);
 			[self drawTextureCurrent:true
 						   withAlpha:alpha
@@ -260,16 +261,17 @@ typedef struct {
 			}
 			
 			float theta = (M_PI_2 * timeDelta) / _changeWork.pChangeParam->delayOut;
-			alpha = sinf(theta);
+			alpha = sinf(theta + M_PI_2);
 			if (bChangeStep) {
 				//切り替え時点の値に修正
-				alpha = 1.0f;
+				alpha = 0.0f;
 			}
+			color.setByInt(0, 0, 0, 255);
 			//debug_NSLog(@"time : %1.3f, theta : %1.4f, alpha = %1.3f", timeDelta, theta, alpha);
 			[self drawTextureCurrent:false
 						   withAlpha:alpha
 						   withColor:color
-						  withShader:_changeWork.pChangeParam->shader];
+						withShader:_changeWork.pChangeParam->shader];
 			
 			if (bChangeStep) {
 				self.step = STEP_NORMAL;

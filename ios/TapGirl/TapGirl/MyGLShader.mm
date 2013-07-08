@@ -102,12 +102,14 @@ enum UniformLocation {
 		const char *shaders[] = {
 			"shader_normal",
 			"shader_fade",
+			"shader_color_fade",
 		};
 		NSString* nameFile = [NSString stringWithFormat:@"%s", shaders[(int)frgShader]];
 		NSString* fCodePath = [[NSBundle mainBundle] pathForResource:nameFile ofType:@"txt"];
 		self.fragmentShader = [[NSString alloc] initWithContentsOfFile:fCodePath
 															  encoding:NSUTF8StringEncoding
 																 error:nil];
+		assert(self.fragmentShader != nil);
 		result = true;
 	}
 	@catch (NSException *exception) {

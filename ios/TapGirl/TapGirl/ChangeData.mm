@@ -19,15 +19,15 @@ const static CHANGE_PARAM s_ChangeParams[] = {
 		_INIT_LENGTH,
 		//切り替えるイメージの番号
 		1,
-		//初期データは、上記２つのみ有効
+		//*****初期データは、上記２つのみ有効*****
 		//切り替える時のSE
 		0,
 		//シェーダー
-		FRSH_FADE,
+		FRSH_FADE_COLOR,
 		//切り替え処理前半の時間（単位は秒）
 		1.0f,
 		//切り替え処理後半の時間（単位は秒）
-		0.5f,
+		0.1f,
 	},
 	//このあとは切り替えデータ
 	{
@@ -38,7 +38,7 @@ const static CHANGE_PARAM s_ChangeParams[] = {
 		//切り替える時のSE
 		1,
 		//シェーダー
-		FRSH_FADE,
+		FRSH_FADE_COLOR,
 		//切り替え処理前半の時間（単位は秒）
 		1.0f,
 		//切り替え処理後半の時間（単位は秒）
@@ -52,7 +52,7 @@ const static CHANGE_PARAM s_ChangeParams[] = {
 		//切り替える時のSE
 		1,
 		//シェーダー
-		FRSH_FADE,
+		FRSH_FADE_COLOR,
 		//切り替え処理前半の時間（単位は秒）
 		1.0f,
 		//切り替え処理後半の時間（単位は秒）
@@ -66,7 +66,7 @@ const static CHANGE_PARAM s_ChangeParams[] = {
 		//切り替える時のSE
 		1,
 		//シェーダー
-		FRSH_FADE,
+		FRSH_FADE_COLOR,
 		//切り替え処理前半の時間（単位は秒）
 		1.0f,
 		//切り替え処理後半の時間（単位は秒）
@@ -80,7 +80,7 @@ const static CHANGE_PARAM s_ChangeParams[] = {
 		//切り替える時のSE
 		1,
 		//シェーダー
-		FRSH_FADE,
+		FRSH_FADE_COLOR,
 		//切り替え処理前半の時間（単位は秒）
 		1.0f,
 		//切り替え処理後半の時間（単位は秒）

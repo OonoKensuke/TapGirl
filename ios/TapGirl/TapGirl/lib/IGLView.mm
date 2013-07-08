@@ -140,7 +140,7 @@
 	//NSLog(@"%s", __PRETTY_FUNCTION__);
 	[EAGLContext setCurrentContext:context];
 	glBindFramebuffer(GL_FRAMEBUFFER, defaultFramebuffer);CHECK_GL_ERROR();
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);CHECK_GL_ERROR();
+	glClearColor(0.0f, 1.0f, 0.0f, 1.0f);CHECK_GL_ERROR();
 	glClear(GL_COLOR_BUFFER_BIT);CHECK_GL_ERROR();
 	[self drawMain];
 	//[self drawFps];
