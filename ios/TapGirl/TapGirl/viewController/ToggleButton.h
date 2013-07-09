@@ -9,5 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface ToggleButton : UIButton
+{
+	
+}
+- (void)buttonPush:(id)sender;
 
 @end

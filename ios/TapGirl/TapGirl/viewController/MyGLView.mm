@@ -234,7 +234,9 @@ typedef struct {
 					self.step = STEP_CHANGE_IN;
 					//
 					_player.numberOfLoops = 0;
-					[_player play];
+					if (![MyGLViewController getInstance].btnToggleSound.highlighted) {
+						[_player play];
+					}
 				}
 			}
 			[self drawTextureCurrent:true withAlpha:alpha withColor:color withShader:FRSH_NORMAL];

@@ -97,6 +97,15 @@ static MyGLViewController* s_Instance = nil;
 - (IBAction)onPushButton:(id)sender
 {
 	debug_NSLog(@"%s", __PRETTY_FUNCTION__);
+	if (sender == self.btnToggleSound) {
+		[self.btnToggleSound buttonPush:sender];
+		if (self.btnToggleSound.highlighted) {
+			debug_NSLog(@"sound off");
+		}
+		else {
+			debug_NSLog(@"sound on");
+		}
+	}
 }
 
 @end
