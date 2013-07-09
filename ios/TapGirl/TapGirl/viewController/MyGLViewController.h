@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MyGLView.h"
+#import "ToggleButton.h"
 
 @interface MyGLViewController : UIViewController
 {
@@ -15,6 +16,9 @@
 }
 @property (retain, nonatomic) IBOutlet MyGLView *glView;
 @property (retain, nonatomic) IBOutlet UILabel *countLabel;
+@property (retain, nonatomic) IBOutlet ToggleButton *btnToggleSound;
 
 +(MyGLViewController*) getInstance;
+- (IBAction)onPushButton:(id)sender;
+
 @end

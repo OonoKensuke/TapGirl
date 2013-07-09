@@ -82,13 +82,21 @@ static MyGLViewController* s_Instance = nil;
 	[_glView release];
     [_countLabel release];
 	s_Instance = nil;
+    [_btnToggleSound release];
 	[super dealloc];
 }
 - (void)viewDidUnload {
 	debug_NSLog(@"%s", __PRETTY_FUNCTION__);
 	[self setGlView:nil];
     [self setCountLabel:nil];
+    [self setBtnToggleSound:nil];
 	[super viewDidUnload];
 	self.glView = nil;
 }
+
+- (IBAction)onPushButton:(id)sender
+{
+	debug_NSLog(@"%s", __PRETTY_FUNCTION__);
+}
+
 @end
