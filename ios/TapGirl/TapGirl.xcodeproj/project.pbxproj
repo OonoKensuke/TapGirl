@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		8A0A09881786E48F0043678E /* MyGLViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A0A098A1786E48F0043678E /* MyGLViewController.xib */; };
 		8A0DB695178AA17500191C35 /* shader_color_fade.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8A0DB694178AA17500191C35 /* shader_color_fade.txt */; };
+		8A29A854178BE9820004F074 /* ToggleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A29A853178BE9820004F074 /* ToggleButton.m */; };
+		8A29A857178BEBC40004F074 /* sound_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A29A855178BEBC40004F074 /* sound_off.png */; };
+		8A29A858178BEBC40004F074 /* sound_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A29A856178BEBC40004F074 /* sound_on.png */; };
 		8A4E022A17856CAF00D3F403 /* CColor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8A4E022817856CAF00D3F403 /* CColor.mm */; };
 		8A4E022D1785711E00D3F403 /* IGL.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8A4E022C1785711E00D3F403 /* IGL.mm */; };
 		8A4E022F1785723400D3F403 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A4E022E1785723400D3F403 /* QuartzCore.framework */; };
@@ -62,6 +65,10 @@
 		8A0A09891786E48F0043678E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MyGLViewController.xib; sourceTree = "<group>"; };
 		8A0A098B1786E4950043678E /* ja */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ja; path = ja.lproj/MyGLViewController.xib; sourceTree = "<group>"; };
 		8A0DB694178AA17500191C35 /* shader_color_fade.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = shader_color_fade.txt; path = resource/src/shader_color_fade.txt; sourceTree = "<group>"; };
+		8A29A852178BE9820004F074 /* ToggleButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ToggleButton.h; path = viewController/ToggleButton.h; sourceTree = "<group>"; };
+		8A29A853178BE9820004F074 /* ToggleButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ToggleButton.m; path = viewController/ToggleButton.m; sourceTree = "<group>"; };
+		8A29A855178BEBC40004F074 /* sound_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sound_off.png; sourceTree = "<group>"; };
+		8A29A856178BEBC40004F074 /* sound_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sound_on.png; sourceTree = "<group>"; };
 		8A4E022817856CAF00D3F403 /* CColor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CColor.mm; path = lib/CColor.mm; sourceTree = "<group>"; };
 		8A4E022917856CAF00D3F403 /* CColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CColor.h; path = lib/CColor.h; sourceTree = "<group>"; };
 		8A4E022B1785711E00D3F403 /* IGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IGL.h; path = lib/IGL.h; sourceTree = "<group>"; };
@@ -261,6 +268,8 @@
 				8A0A098A1786E48F0043678E /* MyGLViewController.xib */,
 				8A4E023C178579F200D3F403 /* MyGLView.h */,
 				8A4E023D178579F200D3F403 /* MyGLView.mm */,
+				8A29A852178BE9820004F074 /* ToggleButton.h */,
+				8A29A853178BE9820004F074 /* ToggleButton.m */,
 			);
 			name = ViewAndViewController;
 			sourceTree = "<group>";
@@ -296,6 +305,8 @@
 		8AD7115E178434E80010DBB9 /* buttons */ = {
 			isa = PBXGroup;
 			children = (
+				8A29A855178BEBC40004F074 /* sound_off.png */,
+				8A29A856178BEBC40004F074 /* sound_on.png */,
 				8AD7115F178434E80010DBB9 /* facebook1.png */,
 				8AD71160178434E80010DBB9 /* twitter1.png */,
 			);
@@ -413,6 +424,8 @@
 				8A8956C317891FF500DBE095 /* shader_normal.txt in Resources */,
 				8A8956C51789271F00DBE095 /* shader_fade.txt in Resources */,
 				8A0DB695178AA17500191C35 /* shader_color_fade.txt in Resources */,
+				8A29A857178BEBC40004F074 /* sound_off.png in Resources */,
+				8A29A858178BEBC40004F074 /* sound_on.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -451,6 +464,7 @@
 				8A4E023E178579F200D3F403 /* MyGLView.mm in Sources */,
 				8A4E024117857A3D00D3F403 /* MyGLShader.mm in Sources */,
 				8A8956C81789537500DBE095 /* ChangeData.mm in Sources */,
+				8A29A854178BE9820004F074 /* ToggleButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
