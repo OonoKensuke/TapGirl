@@ -17,8 +17,6 @@
 #import <AudioToolbox/AudioToolbox.h>
 #import <AVFoundation/AVFoundation.h>
 
-#define _GR_WIDTH 603
-#define _GR_HEIGHT 820
 //iphone(非RetinaのPPI　タッチ座標はRetinaでもこの値)
 #define _PPI	163
 //１インチ＝2.54cm
@@ -350,6 +348,38 @@ typedef struct {
 	[self drawFps];
 }
 
+- (float)getDrawWidth
+{
+	float result = 0.0f;
+	const int indexOfTex = [self getIndexOfTexSize];
+	float width[] = {
+		0.0f,
+		320.0f,
+		640.0f,
+		640.0f,
+	};
+	assert(indexOfTex > 0);
+	assert(indexOfTex < (sizeof(width)/ sizeof(width[0])));
+	result = width[indexOfTex];
+	return result;
+}
+
+- (float)getDrawHeight
+{
+	float result = 0.0f;
+	const int indexOfTex = [self getIndexOfTexSize];
+	float height[] = {
+		0.0f,
+		480.0f - 50.0f,
+		960.0f - 100.0f,
+		1136.0f - 100.0f,
+	};
+	assert(indexOfTex > 0);
+	assert(indexOfTex < (sizeof(height)/ sizeof(height[0])));
+	result = height[indexOfTex];
+	return result;
+}
+
 - (void)drawTextureCurrent:(BOOL)isCurrent withAlpha:(float)alpha withColor:(CColor&)color withShader:(FRAG_SHADER)shaderType
 {
 	_PRIMITIVE *prim = nil;
@@ -362,11 +392,11 @@ typedef struct {
 		prim = &_primNext;
 		texture = self.textureNext;
 	}
-	float drawWidth = _GR_WIDTH;
-	float drawHeight = _GR_HEIGHT;
+	float drawWidth = [self getDrawWidth];
+	float drawHeight = [self getDrawHeight];
 	// テクスチャ座標
-	float u = (float)_GR_WIDTH / (float)texture.width;
-	float v = (float)_GR_HEIGHT / (float)texture.height;
+	float u = drawWidth / (float)texture.width;
+	float v = drawHeight / (float)texture.height;
 	
 	BOOL bResize = false;
 	if (drawWidth > self.width) {
