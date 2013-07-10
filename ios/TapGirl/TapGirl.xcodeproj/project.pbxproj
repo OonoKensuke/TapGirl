@@ -34,6 +34,8 @@
 		8A8956C317891FF500DBE095 /* shader_normal.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8A8956C217891FF500DBE095 /* shader_normal.txt */; };
 		8A8956C51789271F00DBE095 /* shader_fade.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8A8956C41789271F00DBE095 /* shader_fade.txt */; };
 		8A8956C81789537500DBE095 /* ChangeData.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8A8956C71789537500DBE095 /* ChangeData.mm */; };
+		8AD27DA5178D6099008819B8 /* MoreGamesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AD27DA3178D6099008819B8 /* MoreGamesViewController.m */; };
+		8AD27DA6178D6099008819B8 /* MoreGamesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8AD27DA4178D6099008819B8 /* MoreGamesViewController.xib */; };
 		8AD7111B17841DBC0010DBB9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AD7111A17841DBC0010DBB9 /* UIKit.framework */; };
 		8AD7111D17841DBC0010DBB9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AD7111C17841DBC0010DBB9 /* Foundation.framework */; };
 		8AD7111F17841DBC0010DBB9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AD7111E17841DBC0010DBB9 /* CoreGraphics.framework */; };
@@ -107,6 +109,9 @@
 		8A8956C41789271F00DBE095 /* shader_fade.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = shader_fade.txt; path = resource/src/shader_fade.txt; sourceTree = "<group>"; };
 		8A8956C61789537500DBE095 /* ChangeData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeData.h; sourceTree = "<group>"; };
 		8A8956C71789537500DBE095 /* ChangeData.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ChangeData.mm; sourceTree = "<group>"; };
+		8AD27DA2178D6099008819B8 /* MoreGamesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MoreGamesViewController.h; path = viewController/MoreGamesViewController.h; sourceTree = "<group>"; };
+		8AD27DA3178D6099008819B8 /* MoreGamesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MoreGamesViewController.m; path = viewController/MoreGamesViewController.m; sourceTree = "<group>"; };
+		8AD27DA4178D6099008819B8 /* MoreGamesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MoreGamesViewController.xib; path = viewController/MoreGamesViewController.xib; sourceTree = "<group>"; };
 		8AD7111717841DBC0010DBB9 /* TapGirl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TapGirl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8AD7111A17841DBC0010DBB9 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		8AD7111C17841DBC0010DBB9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -285,6 +290,9 @@
 				8A4E023D178579F200D3F403 /* MyGLView.mm */,
 				8A29A852178BE9820004F074 /* ToggleButton.h */,
 				8A29A853178BE9820004F074 /* ToggleButton.m */,
+				8AD27DA2178D6099008819B8 /* MoreGamesViewController.h */,
+				8AD27DA3178D6099008819B8 /* MoreGamesViewController.m */,
+				8AD27DA4178D6099008819B8 /* MoreGamesViewController.xib */,
 			);
 			name = ViewAndViewController;
 			sourceTree = "<group>";
@@ -446,6 +454,7 @@
 				8A817EE0178D4A9600E6F5D8 /* image03_01.jpg in Resources */,
 				8A817EE1178D4A9600E6F5D8 /* image03_02.jpg in Resources */,
 				8A817EE2178D4A9600E6F5D8 /* image03_03.jpg in Resources */,
+				8AD27DA6178D6099008819B8 /* MoreGamesViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -485,6 +494,7 @@
 				8A4E024117857A3D00D3F403 /* MyGLShader.mm in Sources */,
 				8A8956C81789537500DBE095 /* ChangeData.mm in Sources */,
 				8A29A854178BE9820004F074 /* ToggleButton.m in Sources */,
+				8AD27DA5178D6099008819B8 /* MoreGamesViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
