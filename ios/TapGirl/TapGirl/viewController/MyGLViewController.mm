@@ -66,6 +66,13 @@ static MyGLViewController* s_Instance = nil;
 	self.countLabel.text = [NSString stringWithFormat:@"%d", lenInit];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+	debug_NSLog(@"%s", __PRETTY_FUNCTION__);
+	[super viewWillDisappear:animated];
+	[self.glView stopAnimation];
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
 	debug_NSLog(@"%s", __PRETTY_FUNCTION__);
