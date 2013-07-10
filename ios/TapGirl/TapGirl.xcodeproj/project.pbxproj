@@ -36,6 +36,7 @@
 		8A8956C81789537500DBE095 /* ChangeData.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8A8956C71789537500DBE095 /* ChangeData.mm */; };
 		8AD27DA5178D6099008819B8 /* MoreGamesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AD27DA3178D6099008819B8 /* MoreGamesViewController.m */; };
 		8AD27DA6178D6099008819B8 /* MoreGamesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8AD27DA4178D6099008819B8 /* MoreGamesViewController.xib */; };
+		8AD27DA8178D643E008819B8 /* moreapps.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AD27DA7178D643E008819B8 /* moreapps.png */; };
 		8AD7111B17841DBC0010DBB9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AD7111A17841DBC0010DBB9 /* UIKit.framework */; };
 		8AD7111D17841DBC0010DBB9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AD7111C17841DBC0010DBB9 /* Foundation.framework */; };
 		8AD7111F17841DBC0010DBB9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AD7111E17841DBC0010DBB9 /* CoreGraphics.framework */; };
@@ -112,6 +113,7 @@
 		8AD27DA2178D6099008819B8 /* MoreGamesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MoreGamesViewController.h; path = viewController/MoreGamesViewController.h; sourceTree = "<group>"; };
 		8AD27DA3178D6099008819B8 /* MoreGamesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MoreGamesViewController.m; path = viewController/MoreGamesViewController.m; sourceTree = "<group>"; };
 		8AD27DA4178D6099008819B8 /* MoreGamesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MoreGamesViewController.xib; path = viewController/MoreGamesViewController.xib; sourceTree = "<group>"; };
+		8AD27DA7178D643E008819B8 /* moreapps.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = moreapps.png; sourceTree = "<group>"; };
 		8AD7111717841DBC0010DBB9 /* TapGirl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TapGirl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8AD7111A17841DBC0010DBB9 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		8AD7111C17841DBC0010DBB9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -328,6 +330,7 @@
 		8AD7115E178434E80010DBB9 /* buttons */ = {
 			isa = PBXGroup;
 			children = (
+				8AD27DA7178D643E008819B8 /* moreapps.png */,
 				8A29A855178BEBC40004F074 /* sound_off.png */,
 				8A29A856178BEBC40004F074 /* sound_on.png */,
 				8AD7115F178434E80010DBB9 /* facebook1.png */,
@@ -455,6 +458,7 @@
 				8A817EE1178D4A9600E6F5D8 /* image03_02.jpg in Resources */,
 				8A817EE2178D4A9600E6F5D8 /* image03_03.jpg in Resources */,
 				8AD27DA6178D6099008819B8 /* MoreGamesViewController.xib in Resources */,
+				8AD27DA8178D643E008819B8 /* moreapps.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
