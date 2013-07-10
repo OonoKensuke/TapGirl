@@ -31,6 +31,7 @@
 	NSURL *url = [NSURL URLWithString:strUrl];
 	NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
 	[self.webView loadRequest:requestObj];
+	[self.navigationController setNavigationBarHidden:false];
 }
 
 - (void)didReceiveMemoryWarning

@@ -17,6 +17,7 @@
 @property (retain, nonatomic) IBOutlet MyGLView *glView;
 @property (retain, nonatomic) IBOutlet UILabel *countLabel;
 @property (retain, nonatomic) IBOutlet ToggleButton *btnToggleSound;
+@property (retain, nonatomic) IBOutlet UIButton *btnMoreApps;
 
 +(MyGLViewController*) getInstance;
 - (IBAction)onPushButton:(id)sender;

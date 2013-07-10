@@ -9,6 +9,7 @@
 #import "MyGLViewController.h"
 #import "IGLKit.h"
 #import "ChangeData.h"
+#import "MoreGamesViewController.h"
 
 @interface MyGLViewController ()
 @property(strong, nonatomic) NSString* fshSource;
@@ -50,6 +51,8 @@ static MyGLViewController* s_Instance = nil;
 {
 	debug_NSLog(@"%s", __PRETTY_FUNCTION__);
 	[super viewWillAppear:animated];
+	//ナビゲーションバーは非表示。MoreGamesなどから返った時にもここを通る
+	[self.navigationController setNavigationBarHidden:true];
 	//self.glView.shader.fragmentShader = self.fshSource;
 	BOOL resultLoad = [self.glView loadShaders];
 	assert(resultLoad);
@@ -83,6 +86,7 @@ static MyGLViewController* s_Instance = nil;
     [_countLabel release];
 	s_Instance = nil;
     [_btnToggleSound release];
+    [_btnMoreApps release];
 	[super dealloc];
 }
 - (void)viewDidUnload {
@@ -90,6 +94,7 @@ static MyGLViewController* s_Instance = nil;
 	[self setGlView:nil];
     [self setCountLabel:nil];
     [self setBtnToggleSound:nil];
+    [self setBtnMoreApps:nil];
 	[super viewDidUnload];
 	self.glView = nil;
 }
@@ -105,6 +110,12 @@ static MyGLViewController* s_Instance = nil;
 		else {
 			debug_NSLog(@"sound on");
 		}
+	}
+	else if (sender == self.btnMoreApps) {
+		debug_NSLog(@"more apps");
+		MoreGamesViewController *controller = [[MoreGamesViewController alloc]initWithNibName:@"MoreGamesViewController" bundle:nil];
+		[self.navigationController pushViewController:controller animated:true];
+		[controller release];
 	}
 }
 
