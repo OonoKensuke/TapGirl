@@ -27,6 +27,10 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+	NSString* strUrl = @"http://apple.com";
+	NSURL *url = [NSURL URLWithString:strUrl];
+	NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
+	[self.webView loadRequest:requestObj];
 }
 
 - (void)didReceiveMemoryWarning
@@ -35,4 +39,12 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)dealloc {
+	[_webView release];
+	[super dealloc];
+}
+- (void)viewDidUnload {
+	[self setWebView:nil];
+	[super viewDidUnload];
+}
 @end

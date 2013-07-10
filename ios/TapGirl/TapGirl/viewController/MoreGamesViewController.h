@@ -9,5 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface MoreGamesViewController : UIViewController
+{
+	
+}
+@property (retain, nonatomic) IBOutlet UIWebView *webView;
 
 @end
