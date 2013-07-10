@@ -120,8 +120,6 @@ typedef struct {
 		self.touchLength = 0.0f;
 		//NSLog(@"pix per cm = %f", _PIX_PER_CM);
 		self.changeData = [[ChangeData alloc] initWithTouchLength:self.touchLength];
-		const CHANGE_PARAM *pChangeParam = [self.changeData getChangeParam];
-		[self loadTextureFromIndex:pChangeParam->indexImage toCurrent:true];
 		_player = nil;
 		self.step = STEP_INIT;
     }
@@ -137,11 +135,36 @@ typedef struct {
 	[super dealloc];
 }
 
+#pragma mark -Texture
+
+- (int)getIndexOfTexSize
+{
+	int result = -1;
+	CGSize size = self.frame.size;
+	float height = size.height * self.contentScaleFactor;
+	if (height > 480.0f) {
+		if (height > 960.0f) {
+			//4inch retina
+			result = 3;
+		}
+		else {
+			//3.5inch retina
+			result = 2;
+		}
+	}
+	else {
+		result = 1;
+	}
+	return result;
+}
+
 - (BOOL)loadTextureFromIndex:(int)index toCurrent:(BOOL)bLoadCurrent
 {
 	BOOL result = false;
 	@try {
-		NSString* nameFile = [NSString stringWithFormat:@"image%02d.jpg", index];
+		int indexTexSize = [self getIndexOfTexSize];
+		assert(indexTexSize > 0);
+		NSString* nameFile = [NSString stringWithFormat:@"image%02d_%02d.jpg", indexTexSize, index];
 		debug_NSLog(@"%@ をテクスチャとして読み込みます", nameFile);
 		NSString* strPath = [[NSBundle mainBundle] pathForResource:nameFile ofType:nil];
 		if ([[NSFileManager defaultManager] fileExistsAtPath:strPath]) {
@@ -205,6 +228,10 @@ typedef struct {
 	switch (self.step) {
 		case STEP_INIT:
 		{
+			{
+				const CHANGE_PARAM *pChangeParam = [self.changeData getChangeParam];
+				[self loadTextureFromIndex:pChangeParam->indexImage toCurrent:true];
+			}
 			[self drawTextureCurrent:true withAlpha:alpha withColor:color withShader:FRSH_NORMAL];
 			self.step = STEP_NORMAL;
 		}
