@@ -24,8 +24,12 @@
 		8A5E0370178E808000F40657 /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A5E036F178E808000F40657 /* libGoogleAdMobAds.a */; };
 		8A5E0372178E80A400F40657 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A5E0371178E80A400F40657 /* MessageUI.framework */; };
 		8A5E0374178E80AD00F40657 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A5E0373178E80AD00F40657 /* SystemConfiguration.framework */; };
-		8A5E0376178E841100F40657 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A5E0375178E841100F40657 /* AdSupport.framework */; };
+		8A5E0376178E841100F40657 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A5E0375178E841100F40657 /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		8A5E0378178E841E00F40657 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A5E0377178E841E00F40657 /* StoreKit.framework */; };
+		8A5E040B178E968100F40657 /* libAdapterNend.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A5E0407178E968100F40657 /* libAdapterNend.a */; };
+		8A5E040C178E968100F40657 /* libNendAd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A5E0408178E968100F40657 /* libNendAd.a */; };
+		8A5E040D178E968100F40657 /* NADView_readme.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8A5E040A178E968100F40657 /* NADView_readme.txt */; };
+		8A5E040F178E96BD00F40657 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A5E040E178E96BC00F40657 /* Security.framework */; };
 		8A7B4272178563B00023AD49 /* CMatrix.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8A7B4270178563B00023AD49 /* CMatrix.mm */; };
 		8A817EDA178D4A9600E6F5D8 /* image01_01.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8A817ED1178D4A9600E6F5D8 /* image01_01.jpg */; };
 		8A817EDB178D4A9600E6F5D8 /* image01_02.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8A817ED2178D4A9600E6F5D8 /* image01_02.jpg */; };
@@ -113,6 +117,11 @@
 		8A5E0373178E80AD00F40657 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		8A5E0375178E841100F40657 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		8A5E0377178E841E00F40657 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		8A5E0407178E968100F40657 /* libAdapterNend.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libAdapterNend.a; sourceTree = "<group>"; };
+		8A5E0408178E968100F40657 /* libNendAd.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libNendAd.a; sourceTree = "<group>"; };
+		8A5E0409178E968100F40657 /* NADView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NADView.h; sourceTree = "<group>"; };
+		8A5E040A178E968100F40657 /* NADView_readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = NADView_readme.txt; sourceTree = "<group>"; };
+		8A5E040E178E96BC00F40657 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		8A7B426F17855CD60023AD49 /* CVec2D.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CVec2D.h; path = lib/CVec2D.h; sourceTree = "<group>"; };
 		8A7B4270178563B00023AD49 /* CMatrix.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CMatrix.mm; path = lib/CMatrix.mm; sourceTree = "<group>"; };
 		8A7B4271178563B00023AD49 /* CMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CMatrix.h; path = lib/CMatrix.h; sourceTree = "<group>"; };
@@ -176,6 +185,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8A5E040F178E96BD00F40657 /* Security.framework in Frameworks */,
 				8A5E0378178E841E00F40657 /* StoreKit.framework in Frameworks */,
 				8A5E0376178E841100F40657 /* AdSupport.framework in Frameworks */,
 				8A5E0374178E80AD00F40657 /* SystemConfiguration.framework in Frameworks */,
@@ -189,6 +199,8 @@
 				8AD7111D17841DBC0010DBB9 /* Foundation.framework in Frameworks */,
 				8AD7111F17841DBC0010DBB9 /* CoreGraphics.framework in Frameworks */,
 				8A5E0370178E808000F40657 /* libGoogleAdMobAds.a in Frameworks */,
+				8A5E040B178E968100F40657 /* libAdapterNend.a in Frameworks */,
+				8A5E040C178E968100F40657 /* libNendAd.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -214,6 +226,7 @@
 		8A5E0364178E805800F40657 /* adsSDK */ = {
 			isa = PBXGroup;
 			children = (
+				8A5E0406178E968100F40657 /* NendAd */,
 				8A5E0365178E806700F40657 /* admob */,
 			);
 			name = adsSDK;
@@ -234,6 +247,18 @@
 				8A5E036F178E808000F40657 /* libGoogleAdMobAds.a */,
 			);
 			name = admob;
+			sourceTree = "<group>";
+		};
+		8A5E0406178E968100F40657 /* NendAd */ = {
+			isa = PBXGroup;
+			children = (
+				8A5E0407178E968100F40657 /* libAdapterNend.a */,
+				8A5E0408178E968100F40657 /* libNendAd.a */,
+				8A5E0409178E968100F40657 /* NADView.h */,
+				8A5E040A178E968100F40657 /* NADView_readme.txt */,
+			);
+			name = NendAd;
+			path = adssdk/NendAd;
 			sourceTree = "<group>";
 		};
 		8A7B426E17855CC20023AD49 /* lib */ = {
@@ -270,6 +295,7 @@
 		8AD7110E17841DBC0010DBB9 = {
 			isa = PBXGroup;
 			children = (
+				8A5E040E178E96BC00F40657 /* Security.framework */,
 				8A5E0377178E841E00F40657 /* StoreKit.framework */,
 				8A5E0375178E841100F40657 /* AdSupport.framework */,
 				8A5E0373178E80AD00F40657 /* SystemConfiguration.framework */,
@@ -513,6 +539,7 @@
 				8A817EE2178D4A9600E6F5D8 /* image03_03.jpg in Resources */,
 				8AD27DA6178D6099008819B8 /* MoreGamesViewController.xib in Resources */,
 				8AD27DA8178D643E008819B8 /* moreapps.png in Resources */,
+				8A5E040D178E968100F40657 /* NADView_readme.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -646,6 +673,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/TapGirl/adssdk/GoogleAdMobAdsSdkiOS-6.4.2\"",
 					"\"$(SRCROOT)/TapGirl/adssdk/GoogleAdMobAdsSdkiOS-6.4.2/Add-ons/GoogleAnalyticsiOS_2.0beta4/Library\"",
+					"\"$(SRCROOT)/TapGirl/adssdk/NendAd\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -664,6 +692,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/TapGirl/adssdk/GoogleAdMobAdsSdkiOS-6.4.2\"",
 					"\"$(SRCROOT)/TapGirl/adssdk/GoogleAdMobAdsSdkiOS-6.4.2/Add-ons/GoogleAnalyticsiOS_2.0beta4/Library\"",
+					"\"$(SRCROOT)/TapGirl/adssdk/NendAd\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
