@@ -9,15 +9,16 @@
 #import <UIKit/UIKit.h>
 #import "MyGLView.h"
 #import "ToggleButton.h"
+#import "NADView.h"
 
-@interface MyGLViewController : UIViewController
+@interface MyGLViewController : UIViewController<NADViewDelegate>
 {
-	
 }
 @property (retain, nonatomic) IBOutlet MyGLView *glView;
 @property (retain, nonatomic) IBOutlet UILabel *countLabel;
 @property (retain, nonatomic) IBOutlet ToggleButton *btnToggleSound;
 @property (retain, nonatomic) IBOutlet UIButton *btnMoreApps;
+@property (nonatomic, retain) NADView* nadView;
 
 +(MyGLViewController*) getInstance;
 - (IBAction)onPushButton:(id)sender;

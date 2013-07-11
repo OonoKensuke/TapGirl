@@ -10,8 +10,21 @@
 #import "IGLKit.h"
 #import "ChangeData.h"
 #import "MoreGamesViewController.h"
+extern "C" {
+#import "GADBannerView.h"
+};
+//Admob用の広告枠コード
+//**********必ずアプリ専用のものに書き換える**********
+#define _ADMOB_PUBLISHER_ID  @"a150ff2a3b55ce0"
+#define _NEND_ID	@"a6eca9dd074372c898dd1df549301f277c53f2b9"
+#define _NEND_SPOT_ID	@"3172"
+
 
 @interface MyGLViewController ()
+{
+	GADBannerView *_admobView;
+	BOOL _adsInitialized;
+}
 @property(strong, nonatomic) NSString* fshSource;
 
 @end
@@ -45,6 +58,7 @@ static MyGLViewController* s_Instance = nil;
     // Do any additional setup after loading the view from its nib.
 	self.glView.contentScaleFactor = [UIScreen mainScreen].scale;
 	s_Instance = self;
+	_adsInitialized = false;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -64,6 +78,8 @@ static MyGLViewController* s_Instance = nil;
 	const CHANGE_PARAM *pParam = [changeData getChangeParam];
 	int lenInit = (int)(pParam->restLength);
 	self.countLabel.text = [NSString stringWithFormat:@"%d", lenInit];
+
+	[self initAds];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -102,9 +118,86 @@ static MyGLViewController* s_Instance = nil;
     [self setCountLabel:nil];
     [self setBtnToggleSound:nil];
     [self setBtnMoreApps:nil];
+	[_admobView release];
 	[super viewDidUnload];
 	self.glView = nil;
 }
+
+#pragma mark -Ads
+
+- (BOOL)initAds
+{
+	BOOL result = false;
+	if (!_adsInitialized) {
+		NSArray *arrayLang = [NSLocale preferredLanguages];
+		NSString *szLang  = [arrayLang objectAtIndex:0];
+		debug_NSLog(@"%@", szLang);
+		if ([szLang isEqualToString:@"ja"]) {
+			result = [self initNend];
+		}
+		else {
+			result = [self initAdmob];
+		}
+		_adsInitialized = true;
+	}
+	return result;
+}
+
+- (BOOL)initAdmob
+{
+	BOOL result = false;
+	if (_admobView == nil) {
+		_admobView = [[GADBannerView alloc] initWithAdSize:kGADAdSizeBanner];
+		CGRect rect = _admobView.frame;
+		rect.origin.y = self.glView.frame.size.height - rect.size.height;
+		[_admobView setFrame:rect];
+		debug_NSLog(@"%f", rect.origin.x);
+		_admobView.adUnitID = _ADMOB_PUBLISHER_ID;
+		_admobView.rootViewController = self;
+		[self.glView addSubview:_admobView];
+		[_admobView loadRequest:[GADRequest request]];
+		result = true;
+	}
+	return result;
+}
+
+- (BOOL)initNend
+{
+	BOOL result = false;
+	if (self.nadView == nil) {
+		float y = self.glView.frame.size.height - NAD_ADVIEW_SIZE_320x50.height;
+		self.nadView = [[NADView alloc] initWithFrame:CGRectMake(0.0f, y,
+																 NAD_ADVIEW_SIZE_320x50.width,
+																 NAD_ADVIEW_SIZE_320x50.height)];
+		[self.nadView setNendID:_NEND_ID spotID:_NEND_SPOT_ID];
+		[self.nadView setDelegate:self];
+		[self.nadView load];
+		[self.glView addSubview:self.nadView];		
+	}
+	return result;
+}
+
+- (void)nadViewDidFinishLoad:(NADView *)adView
+{
+	debug_NSLog(@"%s", __PRETTY_FUNCTION__);
+}
+
+- (void)nadViewDidReceiveAd:(NADView *)adView
+{
+	debug_NSLog(@"%s", __PRETTY_FUNCTION__);
+}
+
+- (void)nadViewDidFailToReceiveAd:(NADView *)adView
+{
+	debug_NSLog(@"%s", __PRETTY_FUNCTION__);
+}
+
+- (void)nadViewDidClickAd:(NADView *)adView
+{
+	debug_NSLog(@"%s", __PRETTY_FUNCTION__);
+}
+
+#pragma mark -IBAction
 
 - (IBAction)onPushButton:(id)sender
 {
