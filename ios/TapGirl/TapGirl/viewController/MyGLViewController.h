@@ -18,6 +18,10 @@
 @property (retain, nonatomic) IBOutlet UILabel *countLabel;
 @property (retain, nonatomic) IBOutlet ToggleButton *btnToggleSound;
 @property (retain, nonatomic) IBOutlet UIButton *btnMoreApps;
+@property (retain, nonatomic) IBOutlet UIButton *btnTweet;
+@property (retain, nonatomic) IBOutlet UIButton *btnFacebook;
+
+
 @property (nonatomic, retain) NADView* nadView;
 
 +(MyGLViewController*) getInstance;

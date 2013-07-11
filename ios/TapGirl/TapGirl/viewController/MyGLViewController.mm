@@ -22,7 +22,15 @@ extern "C" {
 //App Bankの広告枠コード、SpotID
 #define _NEND_SPOT_ID	@"3172"
 //**********必ずアプリ専用のものに書き換える**********
+
+//SNS拡散URL
 #define _SNS_URL	@"http://www.apple.com/"
+//SNSアプリ名
+#define _SNS_APP_NAME	@"アプリ名"
+//SNSハッシュタグ
+#define _SNS_HASHTAG	@"ハッシュタグ"
+//Twitterフォーマット
+#define _SNS_TWEET_FORMAT	@"カワイイおんなのこを%dcmこすった。%@ #%@"
 
 
 @interface MyGLViewController ()
@@ -115,6 +123,8 @@ static MyGLViewController* s_Instance = nil;
 	s_Instance = nil;
     [_btnToggleSound release];
     [_btnMoreApps release];
+	[_btnTweet release];
+	[_btnFacebook release];
 	[super dealloc];
 }
 - (void)viewDidUnload {
@@ -124,6 +134,8 @@ static MyGLViewController* s_Instance = nil;
     [self setBtnToggleSound:nil];
     [self setBtnMoreApps:nil];
 	[_admobView release];
+	[self setBtnTweet:nil];
+	[self setBtnFacebook:nil];
 	[super viewDidUnload];
 	self.glView = nil;
 }
@@ -204,13 +216,15 @@ static MyGLViewController* s_Instance = nil;
 #pragma mark -SNS
 - (void)tweet
 {
+	int len = (int)(self.glView.touchLength);
+	NSString *str = [NSString stringWithFormat:_SNS_TWEET_FORMAT, len, _SNS_APP_NAME, _SNS_HASHTAG];
 	TWTweetComposeViewController *controller = [[TWTweetComposeViewController alloc]init];
-	[controller setInitialText:@"init string"];
+	[controller setInitialText:str];
 	[controller addURL:[NSURL URLWithString:_SNS_URL]];
 	
 	controller.completionHandler = ^(TWTweetComposeViewControllerResult res) {
 		if (res == TWTweetComposeViewControllerResultDone) {
-			debug_NSLog(@"tweet");
+			debug_NSLog(@"tweet done");
 		}
 		else if (res == TWTweetComposeViewControllerResultCancelled) {
 			debug_NSLog(@"tweet cancel");
@@ -238,6 +252,9 @@ static MyGLViewController* s_Instance = nil;
 		MoreGamesViewController *controller = [[MoreGamesViewController alloc]initWithNibName:@"MoreGamesViewController" bundle:nil];
 		[self.navigationController pushViewController:controller animated:true];
 		[controller release];
+	}
+	else if (sender == self.btnTweet) {
+		[self tweet];
 	}
 }
 
