@@ -30,6 +30,7 @@
 		8A5E040C178E968100F40657 /* libNendAd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A5E0408178E968100F40657 /* libNendAd.a */; };
 		8A5E040D178E968100F40657 /* NADView_readme.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8A5E040A178E968100F40657 /* NADView_readme.txt */; };
 		8A5E040F178E96BD00F40657 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A5E040E178E96BC00F40657 /* Security.framework */; };
+		8A5E0411178EB02E00F40657 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A5E0410178EB02E00F40657 /* Twitter.framework */; };
 		8A7B4272178563B00023AD49 /* CMatrix.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8A7B4270178563B00023AD49 /* CMatrix.mm */; };
 		8A817EDA178D4A9600E6F5D8 /* image01_01.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8A817ED1178D4A9600E6F5D8 /* image01_01.jpg */; };
 		8A817EDB178D4A9600E6F5D8 /* image01_02.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8A817ED2178D4A9600E6F5D8 /* image01_02.jpg */; };
@@ -122,6 +123,7 @@
 		8A5E0409178E968100F40657 /* NADView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NADView.h; sourceTree = "<group>"; };
 		8A5E040A178E968100F40657 /* NADView_readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = NADView_readme.txt; sourceTree = "<group>"; };
 		8A5E040E178E96BC00F40657 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		8A5E0410178EB02E00F40657 /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
 		8A7B426F17855CD60023AD49 /* CVec2D.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CVec2D.h; path = lib/CVec2D.h; sourceTree = "<group>"; };
 		8A7B4270178563B00023AD49 /* CMatrix.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CMatrix.mm; path = lib/CMatrix.mm; sourceTree = "<group>"; };
 		8A7B4271178563B00023AD49 /* CMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CMatrix.h; path = lib/CMatrix.h; sourceTree = "<group>"; };
@@ -185,6 +187,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8A5E0411178EB02E00F40657 /* Twitter.framework in Frameworks */,
 				8A5E040F178E96BD00F40657 /* Security.framework in Frameworks */,
 				8A5E0378178E841E00F40657 /* StoreKit.framework in Frameworks */,
 				8A5E0376178E841100F40657 /* AdSupport.framework in Frameworks */,
@@ -295,6 +298,7 @@
 		8AD7110E17841DBC0010DBB9 = {
 			isa = PBXGroup;
 			children = (
+				8A5E0410178EB02E00F40657 /* Twitter.framework */,
 				8A5E040E178E96BC00F40657 /* Security.framework */,
 				8A5E0377178E841E00F40657 /* StoreKit.framework */,
 				8A5E0375178E841100F40657 /* AdSupport.framework */,

@@ -9,6 +9,7 @@
 #import "MyGLViewController.h"
 #import "IGLKit.h"
 #import "ChangeData.h"
+#import <Twitter/Twitter.h>
 #import "MoreGamesViewController.h"
 extern "C" {
 #import "GADBannerView.h"
@@ -21,6 +22,7 @@ extern "C" {
 //App Bankの広告枠コード、SpotID
 #define _NEND_SPOT_ID	@"3172"
 //**********必ずアプリ専用のものに書き換える**********
+#define _SNS_URL	@"http://www.apple.com/"
 
 
 @interface MyGLViewController ()
@@ -198,6 +200,23 @@ static MyGLViewController* s_Instance = nil;
 - (void)nadViewDidClickAd:(NADView *)adView
 {
 	debug_NSLog(@"%s", __PRETTY_FUNCTION__);
+}
+#pragma mark -SNS
+- (void)tweet
+{
+	TWTweetComposeViewController *controller = [[TWTweetComposeViewController alloc]init];
+	[controller setInitialText:@"init string"];
+	[controller addURL:[NSURL URLWithString:_SNS_URL]];
+	
+	controller.completionHandler = ^(TWTweetComposeViewControllerResult res) {
+		if (res == TWTweetComposeViewControllerResultDone) {
+			debug_NSLog(@"tweet");
+		}
+		else if (res == TWTweetComposeViewControllerResultCancelled) {
+			debug_NSLog(@"tweet cancel");
+		}
+	};
+	[self presentModalViewController:controller animated:true];
 }
 
 #pragma mark -IBAction
