@@ -15,6 +15,8 @@
 		8A1BF4F6178FB4E6009DBF57 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A1BF4F5178FB4E6009DBF57 /* libsqlite3.dylib */; };
 		8A1BF4FA178FD3F4009DBF57 /* FacebookPostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A1BF4F8178FD3F4009DBF57 /* FacebookPostViewController.m */; };
 		8A1BF4FB178FD3F4009DBF57 /* FacebookPostViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A1BF4F9178FD3F4009DBF57 /* FacebookPostViewController.xib */; };
+		8A1BF4FD178FE555009DBF57 /* FacebookSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8A1BF4FC178FE555009DBF57 /* FacebookSDKResources.bundle */; };
+		8A1BF4FF178FE55D009DBF57 /* FBUserSettingsViewResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8A1BF4FE178FE55D009DBF57 /* FBUserSettingsViewResources.bundle */; };
 		8A29A854178BE9820004F074 /* ToggleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A29A853178BE9820004F074 /* ToggleButton.m */; };
 		8A29A857178BEBC40004F074 /* sound_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A29A855178BEBC40004F074 /* sound_off.png */; };
 		8A29A858178BEBC40004F074 /* sound_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A29A856178BEBC40004F074 /* sound_on.png */; };
@@ -96,6 +98,8 @@
 		8A1BF4F7178FD3F4009DBF57 /* FacebookPostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FacebookPostViewController.h; path = viewController/FacebookPostViewController.h; sourceTree = "<group>"; };
 		8A1BF4F8178FD3F4009DBF57 /* FacebookPostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FacebookPostViewController.m; path = viewController/FacebookPostViewController.m; sourceTree = "<group>"; };
 		8A1BF4F9178FD3F4009DBF57 /* FacebookPostViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FacebookPostViewController.xib; path = viewController/FacebookPostViewController.xib; sourceTree = "<group>"; };
+		8A1BF4FC178FE555009DBF57 /* FacebookSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FacebookSDKResources.bundle; path = TapGirl/FacebookSDK.framework/Resources/FacebookSDKResources.bundle; sourceTree = "<group>"; };
+		8A1BF4FE178FE55D009DBF57 /* FBUserSettingsViewResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FBUserSettingsViewResources.bundle; path = TapGirl/FacebookSDK.framework/Resources/FBUserSettingsViewResources.bundle; sourceTree = "<group>"; };
 		8A29A852178BE9820004F074 /* ToggleButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ToggleButton.h; path = viewController/ToggleButton.h; sourceTree = "<group>"; };
 		8A29A853178BE9820004F074 /* ToggleButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ToggleButton.m; path = viewController/ToggleButton.m; sourceTree = "<group>"; };
 		8A29A855178BEBC40004F074 /* sound_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sound_off.png; sourceTree = "<group>"; };
@@ -345,6 +349,8 @@
 		8AD7111917841DBC0010DBB9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8A1BF4FE178FE55D009DBF57 /* FBUserSettingsViewResources.bundle */,
+				8A1BF4FC178FE555009DBF57 /* FacebookSDKResources.bundle */,
 				8A1BF4EF178FB49A009DBF57 /* FacebookSDK.framework */,
 				8AE2606917882C44008FFA86 /* AVFoundation.framework */,
 				8AE2606717882C39008FFA86 /* CoreAudio.framework */,
@@ -569,6 +575,8 @@
 				8AD27DA8178D643E008819B8 /* moreapps.png in Resources */,
 				8A5E040D178E968100F40657 /* NADView_readme.txt in Resources */,
 				8A1BF4FB178FD3F4009DBF57 /* FacebookPostViewController.xib in Resources */,
+				8A1BF4FD178FE555009DBF57 /* FacebookSDKResources.bundle in Resources */,
+				8A1BF4FF178FE55D009DBF57 /* FBUserSettingsViewResources.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
