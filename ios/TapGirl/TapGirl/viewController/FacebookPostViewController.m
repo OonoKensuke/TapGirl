@@ -8,7 +8,7 @@
 
 #import "FacebookPostViewController.h"
 
-@interface FacebookPostViewController ()
+@interface FacebookPostViewController () <FBLoginViewDelegate>
 @property (strong, nonatomic) id<FBGraphUser> loggedInUser;
 
 @end
@@ -33,7 +33,7 @@
     
     loginview.frame = CGRectOffset(loginview.frame, 5, 5);
     loginview.delegate = self;
-    
+	
     [self.view addSubview:loginview];
     
     [loginview sizeToFit];

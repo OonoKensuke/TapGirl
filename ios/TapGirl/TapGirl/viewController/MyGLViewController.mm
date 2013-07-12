@@ -14,6 +14,7 @@
 extern "C" {
 #import "GADBannerView.h"
 };
+#import "FacebookPostViewController.h"
 //**********必ずアプリ専用のものに書き換える**********
 //Admob用の広告枠コード
 #define _ADMOB_PUBLISHER_ID  @"a150ff2a3b55ce0"
@@ -255,6 +256,11 @@ static MyGLViewController* s_Instance = nil;
 	}
 	else if (sender == self.btnTweet) {
 		[self tweet];
+	}
+	else if (sender == self.btnFacebook) {
+		FacebookPostViewController* controller = [[FacebookPostViewController alloc] initWithNibName:@"FacebookPostViewController" bundle:nil];
+		[self.navigationController pushViewController:controller animated:true];
+		[controller release];
 	}
 }
 

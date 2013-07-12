@@ -10,7 +10,7 @@
 #import <FacebookSDK/FacebookSDK.h>
 
 
-@interface FacebookPostViewController : UIViewController<FBLoginViewDelegate>
+@interface FacebookPostViewController : UIViewController
 {
 	
 }
