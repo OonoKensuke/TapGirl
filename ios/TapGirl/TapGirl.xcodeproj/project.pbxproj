@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		8A0A09881786E48F0043678E /* MyGLViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A0A098A1786E48F0043678E /* MyGLViewController.xib */; };
 		8A0DB695178AA17500191C35 /* shader_color_fade.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8A0DB694178AA17500191C35 /* shader_color_fade.txt */; };
+		8A1BF4F0178FB49A009DBF57 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A1BF4EF178FB49A009DBF57 /* FacebookSDK.framework */; };
+		8A1BF4F2178FB4C7009DBF57 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A1BF4F1178FB4C7009DBF57 /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		8A1BF4F4178FB4D9009DBF57 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A1BF4F3178FB4D9009DBF57 /* Accounts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		8A1BF4F6178FB4E6009DBF57 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A1BF4F5178FB4E6009DBF57 /* libsqlite3.dylib */; };
 		8A29A854178BE9820004F074 /* ToggleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A29A853178BE9820004F074 /* ToggleButton.m */; };
 		8A29A857178BEBC40004F074 /* sound_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A29A855178BEBC40004F074 /* sound_off.png */; };
 		8A29A858178BEBC40004F074 /* sound_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A29A856178BEBC40004F074 /* sound_on.png */; };
@@ -83,6 +87,10 @@
 		8A0A09891786E48F0043678E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MyGLViewController.xib; sourceTree = "<group>"; };
 		8A0A098B1786E4950043678E /* ja */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ja; path = ja.lproj/MyGLViewController.xib; sourceTree = "<group>"; };
 		8A0DB694178AA17500191C35 /* shader_color_fade.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = shader_color_fade.txt; path = resource/src/shader_color_fade.txt; sourceTree = "<group>"; };
+		8A1BF4EF178FB49A009DBF57 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = TapGirl/FacebookSDK.framework; sourceTree = "<group>"; };
+		8A1BF4F1178FB4C7009DBF57 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		8A1BF4F3178FB4D9009DBF57 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		8A1BF4F5178FB4E6009DBF57 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		8A29A852178BE9820004F074 /* ToggleButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ToggleButton.h; path = viewController/ToggleButton.h; sourceTree = "<group>"; };
 		8A29A853178BE9820004F074 /* ToggleButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ToggleButton.m; path = viewController/ToggleButton.m; sourceTree = "<group>"; };
 		8A29A855178BEBC40004F074 /* sound_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sound_off.png; sourceTree = "<group>"; };
@@ -187,6 +195,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8A1BF4F6178FB4E6009DBF57 /* libsqlite3.dylib in Frameworks */,
+				8A1BF4F4178FB4D9009DBF57 /* Accounts.framework in Frameworks */,
+				8A1BF4F2178FB4C7009DBF57 /* Social.framework in Frameworks */,
 				8A5E0411178EB02E00F40657 /* Twitter.framework in Frameworks */,
 				8A5E040F178E96BD00F40657 /* Security.framework in Frameworks */,
 				8A5E0378178E841E00F40657 /* StoreKit.framework in Frameworks */,
@@ -204,6 +215,7 @@
 				8A5E0370178E808000F40657 /* libGoogleAdMobAds.a in Frameworks */,
 				8A5E040B178E968100F40657 /* libAdapterNend.a in Frameworks */,
 				8A5E040C178E968100F40657 /* libNendAd.a in Frameworks */,
+				8A1BF4F0178FB49A009DBF57 /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -298,6 +310,9 @@
 		8AD7110E17841DBC0010DBB9 = {
 			isa = PBXGroup;
 			children = (
+				8A1BF4F5178FB4E6009DBF57 /* libsqlite3.dylib */,
+				8A1BF4F3178FB4D9009DBF57 /* Accounts.framework */,
+				8A1BF4F1178FB4C7009DBF57 /* Social.framework */,
 				8A5E0410178EB02E00F40657 /* Twitter.framework */,
 				8A5E040E178E96BC00F40657 /* Security.framework */,
 				8A5E0377178E841E00F40657 /* StoreKit.framework */,
@@ -325,6 +340,7 @@
 		8AD7111917841DBC0010DBB9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8A1BF4EF178FB49A009DBF57 /* FacebookSDK.framework */,
 				8AE2606917882C44008FFA86 /* AVFoundation.framework */,
 				8AE2606717882C39008FFA86 /* CoreAudio.framework */,
 				8AE2606517882C2C008FFA86 /* AudioToolbox.framework */,
@@ -669,6 +685,10 @@
 		8AD7114117841DBC0010DBB9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/TapGirl\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TapGirl/TapGirl-Prefix.pch";
 				INFOPLIST_FILE = "TapGirl/TapGirl-Info.plist";
@@ -688,6 +708,10 @@
 		8AD7114217841DBC0010DBB9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/TapGirl\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TapGirl/TapGirl-Prefix.pch";
 				INFOPLIST_FILE = "TapGirl/TapGirl-Info.plist";
