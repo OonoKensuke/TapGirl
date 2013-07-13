@@ -123,6 +123,7 @@ typedef struct {
 		self.changeData = [[ChangeData alloc] initWithTouchLength:self.touchLength];
 		_player = nil;
 		self.step = STEP_INIT;
+		s_Instance = self;
     }
     return self;
 }

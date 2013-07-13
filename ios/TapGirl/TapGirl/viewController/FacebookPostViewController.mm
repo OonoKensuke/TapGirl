@@ -10,7 +10,7 @@
 #import "MyGLView.h"
 #include "gameDefs.h"
 
-@interface FacebookPostViewController () <FBLoginViewDelegate>
+@interface FacebookPostViewController () <FBLoginViewDelegate, UITextViewDelegate>
 @property (strong, nonatomic) id<FBGraphUser> loggedInUser;
 @property (strong, nonatomic) NSMutableDictionary *postParams;
 
@@ -33,26 +33,29 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    FBLoginView *loginview = [[FBLoginView alloc] init];
-    
-    loginview.frame = CGRectOffset(loginview.frame, 5, 5);
-    loginview.delegate = self;
-	loginview.readPermissions = @[@"basic_inof"];
+
+    self.loginFbView.delegate = self;
+	self.loginFbView.readPermissions = @[@"basic_inof"];
 	
-    [self.view addSubview:loginview];
     
-    [loginview sizeToFit];
 	{
         // Custom initialization
         self.postParams = [@{
 						   @"link" : SNS_URL,
 						   //@"picture" : @"https://developers.facebook.com/attachment/iossdk_logo.png",
 						   @"name" : SNS_APP_NAME,
-						   @"caption" : @"キャプション",
-						   @"description" : @"簡単な説明"
+						   @"caption" : FACEBOOK_CAPTION,
+						   @"description" : FACEBOOK_DESCRIPTION
 						   } mutableCopy];
 	}
 	[self.navigationController setNavigationBarHidden:NO];
+	{
+		MyGLView* glView = [MyGLView getInstance];
+		int len = (int)glView.touchLength;
+		NSString *str = [NSString stringWithFormat:SNS_TWEET_FORMAT, len, SNS_APP_NAME, SNS_HASHTAG];
+		NSLog(@"%@", str);
+		self.textPost.text = str;
+	}
 }
 
 - (void)didReceiveMemoryWarning
@@ -65,12 +68,16 @@
     [_btnPostMessage release];
 	[_labelFirstName release];
 	[_profilePic release];
+	[_loginFbView release];
+	[_textPost release];
     [super dealloc];
 }
 - (void)viewDidUnload {
     [self setBtnPostMessage:nil];
 	[self setLabelFirstName:nil];
 	[self setProfilePic:nil];
+	[self setLoginFbView:nil];
+	[self setTextPost:nil];
     [super viewDidUnload];
 }
 
@@ -133,30 +140,33 @@
 #pragma mark -event
 - (IBAction)onPushButton:(id)sender
 {
-	MyGLView* glView = [MyGLView getInstance];
-	int len = (int)glView.touchLength;
-	NSString *str = [NSString stringWithFormat:SNS_TWEET_FORMAT, len, SNS_APP_NAME, SNS_HASHTAG];
-
-	self.postParams[@"message"] = str;
-    if ([FBSession.activeSession.permissions
-         indexOfObject:@"publish_actions"] == NSNotFound) {
-        // Permission hasn't been granted, so ask for publish_actions
-        [FBSession openActiveSessionWithPublishPermissions:@[@"publish_actions"]
-                                           defaultAudience:FBSessionDefaultAudienceFriends
-                                              allowLoginUI:YES
-                                         completionHandler:^(FBSession *session, FBSessionState state, NSError *error) {
-											 if (FBSession.activeSession.isOpen && !error) {
-												 // Publish the story if permission was granted
-												 [self publishStory];
-											 }
-											 else {
-												 NSLog(@"session open erro:%@", error);
-											 }
-										 }];
-    } else {
-        // If permissions present, publish the story
-        [self publishStory];
+    // Hide keyboard if showing when button clicked
+    if ([self.textPost isFirstResponder]) {
+        [self.textPost resignFirstResponder];
     }
+	if (![self.textPost.text isEqualToString:@""]) {
+		self.postParams[@"message"] = self.textPost.text;
+		if ([FBSession.activeSession.permissions
+			 indexOfObject:@"publish_actions"] == NSNotFound) {
+			// Permission hasn't been granted, so ask for publish_actions
+			[FBSession openActiveSessionWithPublishPermissions:@[@"publish_actions"]
+											   defaultAudience:FBSessionDefaultAudienceFriends
+												  allowLoginUI:YES
+											 completionHandler:^(FBSession *session, FBSessionState state, NSError *error) {
+												 if (FBSession.activeSession.isOpen && !error) {
+													 // Publish the story if permission was granted
+													 [self publishStory];
+												 }
+												 else {
+													 NSLog(@"session open erro:%@", error);
+												 }
+											 }];
+		} else {
+			// If permissions present, publish the story
+			[self publishStory];
+		}
+	}
+
 }
 
 #pragma mark -
