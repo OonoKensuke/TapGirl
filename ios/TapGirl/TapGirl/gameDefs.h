@@ -18,7 +18,7 @@
 //SNSハッシュタグ
 #define SNS_HASHTAG	@"ハッシュタグ"
 //Twitterフォーマット
-#define SNS_TWEET_FORMAT	@"アプリを%dcmこすった。%@ #%@"
+#define SNS_TWEET_FORMAT	@"アプリを%dcmこすった。%@ #%@ "
 
 //Facebookキャプション
 #define FACEBOOK_CAPTION	@"キャプション"
