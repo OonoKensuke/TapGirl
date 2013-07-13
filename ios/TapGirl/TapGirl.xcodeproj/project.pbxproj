@@ -13,7 +13,7 @@
 		8A1BF4F2178FB4C7009DBF57 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A1BF4F1178FB4C7009DBF57 /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		8A1BF4F4178FB4D9009DBF57 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A1BF4F3178FB4D9009DBF57 /* Accounts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		8A1BF4F6178FB4E6009DBF57 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A1BF4F5178FB4E6009DBF57 /* libsqlite3.dylib */; };
-		8A1BF4FA178FD3F4009DBF57 /* FacebookPostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A1BF4F8178FD3F4009DBF57 /* FacebookPostViewController.m */; };
+		8A1BF4FA178FD3F4009DBF57 /* FacebookPostViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8A1BF4F8178FD3F4009DBF57 /* FacebookPostViewController.mm */; };
 		8A1BF4FB178FD3F4009DBF57 /* FacebookPostViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A1BF4F9178FD3F4009DBF57 /* FacebookPostViewController.xib */; };
 		8A1BF4FD178FE555009DBF57 /* FacebookSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8A1BF4FC178FE555009DBF57 /* FacebookSDKResources.bundle */; };
 		8A1BF4FF178FE55D009DBF57 /* FBUserSettingsViewResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8A1BF4FE178FE55D009DBF57 /* FBUserSettingsViewResources.bundle */; };
@@ -96,7 +96,7 @@
 		8A1BF4F3178FB4D9009DBF57 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		8A1BF4F5178FB4E6009DBF57 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		8A1BF4F7178FD3F4009DBF57 /* FacebookPostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FacebookPostViewController.h; path = viewController/FacebookPostViewController.h; sourceTree = "<group>"; };
-		8A1BF4F8178FD3F4009DBF57 /* FacebookPostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FacebookPostViewController.m; path = viewController/FacebookPostViewController.m; sourceTree = "<group>"; };
+		8A1BF4F8178FD3F4009DBF57 /* FacebookPostViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = FacebookPostViewController.mm; path = viewController/FacebookPostViewController.mm; sourceTree = "<group>"; };
 		8A1BF4F9178FD3F4009DBF57 /* FacebookPostViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FacebookPostViewController.xib; path = viewController/FacebookPostViewController.xib; sourceTree = "<group>"; };
 		8A1BF4FC178FE555009DBF57 /* FacebookSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FacebookSDKResources.bundle; path = TapGirl/FacebookSDK.framework/Resources/FacebookSDKResources.bundle; sourceTree = "<group>"; };
 		8A1BF4FE178FE55D009DBF57 /* FBUserSettingsViewResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FBUserSettingsViewResources.bundle; path = TapGirl/FacebookSDK.framework/Resources/FBUserSettingsViewResources.bundle; sourceTree = "<group>"; };
@@ -408,7 +408,7 @@
 				8AD27DA3178D6099008819B8 /* MoreGamesViewController.m */,
 				8AD27DA4178D6099008819B8 /* MoreGamesViewController.xib */,
 				8A1BF4F7178FD3F4009DBF57 /* FacebookPostViewController.h */,
-				8A1BF4F8178FD3F4009DBF57 /* FacebookPostViewController.m */,
+				8A1BF4F8178FD3F4009DBF57 /* FacebookPostViewController.mm */,
 				8A1BF4F9178FD3F4009DBF57 /* FacebookPostViewController.xib */,
 			);
 			name = ViewAndViewController;
@@ -619,7 +619,7 @@
 				8A8956C81789537500DBE095 /* ChangeData.mm in Sources */,
 				8A29A854178BE9820004F074 /* ToggleButton.m in Sources */,
 				8AD27DA5178D6099008819B8 /* MoreGamesViewController.m in Sources */,
-				8A1BF4FA178FD3F4009DBF57 /* FacebookPostViewController.m in Sources */,
+				8A1BF4FA178FD3F4009DBF57 /* FacebookPostViewController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
