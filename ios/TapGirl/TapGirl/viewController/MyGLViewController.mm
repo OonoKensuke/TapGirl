@@ -22,6 +22,7 @@ extern "C" {
 {
 	GADBannerView *_admobView;
 	BOOL _adsInitialized;
+	BOOL _isAppeared;
 }
 @property(strong, nonatomic) NSString* fshSource;
 
@@ -57,6 +58,7 @@ static MyGLViewController* s_Instance = nil;
 	self.glView.contentScaleFactor = [UIScreen mainScreen].scale;
 	s_Instance = self;
 	_adsInitialized = false;
+	_isAppeared = false;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -66,16 +68,19 @@ static MyGLViewController* s_Instance = nil;
 	//ナビゲーションバーは非表示。MoreGamesなどから返った時にもここを通る
 	[self.navigationController setNavigationBarHidden:true];
 	//self.glView.shader.fragmentShader = self.fshSource;
-	BOOL resultLoad = [self.glView loadShaders];
-	assert(resultLoad);
-	NSString* error = [self.glView buildShader];
-	if (error != nil) {
-		debug_NSLog(@"%@", error);
+	if (!_isAppeared) {
+		BOOL resultLoad = [self.glView loadShaders];
+		assert(resultLoad);
+		NSString* error = [self.glView buildShader];
+		if (error != nil) {
+			debug_NSLog(@"%@", error);
+		}
+		ChangeData* changeData = [ChangeData getInstance];
+		const CHANGE_PARAM *pParam = [changeData getChangeParam];
+		int lenInit = (int)(pParam->restLength);
+		self.countLabel.text = [NSString stringWithFormat:@"%d", lenInit];
+		_isAppeared = true;
 	}
-	ChangeData* changeData = [ChangeData getInstance];
-	const CHANGE_PARAM *pParam = [changeData getChangeParam];
-	int lenInit = (int)(pParam->restLength);
-	self.countLabel.text = [NSString stringWithFormat:@"%d", lenInit];
 
 	[self initAds];
 }
