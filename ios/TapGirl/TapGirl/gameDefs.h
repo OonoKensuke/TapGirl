@@ -12,13 +12,18 @@
 #pragma mark -SNS
 
 //SNS拡散URL
-#define _SNS_URL	@"http://www.apple.com/"
+#define SNS_URL	@"http://www.apple.com/"
 //SNSアプリ名
-#define _SNS_APP_NAME	@"アプリ名"
+#define SNS_APP_NAME	@"アプリ名"
 //SNSハッシュタグ
-#define _SNS_HASHTAG	@"ハッシュタグ"
+#define SNS_HASHTAG	@"ハッシュタグ"
 //Twitterフォーマット
-#define _SNS_TWEET_FORMAT	@"アプリを%dcmこすった。%@ #%@"
+#define SNS_TWEET_FORMAT	@"アプリを%dcmこすった。%@ #%@"
+
+//Facebookキャプション
+#define FACEBOOK_CAPTION	@"キャプション"
+//Facebook説明
+#define FACEBOOK_DESCRIPTION	@"アプリ説明"
 
 #pragma mark -広告
 

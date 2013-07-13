@@ -202,10 +202,10 @@ static MyGLViewController* s_Instance = nil;
 - (void)tweet
 {
 	int len = (int)(self.glView.touchLength);
-	NSString *str = [NSString stringWithFormat:_SNS_TWEET_FORMAT, len, _SNS_APP_NAME, _SNS_HASHTAG];
+	NSString *str = [NSString stringWithFormat:SNS_TWEET_FORMAT, len, SNS_APP_NAME, SNS_HASHTAG];
 	TWTweetComposeViewController *controller = [[TWTweetComposeViewController alloc]init];
 	[controller setInitialText:str];
-	[controller addURL:[NSURL URLWithString:_SNS_URL]];
+	[controller addURL:[NSURL URLWithString:SNS_URL]];
 	
 	controller.completionHandler = ^(TWTweetComposeViewControllerResult res) {
 		if (res == TWTweetComposeViewControllerResultDone) {

@@ -7,6 +7,8 @@
 //
 
 #import "FacebookPostViewController.h"
+#import "MyGLView.h"
+#include "gameDefs.h"
 
 @interface FacebookPostViewController () <FBLoginViewDelegate>
 @property (strong, nonatomic) id<FBGraphUser> loggedInUser;
@@ -43,13 +45,14 @@
 	{
         // Custom initialization
         self.postParams = [@{
-						   @"link" : @"https://developers.facebook.com/ios",
+						   @"link" : SNS_URL,
 						   //@"picture" : @"https://developers.facebook.com/attachment/iossdk_logo.png",
-						   @"name" : @"Facebook SDK for iOS",
-						   @"caption" : @"Build great social apps and get more installs.",
-						   @"description" : @"The Facebook SDK for iOS makes it easier and faster to develop Facebook integrated iOS apps."
+						   @"name" : SNS_APP_NAME,
+						   @"caption" : @"キャプション",
+						   @"description" : @"簡単な説明"
 						   } mutableCopy];
 	}
+	[self.navigationController setNavigationBarHidden:NO];
 }
 
 - (void)didReceiveMemoryWarning
@@ -130,7 +133,11 @@
 #pragma mark -event
 - (IBAction)onPushButton:(id)sender
 {
-	self.postParams[@"message"] = @"test";
+	MyGLView* glView = [MyGLView getInstance];
+	int len = (int)glView.touchLength;
+	NSString *str = [NSString stringWithFormat:SNS_TWEET_FORMAT, len, SNS_APP_NAME, SNS_HASHTAG];
+
+	self.postParams[@"message"] = str;
     if ([FBSession.activeSession.permissions
          indexOfObject:@"publish_actions"] == NSNotFound) {
         // Permission hasn't been granted, so ask for publish_actions
