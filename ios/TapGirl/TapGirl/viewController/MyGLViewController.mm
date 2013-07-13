@@ -217,6 +217,15 @@ static MyGLViewController* s_Instance = nil;
 	};
 	[self presentModalViewController:controller animated:true];
 }
+- (void)facebookBySocialframework
+{
+	int len = (int)(self.glView.touchLength);
+	NSString *str = [NSString stringWithFormat:SNS_TWEET_FORMAT, len, SNS_APP_NAME, SNS_HASHTAG];
+	SLComposeViewController *facebookPostVC = [SLComposeViewController
+											   composeViewControllerForServiceType:SLServiceTypeFacebook];
+	[facebookPostVC setInitialText:str];
+	[self presentViewController:facebookPostVC animated:YES completion:nil];	
+}
 
 #pragma mark -IBAction
 
@@ -242,9 +251,18 @@ static MyGLViewController* s_Instance = nil;
 		[self tweet];
 	}
 	else if (sender == self.btnFacebook) {
-		FacebookPostViewController* controller = [[FacebookPostViewController alloc] initWithNibName:@"FacebookPostViewController" bundle:nil];
-		[self.navigationController pushViewController:controller animated:true];
-		[controller release];
+		if (NSClassFromString(@"SLComposeViewController")) {
+			//use social framework
+			debug_NSLog(@"use social.framework");
+			[self facebookBySocialframework];
+		}
+		else {
+			//
+			debug_NSLog(@"use facebook SDK");
+			FacebookPostViewController* controller = [[FacebookPostViewController alloc] initWithNibName:@"FacebookPostViewController" bundle:nil];
+			[self.navigationController pushViewController:controller animated:true];
+			[controller release];
+		}
 	}
 }
 
