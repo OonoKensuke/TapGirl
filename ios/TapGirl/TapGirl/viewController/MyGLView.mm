@@ -28,6 +28,8 @@
 //浮動小数点で誤差が生じる可能性があるとき、十分小さな値として使う
 #define _NEAR0	(float)(1.0f / 65536.0f)
 
+static MyGLView *s_Instance = nil;
+
 typedef struct {
 	// 位置
 	CVec2D positions[4];
@@ -97,6 +99,7 @@ typedef struct {
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
+		s_Instance = self;
     }
     return self;
 }
@@ -126,12 +129,19 @@ typedef struct {
 
 - (void)dealloc
 {
+	s_Instance = nil;
 	[self.textureCurrent release];
 	[self.textureNext release];
 	[self.changeData release];
 	[self.arrayShader release];
 	[super dealloc];
 }
+
++ (MyGLView*)getInstance
+{
+	return s_Instance;
+}
+
 
 #pragma mark -Texture
 

@@ -14,7 +14,7 @@
 -(void)drawMain;
 -(NSString*)buildShader;
 -(BOOL)loadShaders;
-
++ (MyGLView*)getInstance;
 
 @property(assign, nonatomic) float touchLength;
 

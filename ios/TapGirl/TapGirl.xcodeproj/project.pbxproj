@@ -104,6 +104,7 @@
 		8A29A853178BE9820004F074 /* ToggleButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ToggleButton.m; path = viewController/ToggleButton.m; sourceTree = "<group>"; };
 		8A29A855178BEBC40004F074 /* sound_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sound_off.png; sourceTree = "<group>"; };
 		8A29A856178BEBC40004F074 /* sound_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sound_on.png; sourceTree = "<group>"; };
+		8A317004179133DA00AEA9D3 /* gameDefs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = gameDefs.h; sourceTree = "<group>"; };
 		8A4E022817856CAF00D3F403 /* CColor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CColor.mm; path = lib/CColor.mm; sourceTree = "<group>"; };
 		8A4E022917856CAF00D3F403 /* CColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CColor.h; path = lib/CColor.h; sourceTree = "<group>"; };
 		8A4E022B1785711E00D3F403 /* IGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IGL.h; path = lib/IGL.h; sourceTree = "<group>"; };
@@ -460,6 +461,7 @@
 				8A4E024017857A3C00D3F403 /* MyGLShader.mm */,
 				8A8956C61789537500DBE095 /* ChangeData.h */,
 				8A8956C71789537500DBE095 /* ChangeData.mm */,
+				8A317004179133DA00AEA9D3 /* gameDefs.h */,
 			);
 			name = OtherSource;
 			sourceTree = "<group>";
