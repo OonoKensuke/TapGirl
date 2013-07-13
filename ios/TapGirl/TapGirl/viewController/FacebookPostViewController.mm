@@ -56,6 +56,7 @@
 		NSLog(@"%@", str);
 		self.textPost.text = str;
 	}
+	//self.btnPostMessage.enabled = NO;
 }
 
 - (void)didReceiveMemoryWarning
