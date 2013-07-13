@@ -13,6 +13,19 @@
 
 @implementation AppDelegate
 
+/*
+ * If we have a valid session at the time of openURL call, we handle
+ * Facebook transitions by passing the url argument to handleOpenURL
+ */
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation {
+    // attempt to extract a token from the url
+    return [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];
+}
+
+
 - (void)dealloc
 {
 	[_window release];

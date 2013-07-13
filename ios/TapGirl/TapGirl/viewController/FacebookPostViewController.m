@@ -10,11 +10,13 @@
 
 @interface FacebookPostViewController () <FBLoginViewDelegate>
 @property (strong, nonatomic) id<FBGraphUser> loggedInUser;
+@property (strong, nonatomic) NSMutableDictionary *postParams;
 
 @end
 
 @implementation FacebookPostViewController
 @synthesize loggedInUser = _loggedInUser;
+@synthesize postParams = _postParams;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -33,10 +35,21 @@
     
     loginview.frame = CGRectOffset(loginview.frame, 5, 5);
     loginview.delegate = self;
+	loginview.readPermissions = @[@"basic_inof"];
 	
     [self.view addSubview:loginview];
     
     [loginview sizeToFit];
+	{
+        // Custom initialization
+        self.postParams = [@{
+						   @"link" : @"https://developers.facebook.com/ios",
+						   //@"picture" : @"https://developers.facebook.com/attachment/iossdk_logo.png",
+						   @"name" : @"Facebook SDK for iOS",
+						   @"caption" : @"Build great social apps and get more installs.",
+						   @"description" : @"The Facebook SDK for iOS makes it easier and faster to develop Facebook integrated iOS apps."
+						   } mutableCopy];
+	}
 }
 
 - (void)didReceiveMemoryWarning
@@ -114,108 +127,65 @@
     // our policy here is to let the login view handle errors, but to log the results
     NSLog(@"FBLoginView encountered an error=%@", error);
 }
-#pragma mark -
-
-// Convenience method to perform some action that requires the "publish_actions" permissions.
-- (void) performPublishAction:(void (^)(void)) action {
-    // we defer request for permission to post to the moment of post, then we check for the permission
-    if ([FBSession.activeSession.permissions indexOfObject:@"publish_actions"] == NSNotFound) {
-        // if we don't already have the permission, then we request it now
-        [FBSession.activeSession requestNewPublishPermissions:@[@"publish_actions"]
-                                              defaultAudience:FBSessionDefaultAudienceFriends
-                                            completionHandler:^(FBSession *session, NSError *error) {
-                                                if (!error) {
-                                                    action();
-                                                }
-                                                //For this example, ignore errors (such as if user cancels).
-                                            }];
-    } else {
-        action();
-    }
-    
-}
-
 #pragma mark -event
 - (IBAction)onPushButton:(id)sender
 {
-    NSURL *urlToShare = [NSURL URLWithString:@"http://developers.facebook.com/ios"];
-	if (sender == self.btnPostMessage) {
-		FBAppCall *appCall = [FBDialogs presentShareDialogWithLink:urlToShare
-															  name:@"Hello Facebook"
-														   caption:nil
-													   description:@"The 'Hello Facebook' sample application showcases simple Facebook integration."
-														   picture:nil
-													   clientState:nil
-														   handler:^(FBAppCall *call, NSDictionary *results, NSError *error) {
-															   if (error) {
-																   NSLog(@"Error: %@", error.description);
-															   } else {
-																   NSLog(@"Success!");
-															   }
-														   }];
-		
-		if (!appCall) {
-			// Next try to post using Facebook's iOS6 integration
-			BOOL displayedNativeDialog = [FBDialogs presentOSIntegratedShareDialogModallyFrom:self
-																				  initialText:nil
-																						image:nil
-																						  url:urlToShare
-																					  handler:nil];
-			
-			if (!displayedNativeDialog) {
-				// Lastly, fall back on a request for permissions and a direct post using the Graph API
-				[self performPublishAction:^{
-					NSString *message = [NSString stringWithFormat:@"Updating status for %@ at %@", self.loggedInUser.first_name, [NSDate date]];
-					
-					[FBRequestConnection startForPostStatusUpdate:message
-												completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
-													
-													[self showAlert:message result:result error:error];
-													self.btnPostMessage.enabled = YES;
-												}];
-					
-					self.btnPostMessage.enabled = NO;
-				}];
-			}
-		}
-	}
+	self.postParams[@"message"] = @"test";
+    if ([FBSession.activeSession.permissions
+         indexOfObject:@"publish_actions"] == NSNotFound) {
+        // Permission hasn't been granted, so ask for publish_actions
+        [FBSession openActiveSessionWithPublishPermissions:@[@"publish_actions"]
+                                           defaultAudience:FBSessionDefaultAudienceFriends
+                                              allowLoginUI:YES
+                                         completionHandler:^(FBSession *session, FBSessionState state, NSError *error) {
+											 if (FBSession.activeSession.isOpen && !error) {
+												 // Publish the story if permission was granted
+												 [self publishStory];
+											 }
+											 else {
+												 NSLog(@"session open erro:%@", error);
+											 }
+										 }];
+    } else {
+        // If permissions present, publish the story
+        [self publishStory];
+    }
 }
 
-// UIAlertView helper for post buttons
-- (void)showAlert:(NSString *)message
-           result:(id)result
-            error:(NSError *)error {
-    
-    NSString *alertMsg;
-    NSString *alertTitle;
-    if (error) {
-        alertTitle = @"Error";
-        if (error.fberrorShouldNotifyUser ||
-            error.fberrorCategory == FBErrorCategoryPermissions ||
-            error.fberrorCategory == FBErrorCategoryAuthenticationReopenSession) {
-            alertMsg = error.fberrorUserMessage;
-        } else {
-            alertMsg = @"Operation failed due to a connection problem, retry later.";
-        }
-    } else {
-        NSDictionary *resultDict = (NSDictionary *)result;
-        alertMsg = [NSString stringWithFormat:@"Successfully posted '%@'.", message];
-        NSString *postId = [resultDict valueForKey:@"id"];
-        if (!postId) {
-            postId = [resultDict valueForKey:@"postId"];
-        }
-        if (postId) {
-            alertMsg = [NSString stringWithFormat:@"%@\nPost ID: %@", alertMsg, postId];
-        }
-        alertTitle = @"Success";
-    }
-    
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:alertTitle
-                                                        message:alertMsg
-                                                       delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-    [alertView show];
+#pragma mark -
+- (void)publishStory
+{
+	[FBRequestConnection
+	 startWithGraphPath:@"me/feed"
+	 parameters:self.postParams
+	 HTTPMethod:@"POST"
+	 completionHandler:^(FBRequestConnection *connection,
+						 id result,
+						 NSError *error) {
+		 NSString *alertText;
+		 if (error) {
+			 alertText = [NSString stringWithFormat:
+						  @"error: domain = %@, code = %d",
+						  error.domain, error.code];
+		 }
+		 else {
+			 alertText = [NSString stringWithFormat:
+						  @"Posted action, id:%@",
+						  result[@"id"]];
+		 }
+		 [[[UIAlertView alloc] initWithTitle:@"Result"
+									 message:alertText
+									delegate:self
+						   cancelButtonTitle:@"Ok"
+						   otherButtonTitles:nil, nil]
+		  show];
+	 }];
+}
+
+- (void)alertView:(UIAlertView*)alertView
+{
+	[[self presentedViewController]
+	 dismissModalViewControllerAnimated:YES];
 }
 
 
