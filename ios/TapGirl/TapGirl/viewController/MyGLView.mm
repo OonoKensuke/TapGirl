@@ -16,6 +16,7 @@
 #import "ChangeData.h"
 #import <AudioToolbox/AudioToolbox.h>
 #import <AVFoundation/AVFoundation.h>
+#include "gameDefs.h"
 
 //iphone(非RetinaのPPI　タッチ座標はRetinaでもこの値)
 #define _PPI	163
@@ -48,6 +49,12 @@ typedef enum  {
 	STEP_CHANGE_OUT,
 	//音声終了待ち
 	STEP_WAIT_SE_END,
+	//おめでとう表示
+	STEP_DISP_CONGRATULATIONS,
+	//パスワード表示
+	STEP_DISP_PASSWORD,
+	//サイト表示
+	STEP_SHOW_SITE,
 }_STEP;
 
 typedef struct {
@@ -251,6 +258,9 @@ typedef struct {
 	float alpha = (float)((sin(M_PI * time / 2.0) + 1.0) / 2.0);
 	CColor color;
 	color.setHue((float)fmod(time / 8.0, 1.0) * 360.f, 1.f);
+	MyGLViewController *controller = [MyGLViewController getInstance];
+	//現在のテクスチャを表示する
+	BOOL bDrawNormal = true;
 
 	switch (self.step) {
 		case STEP_INIT:
@@ -259,8 +269,13 @@ typedef struct {
 				const CHANGE_PARAM *pChangeParam = [self.changeData getChangeParam];
 				[self loadTextureFromIndex:pChangeParam->indexImage toCurrent:true];
 			}
-			[self drawTextureCurrent:true withAlpha:alpha withColor:color withShader:FRSH_NORMAL];
-			self.step = STEP_NORMAL;
+			if (self.changeData.restLength == 0.0f) {
+				[self setupDispPasswordWithTime:time];
+				self.step = STEP_DISP_PASSWORD;
+			}
+			else {
+				self.step = STEP_NORMAL;
+			}
 		}
 			break;
 		case STEP_NORMAL:
@@ -288,12 +303,11 @@ typedef struct {
 					self.step = STEP_CHANGE_IN;
 					//
 					_player.numberOfLoops = 0;
-					if (![MyGLViewController getInstance].btnToggleSound.highlighted) {
+					if (!controller.btnToggleSound.highlighted) {
 						[_player play];
 					}
 				}
 			}
-			[self drawTextureCurrent:true withAlpha:alpha withColor:color withShader:FRSH_NORMAL];
 		}
 			break;
 		case STEP_CHANGE_IN:
@@ -316,6 +330,7 @@ typedef struct {
 						   withAlpha:alpha
 						   withColor:color
 						  withShader:_changeWork.pChangeParam->shader];
+			bDrawNormal = false;
 			//debug_NSLog(@"%f", timeDelta);
 			if (bChangeStep) {
 				self.step = STEP_CHANGE_OUT;
@@ -345,6 +360,7 @@ typedef struct {
 						   withAlpha:alpha
 						   withColor:color
 						withShader:_changeWork.pChangeParam->shader];
+			bDrawNormal = false;
 			
 			if (bChangeStep) {
 				self.step = STEP_WAIT_SE_END;
@@ -365,14 +381,52 @@ typedef struct {
 			if (!_player.isPlaying) {
 				[_player release];
 				_player = nil;
-				self.step = STEP_NORMAL;
+				if (self.changeData.restLength == 0.0f) {
+					//おめでとう画面へ
+					debug_NSLog(@"to end");
+					memset(&_changeWork, 0, sizeof(_changeWork));
+					_changeWork.timeBegin = time;
+					self.step = STEP_DISP_CONGRATULATIONS;
+					controller.countLabel.text = CONGRATURATIONS_MESSAGE;
+				}
+				else {
+					self.step = STEP_NORMAL;
+				}
 			}
-			[self drawTextureCurrent:true withAlpha:alpha withColor:color withShader:FRSH_NORMAL];
+		}
+			break;
+			//おめでとう表示
+		case STEP_DISP_CONGRATULATIONS:
+		{
+			double timeDelta = time - _changeWork.timeBegin;
+			if (timeDelta >= CONGRATULATIONS_WAIT_TO_PASSWORD) {
+				[self setupDispPasswordWithTime:time];
+				self.step = STEP_DISP_PASSWORD;
+			}
+		}
+			break;
+			//パスワード表示
+		case STEP_DISP_PASSWORD:
+		{
+			double timeDelta = time - _changeWork.timeBegin;
+			if (timeDelta >= CONGRATULATIONS_WAIT_TO_SHOP) {
+				[[UIApplication sharedApplication] openURL:[NSURL URLWithString:SHOP_SITE_URL]];
+				self.step = STEP_SHOW_SITE;
+			}
+		}
+			break;
+			//サイト表示
+		case STEP_SHOW_SITE:
+		{
+			//特に何も決まっていない
 		}
 			break;
 			
 		default:
 			break;
+	}
+	if (bDrawNormal) {
+		[self drawTextureCurrent:true withAlpha:alpha withColor:color withShader:FRSH_NORMAL];
 	}
 	[self drawFps];
 }
@@ -504,6 +558,13 @@ typedef struct {
 			//debug_NSLog(@"距離が短すぎる:%f", curLen);
 		}
 	}
+}
+
+- (void)setupDispPasswordWithTime:(double)time
+{
+	MyGLViewController *controller = [MyGLViewController getInstance];
+	controller.countLabel.text = SHOP_PASSWORD;
+	_changeWork.timeBegin = time;
 }
 #pragma mark -touch events
 - (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event

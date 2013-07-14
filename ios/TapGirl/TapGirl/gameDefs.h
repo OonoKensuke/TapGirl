@@ -36,4 +36,15 @@
 #define _NEND_SPOT_ID	@"3172"
 //**********必ずアプリ専用のものに書き換える**********
 
+
+#pragma mark -congratulations おめでとう画面
+//最後に数字の場所に表示するメッセージ
+#define CONGRATURATIONS_MESSAGE	@"Congratulations!"
+#define SHOP_PASSWORD	@"password"
+//パスワードを表示しにいくまでの時間
+#define CONGRATULATIONS_WAIT_TO_PASSWORD	10.0f
+//ショップサイトを表示しにいくまでの時間
+#define CONGRATULATIONS_WAIT_TO_SHOP	15.0f
+//表示するサイト
+#define SHOP_SITE_URL	@"http://www.google.co.jp/"
 #endif
