@@ -96,7 +96,7 @@ const static CHANGE_PARAM s_ChangeParams[] = {
 @property (assign, readonly, nonatomic) int countData;
 @end
 
-static ChangeData *s_Instance = nil;
+static ChangeData *s_InstanceChageData = nil;
 
 @implementation ChangeData
 @synthesize indexOfData = _indexOfData;
@@ -108,6 +108,7 @@ static ChangeData *s_Instance = nil;
 {
 	self = [super init];
 	if (self != nil) {
+		s_InstanceChageData = nil;
 		_restLength = s_ChangeParams[0].restLength;
 		_countData = sizeof(s_ChangeParams) / sizeof(s_ChangeParams[0]);
 		const CHANGE_PARAM *pLast = &s_ChangeParams[self.countData - 1];
@@ -120,7 +121,7 @@ static ChangeData *s_Instance = nil;
 			restLength = [self requestAddTouchLength:restLength];
 		}
 		self.isChange = false;
-		s_Instance = self;
+		s_InstanceChageData = self;
 	}
 	return self;
 }
@@ -128,7 +129,7 @@ static ChangeData *s_Instance = nil;
 - (void)dealloc
 {
 	NSLog(@"%s", __PRETTY_FUNCTION__);
-	s_Instance = nil;
+	s_InstanceChageData = nil;
 	[super dealloc];
 }
 - (float)requestAddTouchLength:(float)length
@@ -181,7 +182,7 @@ static ChangeData *s_Instance = nil;
 #pragma mark -class method
 + (ChangeData*)getInstance
 {
-	return s_Instance;
+	return s_InstanceChageData;
 }
 
 
