@@ -533,6 +533,9 @@ typedef struct {
 
 - (void)reqUpdateTouchPos:(CGPoint)posUpdate
 {
+	if (self.changeData.restLength == 0.0f) {
+		return;
+	}
 	if ((_posTouch.x < 0.0f) && (_posTouch.y < 0.0f)) {
 		_posTouch = posUpdate;
 	}
