@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		8A0A09881786E48F0043678E /* MyGLViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A0A098A1786E48F0043678E /* MyGLViewController.xib */; };
+		8A0A906617929AE100E4DF65 /* image01_congratulations.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8A0A906317929AE100E4DF65 /* image01_congratulations.jpg */; };
+		8A0A906717929AE100E4DF65 /* image02_congratulations.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8A0A906417929AE100E4DF65 /* image02_congratulations.jpg */; };
+		8A0A906817929AE100E4DF65 /* image03_congratulations.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8A0A906517929AE100E4DF65 /* image03_congratulations.jpg */; };
 		8A0DB695178AA17500191C35 /* shader_color_fade.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8A0DB694178AA17500191C35 /* shader_color_fade.txt */; };
 		8A1BF4F0178FB49A009DBF57 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A1BF4EF178FB49A009DBF57 /* FacebookSDK.framework */; };
 		8A1BF4F2178FB4C7009DBF57 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A1BF4F1178FB4C7009DBF57 /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -90,6 +93,9 @@
 		8A0A09871786E4730043678E /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8A0A09891786E48F0043678E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MyGLViewController.xib; sourceTree = "<group>"; };
 		8A0A098B1786E4950043678E /* ja */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ja; path = ja.lproj/MyGLViewController.xib; sourceTree = "<group>"; };
+		8A0A906317929AE100E4DF65 /* image01_congratulations.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image01_congratulations.jpg; sourceTree = "<group>"; };
+		8A0A906417929AE100E4DF65 /* image02_congratulations.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image02_congratulations.jpg; sourceTree = "<group>"; };
+		8A0A906517929AE100E4DF65 /* image03_congratulations.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image03_congratulations.jpg; sourceTree = "<group>"; };
 		8A0DB694178AA17500191C35 /* shader_color_fade.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = shader_color_fade.txt; path = resource/src/shader_color_fade.txt; sourceTree = "<group>"; };
 		8A1BF4EF178FB49A009DBF57 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = TapGirl/FacebookSDK.framework; sourceTree = "<group>"; };
 		8A1BF4F1178FB4C7009DBF57 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
@@ -235,6 +241,9 @@
 		8A4E024217857DA900D3F403 /* texture */ = {
 			isa = PBXGroup;
 			children = (
+				8A0A906317929AE100E4DF65 /* image01_congratulations.jpg */,
+				8A0A906417929AE100E4DF65 /* image02_congratulations.jpg */,
+				8A0A906517929AE100E4DF65 /* image03_congratulations.jpg */,
 				8A817ED1178D4A9600E6F5D8 /* image01_01.jpg */,
 				8A817ED2178D4A9600E6F5D8 /* image01_02.jpg */,
 				8A817ED3178D4A9600E6F5D8 /* image01_03.jpg */,
@@ -579,6 +588,9 @@
 				8A1BF4FB178FD3F4009DBF57 /* FacebookPostViewController.xib in Resources */,
 				8A1BF4FD178FE555009DBF57 /* FacebookSDKResources.bundle in Resources */,
 				8A1BF4FF178FE55D009DBF57 /* FBUserSettingsViewResources.bundle in Resources */,
+				8A0A906617929AE100E4DF65 /* image01_congratulations.jpg in Resources */,
+				8A0A906717929AE100E4DF65 /* image02_congratulations.jpg in Resources */,
+				8A0A906817929AE100E4DF65 /* image03_congratulations.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
