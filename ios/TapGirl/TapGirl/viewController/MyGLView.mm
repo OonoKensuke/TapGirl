@@ -173,7 +173,15 @@ typedef struct {
 	@try {
 		int indexTexSize = [self getIndexOfTexSize];
 		assert(indexTexSize > 0);
-		NSString* nameFile = [NSString stringWithFormat:@"image%02d_%02d.jpg", indexTexSize, index];
+		NSString* nameFile = nil;
+		if (self.changeData.restLength == 0.0f) {
+			debug_NSLog(@"last");
+			nameFile = [NSString stringWithFormat:@"image%02d_congratulations.jpg", indexTexSize];
+		}
+		else {
+			nameFile = [NSString stringWithFormat:@"image%02d_%02d.jpg", indexTexSize, index];
+		}
+		
 		debug_NSLog(@"%@ をテクスチャとして読み込みます", nameFile);
 		NSString* strPath = [[NSBundle mainBundle] pathForResource:nameFile ofType:nil];
 		if ([[NSFileManager defaultManager] fileExistsAtPath:strPath]) {
