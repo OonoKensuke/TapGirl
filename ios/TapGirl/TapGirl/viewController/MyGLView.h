@@ -14,6 +14,7 @@
 -(void)drawMain;
 -(NSString*)buildShader;
 -(BOOL)loadShaders;
+-(void)resetTouchLength:(float)length;
 + (MyGLView*)getInstance;
 
 @property(assign, nonatomic) float touchLength;

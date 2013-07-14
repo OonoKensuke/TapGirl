@@ -18,6 +18,8 @@ extern "C" {
 
 #include "gameDefs.h"
 
+#define _SAVETAG_TOUCH_LENGTH	@"SaveTouchLength"
+
 @interface MyGLViewController ()
 {
 	GADBannerView *_admobView;
@@ -59,6 +61,9 @@ static MyGLViewController* s_Instance = nil;
 	s_Instance = self;
 	_adsInitialized = false;
 	_isAppeared = false;
+	int length = [self loadData];
+	debug_NSLog(@"load len = %d", length);
+	[self.glView resetTouchLength:(float)length];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -76,8 +81,7 @@ static MyGLViewController* s_Instance = nil;
 			debug_NSLog(@"%@", error);
 		}
 		ChangeData* changeData = [ChangeData getInstance];
-		const CHANGE_PARAM *pParam = [changeData getChangeParam];
-		int lenInit = (int)(pParam->restLength);
+		int lenInit = (int)(changeData.restLength);
 		self.countLabel.text = [NSString stringWithFormat:@"%d", lenInit];
 		_isAppeared = true;
 	}
@@ -90,6 +94,7 @@ static MyGLViewController* s_Instance = nil;
 	debug_NSLog(@"%s", __PRETTY_FUNCTION__);
 	[super viewWillDisappear:animated];
 	[self.glView stopAnimation];
+	[self saveData];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -230,6 +235,37 @@ static MyGLViewController* s_Instance = nil;
 											   composeViewControllerForServiceType:SLServiceTypeFacebook];
 	[facebookPostVC setInitialText:str];
 	[self presentViewController:facebookPostVC animated:YES completion:nil];	
+}
+
+#pragma mark -Save Load
+- (BOOL)saveData
+{
+	BOOL result = false;
+	@try {
+		debug_NSLog(@"%s", __PRETTY_FUNCTION__);
+		NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+		int len = (int)self.glView.touchLength;
+		[userDefaults setInteger:len forKey:_SAVETAG_TOUCH_LENGTH];
+		[userDefaults synchronize];
+	}
+	@catch (NSException *exception) {
+		NSLog(@"%s %@ %@", __FUNCTION__, [exception name], [exception reason]);
+	}
+	return result;
+}
+
+- (int)loadData
+{
+	int result = 0;
+	@try {
+		debug_NSLog(@"%s", __PRETTY_FUNCTION__);
+		NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+		result = [userDefaults integerForKey:_SAVETAG_TOUCH_LENGTH];
+	}
+	@catch (NSException *exception) {
+		NSLog(@"%s %@ %@", __FUNCTION__, [exception name], [exception reason]);
+	}
+	return result;
 }
 
 #pragma mark -IBAction

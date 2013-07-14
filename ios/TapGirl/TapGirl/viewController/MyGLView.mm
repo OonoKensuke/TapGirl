@@ -224,6 +224,16 @@ typedef struct {
 	return result;
 }
 
+-(void)resetTouchLength:(float)length
+{
+	self.touchLength = length;
+	if (self.changeData != nil) {
+		[self.changeData release];
+	}
+	self.changeData = [[ChangeData alloc] initWithTouchLength:self.touchLength];
+}
+
+
 #pragma mark -draw
 // 描画
 -(void)drawMain {

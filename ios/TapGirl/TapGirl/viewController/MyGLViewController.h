@@ -26,5 +26,7 @@
 
 +(MyGLViewController*) getInstance;
 - (IBAction)onPushButton:(id)sender;
+- (BOOL)saveData;
+
 
 @end
