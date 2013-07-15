@@ -15,8 +15,10 @@
 -(NSString*)buildShader;
 -(BOOL)loadShaders;
 -(void)resetTouchLength:(float)length;
+- (void)updateLabelInfo;
 + (MyGLView*)getInstance;
 
 @property(assign, nonatomic) float touchLength;
+@property(assign, nonatomic) int roundNum;
 
 @end

@@ -100,6 +100,7 @@ typedef struct {
 @synthesize arrayShader = _arrayShader;
 @synthesize changeData = _changeData;
 @synthesize step = _step;
+@synthesize roundNum = _roundNum;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -130,6 +131,8 @@ typedef struct {
 		self.changeData = [[ChangeData alloc] initWithTouchLength:self.touchLength];
 		_player = nil;
 		self.step = STEP_INIT;
+		//インスタンスは一つだけとする。違う画面でこのクラスは使わないこと
+		assert(s_Instance == nil);
 		s_Instance = self;
     }
     return self;
@@ -265,16 +268,15 @@ typedef struct {
 	switch (self.step) {
 		case STEP_INIT:
 		{
+			if (self.changeData.restLength == 0.0f) {
+				debug_NSLog(@"タッチ距離を初期化します");
+				[self resetTouchLength:0.0f];
+				[self updateLabelInfo];
+			}
+			self.step = STEP_NORMAL;
 			{
 				const CHANGE_PARAM *pChangeParam = [self.changeData getChangeParam];
 				[self loadTextureFromIndex:pChangeParam->indexImage toCurrent:true];
-			}
-			if (self.changeData.restLength == 0.0f) {
-				[self setupDispPasswordWithTime:time];
-				self.step = STEP_DISP_PASSWORD;
-			}
-			else {
-				self.step = STEP_NORMAL;
 			}
 		}
 			break;
@@ -411,6 +413,10 @@ typedef struct {
 			double timeDelta = time - _changeWork.timeBegin;
 			if (timeDelta >= CONGRATULATIONS_WAIT_TO_SHOP) {
 				[[UIApplication sharedApplication] openURL:[NSURL URLWithString:SHOP_SITE_URL]];
+				//周回数を保存する
+				self.roundNum++;
+				//バックグラウンドに行くとき保存されるので、ここで保存する必要は無い
+				//[controller saveData];
 				self.step = STEP_SHOW_SITE;
 			}
 		}
@@ -531,6 +537,17 @@ typedef struct {
 	_posTouch.x = _posTouch.y = -1.0f;
 }
 
+- (void)updateLabelInfo
+{
+	MyGLViewController* controller = [MyGLViewController getInstance];
+	int iLength = self.changeData.objectiveLength - (int)(self.touchLength);
+	NSString* strTouch = [NSString stringWithFormat:@"%i", iLength];
+	controller.countLabel.text = strTouch;
+	NSString* strRound = [NSString stringWithFormat:@"%d周目", self.roundNum + 1];
+	controller.roundLabel.text = strRound;
+	
+}
+
 - (void)reqUpdateTouchPos:(CGPoint)posUpdate
 {
 	if (self.changeData.restLength == 0.0f) {
@@ -553,9 +570,7 @@ typedef struct {
 			self.touchLength += curLen;
 			self.touchLength = MIN(self.touchLength, self.changeData.objectiveLength);
 			_posTouch = posUpdate;
-			int iLength = self.changeData.objectiveLength - (int)(self.touchLength);
-			NSString* strTouch = [NSString stringWithFormat:@"%i", iLength];
-			[MyGLViewController getInstance].countLabel.text = strTouch;
+			[self updateLabelInfo];
 		}
 		else {
 			//debug_NSLog(@"距離が短すぎる:%f", curLen);

@@ -20,6 +20,7 @@
 @property (retain, nonatomic) IBOutlet UIButton *btnMoreApps;
 @property (retain, nonatomic) IBOutlet UIButton *btnTweet;
 @property (retain, nonatomic) IBOutlet UIButton *btnFacebook;
+@property (retain, nonatomic) IBOutlet UILabel *roundLabel;
 
 
 @property (nonatomic, retain) NADView* nadView;

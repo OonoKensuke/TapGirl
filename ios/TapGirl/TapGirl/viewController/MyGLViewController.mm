@@ -19,6 +19,7 @@ extern "C" {
 #include "gameDefs.h"
 
 #define _SAVETAG_TOUCH_LENGTH	@"SaveTouchLength"
+#define _SAVETAG_ROUND_NUM		@"SaveRoundNum"
 
 @interface MyGLViewController ()
 {
@@ -61,9 +62,8 @@ static MyGLViewController* s_Instance = nil;
 	s_Instance = self;
 	_adsInitialized = false;
 	_isAppeared = false;
-	int length = [self loadData];
-	debug_NSLog(@"load len = %d", length);
-	[self.glView resetTouchLength:(float)length];
+	BOOL bLoadResult = [self loadData];
+	assert(bLoadResult);
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -80,9 +80,12 @@ static MyGLViewController* s_Instance = nil;
 		if (error != nil) {
 			debug_NSLog(@"%@", error);
 		}
+		/*
 		ChangeData* changeData = [ChangeData getInstance];
 		int lenInit = (int)(changeData.restLength);
 		self.countLabel.text = [NSString stringWithFormat:@"%d", lenInit];
+		 */
+		[self.glView updateLabelInfo];
 		_isAppeared = true;
 	}
 
@@ -120,6 +123,7 @@ static MyGLViewController* s_Instance = nil;
     [_btnMoreApps release];
 	[_btnTweet release];
 	[_btnFacebook release];
+    [_roundLabel release];
 	[super dealloc];
 }
 - (void)viewDidUnload {
@@ -131,6 +135,7 @@ static MyGLViewController* s_Instance = nil;
 	[_admobView release];
 	[self setBtnTweet:nil];
 	[self setBtnFacebook:nil];
+    [self setRoundLabel:nil];
 	[super viewDidUnload];
 	self.glView = nil;
 }
@@ -246,6 +251,7 @@ static MyGLViewController* s_Instance = nil;
 		NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 		int len = (int)self.glView.touchLength;
 		[userDefaults setInteger:len forKey:_SAVETAG_TOUCH_LENGTH];
+		[userDefaults setInteger:self.glView.roundNum forKey:_SAVETAG_ROUND_NUM];
 		[userDefaults synchronize];
 	}
 	@catch (NSException *exception) {
@@ -254,13 +260,20 @@ static MyGLViewController* s_Instance = nil;
 	return result;
 }
 
-- (int)loadData
+- (BOOL)loadData
 {
-	int result = 0;
+	BOOL result = false;
 	@try {
+		int iData = -1;
 		debug_NSLog(@"%s", __PRETTY_FUNCTION__);
 		NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-		result = [userDefaults integerForKey:_SAVETAG_TOUCH_LENGTH];
+		iData = [userDefaults integerForKey:_SAVETAG_TOUCH_LENGTH];
+		debug_NSLog(@"load len = %d", iData);
+		[self.glView resetTouchLength:(float)iData];
+		iData = [userDefaults integerForKey:_SAVETAG_ROUND_NUM];
+		self.glView.roundNum = iData;
+		
+		result = true;
 	}
 	@catch (NSException *exception) {
 		NSLog(@"%s %@ %@", __FUNCTION__, [exception name], [exception reason]);
