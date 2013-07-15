@@ -12,7 +12,7 @@
 #pragma mark -SNS
 
 //SNS拡散URL
-#define SNS_URL	@"http://www.apple.com/"
+#define SNS_URL	@"http://sekai-seifuku.com/"
 //SNSアプリ名
 #define SNS_APP_NAME	@"アプリ名"
 //SNSハッシュタグ
@@ -36,6 +36,9 @@
 #define _NEND_SPOT_ID	@"3172"
 //**********必ずアプリ専用のものに書き換える**********
 
+#pragma mark -More Apps
+#define MORE_APPS_SITE	@"http://sekai-seifuku.com/"
+
 
 #pragma mark -congratulations おめでとう画面
 //最後に数字の場所に表示するメッセージ
@@ -46,5 +49,5 @@
 //ショップサイトを表示しにいくまでの時間
 #define CONGRATULATIONS_WAIT_TO_SHOP	15.0f
 //表示するサイト
-#define SHOP_SITE_URL	@"http://www.google.co.jp/"
+#define SHOP_SITE_URL	@"http://sekai-seifuku.com/"
 #endif

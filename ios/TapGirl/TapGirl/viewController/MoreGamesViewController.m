@@ -7,6 +7,7 @@
 //
 
 #import "MoreGamesViewController.h"
+#include "gameDefs.h"
 
 @interface MoreGamesViewController ()
 
@@ -27,7 +28,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-	NSString* strUrl = @"http://apple.com";
+	NSString* strUrl = MORE_APPS_SITE;
 	NSURL *url = [NSURL URLWithString:strUrl];
 	NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
 	[self.webView loadRequest:requestObj];
