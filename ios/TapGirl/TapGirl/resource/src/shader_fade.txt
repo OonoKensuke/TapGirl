@@ -4,5 +4,6 @@ uniform lowp vec4 u_color;
 uniform lowp float u_alpha;
 uniform sampler2D u_texture;
 void main(){
-	gl_FragColor = texture2D(u_texture, v_texCoord) * u_alpha;
+	vec4 col = texture2D(u_texture, v_texCoord);
+	gl_FragColor = vec4(col.r,col.g,col.b,u_alpha);
 }
