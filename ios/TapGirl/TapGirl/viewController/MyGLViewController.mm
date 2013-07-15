@@ -80,11 +80,6 @@ static MyGLViewController* s_Instance = nil;
 		if (error != nil) {
 			debug_NSLog(@"%@", error);
 		}
-		/*
-		ChangeData* changeData = [ChangeData getInstance];
-		int lenInit = (int)(changeData.restLength);
-		self.countLabel.text = [NSString stringWithFormat:@"%d", lenInit];
-		 */
 		[self.glView updateLabelInfo];
 		_isAppeared = true;
 	}

@@ -47,6 +47,8 @@ typedef enum  {
 	STEP_CHANGE_IN,
 	//画像変更後半
 	STEP_CHANGE_OUT,
+	//クロスフェード
+	STEP_CROSS_FADE,
 	//音声終了待ち
 	STEP_WAIT_SE_END,
 	//おめでとう表示
@@ -296,18 +298,19 @@ typedef struct {
 				if (self.changeData.isChange) {
 					self.changeData.isChange = false;
 					memset(&_changeWork, 0, sizeof(_changeWork));
-					//アルファなどの変更に使う基準となる現在時刻
-					_changeWork.timeBegin = time;
 					//次のテクスチャを読み込む
 					_changeWork.pChangeParam = [self.changeData getChangeParam];
 					[self loadTextureFromIndex:_changeWork.pChangeParam->indexImage
 									 toCurrent:false];
-					self.step = STEP_CHANGE_IN;
+					self.step = STEP_CROSS_FADE;
 					//
 					_player.numberOfLoops = 0;
 					if (!controller.btnToggleSound.highlighted) {
 						[_player play];
 					}
+					debug_NSLog(@"change effect");
+					//アルファなどの変更に使う基準となる現在時刻
+					_changeWork.timeBegin = [NSDate timeIntervalSinceReferenceDate];
 				}
 			}
 		}
@@ -373,6 +376,38 @@ typedef struct {
 				self.textureNext = nil;
 			}
 			
+		}
+			break;
+			//クロスフェード
+		case STEP_CROSS_FADE:
+		{
+			BOOL bChangeStep = false;
+			double timeDelta = time - _changeWork.timeBegin;
+			if (timeDelta >= _changeWork.pChangeParam->delayIn) {
+				bChangeStep = true;
+			}
+			float theta = (M_PI_2 * timeDelta) / _changeWork.pChangeParam->delayIn;
+			alpha = sinf(theta);
+			if (bChangeStep) {
+				//切り替え時点の値に修正
+				alpha = 1.0f;
+			}
+			debug_NSLog(@"delta:%f, alpha:%f", timeDelta, alpha);
+			color.setByInt(255, 255, 255, 255);
+			//重ねる
+			[self drawTextureCurrent:true withAlpha:alpha withColor:color withShader:FRSH_NORMAL];
+			[self drawTextureCurrent:false withAlpha:alpha withColor:color withShader:FRSH_FADE];
+			
+			bDrawNormal = false;
+			
+			if (bChangeStep) {
+				self.step = STEP_WAIT_SE_END;
+				_changeWork.timeBegin = time;
+				debug_NSLog(@"rc:%d", [self.textureCurrent retainCount]);
+				[self.textureCurrent release];
+				self.textureCurrent = self.textureNext;
+				self.textureNext = nil;
+			}
 		}
 			break;
 			//音声終了待ち
