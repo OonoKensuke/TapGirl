@@ -26,6 +26,7 @@ public class TapGirlActivity extends Activity {
         s_Instance = this;
         mRenderer = new MyRenderer();
         mGLSurfaceView = MyGLUtil.initGLES20(this, mRenderer);
+        mGLSurfaceView.setDebugFlags(GLSurfaceView.DEBUG_CHECK_GL_ERROR	 | 	GLSurfaceView.DEBUG_LOG_GL_CALLS);
         setContentView(mGLSurfaceView);
     }
 }
