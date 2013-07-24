@@ -17,58 +17,36 @@ public class MyGLShader extends IGLShader {
 	static final int VA_POSITION = 0;
 	static final int VA_TEXCOORD = 1;
 	
-	private boolean mTest = false;
 	public boolean build(Activity activity)
 	{
 		boolean result = false;
-		if (mTest) {
+		try {
+			String[] attrs = 
+				{
+					"a_Position",
+					//"a_TexCoord"					
+			};
+			String[] uniforms = null;
+			/*
+				{
+				"u_Sampler"
+			};
+			*/
         	String vshSrc = loadTextAsset("vshader.txt", activity);
         	String fshSrc = loadTextAsset("fshader.txt", activity);
-			// シェーダを初期化する
-			int program = MyGLUtil.initShaders(vshSrc, fshSrc);
-
-			// attribute変数の格納場所を取得する
-			int a_Position = GLES20.glGetAttribLocation(program, "a_Position");
-			if (a_Position == -1) {
-				throw new RuntimeException("attribute変数の格納場所の取得に失敗");
-			}
-			// attribute変数に点の座標を代入する
-			//GLES20.glVertexAttrib3f(a_Position, 0.0f, 0.0f, 0.0f);
-			// 表示されない場合は、
-			MyGLUtil.glVertexAttrib3f(a_Position, 0.0f, 0.0f, 0.0f);
-
-			// 画面をクリアする色を設定する
-			GLES20.glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
+        	
+        	
+        	result = buildWithVsh(vshSrc, fshSrc, attrs, uniforms);
+        	if (result) {
+       	     FloatBuffer vertex = MyGLUtil.makeFloatBuffer(new float[] { 0.0f, 0.0f, 0.0f });
+    	     GLES20.glVertexAttribPointer(VA_POSITION, 3, GLES20.GL_FLOAT, false, 0, vertex);
+    	     GLES20.glEnableVertexAttribArray(VA_POSITION);
+        	}
 		}
-		else {
-			try {
-				String[] attrs = 
-					{
-						"a_Position",
-						//"a_TexCoord"					
-				};
-				String[] uniforms = null;
-				/*
-					{
-					"u_Sampler"
-				};
-				*/
-	        	String vshSrc = loadTextAsset("vshader.txt", activity);
-	        	String fshSrc = loadTextAsset("fshader.txt", activity);
-	        	
-	        	
-	        	result = buildWithVsh(vshSrc, fshSrc, attrs, uniforms);
-	        	if (result) {
-	       	     FloatBuffer vertex = MyGLUtil.makeFloatBuffer(new float[] { 0.0f, 0.0f, 0.0f });
-	    	     GLES20.glVertexAttribPointer(VA_POSITION, 3, GLES20.GL_FLOAT, false, 0, vertex);
-	    	     GLES20.glEnableVertexAttribArray(VA_POSITION);
-	        	}
-			}
-			catch (Exception exp)
-			{
-				Log.d("exception", exp.getMessage());
-				assert(false);
-			}
+		catch (Exception exp)
+		{
+			Log.d("exception", exp.getMessage());
+			assert(false);
 		}
 		
 		return result;

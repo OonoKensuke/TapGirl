@@ -12,7 +12,6 @@ import jp.lolipop.dcc.lib.IGLRenderer;
 
 public class MyRenderer extends IGLRenderer {
 	
-	private boolean mTest = true;
 	private MyGLShader mShader = null;
 	@Override
 	public void onDrawFrame(GL10 gl) {
