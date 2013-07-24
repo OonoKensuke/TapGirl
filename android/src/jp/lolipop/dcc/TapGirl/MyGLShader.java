@@ -10,39 +10,74 @@ import android.content.res.AssetManager;
 import android.opengl.GLES20;
 import android.util.Log;
 import jp.lolipop.dcc.lib.IGLShader;
+import jp.lolipop.dcc.lib.MyGLUtil;
 
 public class MyGLShader extends IGLShader {
+	static final int VA_POSITION = 0;
+	static final int VA_TEXCOORD = 1;
+	
+	// 頂点シェーダのプログラム
+	private static final String VSHADER_SOURCE =
+		"attribute vec4 a_Position;\n" + // attribute変数
+		"void main() {\n" +
+		"  gl_Position = a_Position;\n" + // 点の座標を設定する
+		"  gl_PointSize = 20.0;\n" +      // 点のサイズを設定する
+		"}\n";
+
+	// フラグメントシェーダのプログラム
+	private static final String FSHADER_SOURCE =
+		"void main() {\n" +
+		"    gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);\n" + // 点の色を設定する
+		"}\n";
+	private boolean mTest = true;
 	public boolean build(Activity activity)
 	{
-		final int VA_POSITION = 0;
-		final int VA_TEXCOORD = 1;
-		
 		boolean result = false;
-		try {
-			String[] attrs = null;
-			/*
-				{
-					"a_Position",
-					//"a_TexCoord"					
-			};
-			*/
-			String[] uniforms = null;
-			/*
-				{
-				"u_Sampler"
-			};
-			*/
-        	String vshSrc = loadTextAsset("vshader.txt", activity);
-        	String fshSrc = loadTextAsset("fshader.txt", activity);
-        	
-        	
-        	result = buildWithVsh(vshSrc, fshSrc, attrs, uniforms);
+		if (mTest) {
+			// シェーダを初期化する
+			int program = MyGLUtil.initShaders(VSHADER_SOURCE, FSHADER_SOURCE);
+
+			// attribute変数の格納場所を取得する
+			int a_Position = GLES20.glGetAttribLocation(program, "a_Position");
+			if (a_Position == -1) {
+				throw new RuntimeException("attribute変数の格納場所の取得に失敗");
+			}
+			// attribute変数に点の座標を代入する
+			//GLES20.glVertexAttrib3f(a_Position, 0.0f, 0.0f, 0.0f);
+			// 表示されない場合は、
+			MyGLUtil.glVertexAttrib3f(a_Position, 0.0f, 0.0f, 0.0f);
+
+			// 画面をクリアする色を設定する
+			GLES20.glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
 		}
-		catch (Exception exp)
-		{
-			Log.d("exception", exp.getMessage());
-			assert(false);
+		else {
+			try {
+				String[] attrs = null;
+				/*
+					{
+						"a_Position",
+						//"a_TexCoord"					
+				};
+				*/
+				String[] uniforms = null;
+				/*
+					{
+					"u_Sampler"
+				};
+				*/
+	        	String vshSrc = loadTextAsset("vshader.txt", activity);
+	        	String fshSrc = loadTextAsset("fshader.txt", activity);
+	        	
+	        	
+	        	result = buildWithVsh(vshSrc, fshSrc, attrs, uniforms);
+			}
+			catch (Exception exp)
+			{
+				Log.d("exception", exp.getMessage());
+				assert(false);
+			}
 		}
+		
 		return result;
 	}
 	
