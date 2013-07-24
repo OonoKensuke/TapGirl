@@ -3,7 +3,7 @@ package jp.lolipop.dcc.lib;
 import android.opengl.GLES20;
 import android.util.Log;
 
-public class IGLShader {
+public abstract class IGLShader {
 	private int mProgramId = -1;
 	public int getProgramId() {
 		return mProgramId;
@@ -37,6 +37,19 @@ public class IGLShader {
 		GLES20.glUseProgram(getProgramId());
 	}
 	
+	protected abstract void onDispose();
+	
+	/**
+	 * 後始末
+	 */
+	public void dispose()
+	{
+		if (getProgramId() > 0) {
+			GLES20.glDeleteProgram(getProgramId());
+		}
+		onDispose();
+	}
+	
 	/**
 	 * @param vshSrc 頂点シェーダーソースコード
 	 * @param fshSrc フラグメントシェーダーソースコード
@@ -54,16 +67,20 @@ public class IGLShader {
 			mProgramId = MyGLUtil.createProgram(vshSrc, fshSrc);
 			assert(mProgramId > 0);
 			// アトリビュート変数（頂点フォーマットメンバ）の設定
-			assert(attrs.length <= 16);
-			for (int i = 0; i < attrs.length; i++) {
-				GLES20.glBindAttribLocation(getProgramId(), i, attrs[i]);
+			if (attrs != null) {
+				assert(attrs.length <= 16);
+				for (int i = 0; i < attrs.length; i++) {
+					GLES20.glBindAttribLocation(getProgramId(), i, attrs[i]);
+				}
 			}
-			// ユニフォーム変数の位置を取得
-			mUniformLocations = new int[uniforms.length];
-			for (int i = 0; i < uniforms.length; i++) {
-				mUniformLocations[i] = GLES20.glGetUniformLocation(getProgramId(), uniforms[i]);
-				if (mUniformLocations[i] < 0) {
-					throw new Exception("can't find uniform " + uniforms[i]);
+			if (uniforms != null) {
+				// ユニフォーム変数の位置を取得
+				mUniformLocations = new int[uniforms.length];
+				for (int i = 0; i < uniforms.length; i++) {
+					mUniformLocations[i] = GLES20.glGetUniformLocation(getProgramId(), uniforms[i]);
+					if (mUniformLocations[i] < 0) {
+						throw new Exception("can't find uniform " + uniforms[i]);
+					}
 				}
 			}
 			result = true;

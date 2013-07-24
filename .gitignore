@@ -20,3 +20,4 @@ MyGLUtil.class
 IGLRenderer.class
 MyRenderer.class
 IGLShader.class
+MyGLShader.class
