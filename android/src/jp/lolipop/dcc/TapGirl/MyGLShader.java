@@ -7,23 +7,34 @@ import java.io.InputStreamReader;
 
 import android.app.Activity;
 import android.content.res.AssetManager;
+import android.opengl.GLES20;
 import android.util.Log;
 import jp.lolipop.dcc.lib.IGLShader;
 
 public class MyGLShader extends IGLShader {
 	public boolean build(Activity activity)
 	{
+		final int VA_POSITION = 0;
+		final int VA_TEXCOORD = 1;
+		
 		boolean result = false;
 		try {
-			String[] attrs = {
+			String[] attrs = null;
+			/*
+				{
 					"a_Position",
-					"a_TexCoord"					
+					//"a_TexCoord"					
 			};
-			String[] uniforms = {
+			*/
+			String[] uniforms = null;
+			/*
+				{
 				"u_Sampler"
 			};
+			*/
         	String vshSrc = loadTextAsset("vshader.txt", activity);
         	String fshSrc = loadTextAsset("fshader.txt", activity);
+        	
         	
         	result = buildWithVsh(vshSrc, fshSrc, attrs, uniforms);
 		}

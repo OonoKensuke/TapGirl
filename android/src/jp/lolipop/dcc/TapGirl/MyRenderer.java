@@ -9,10 +9,11 @@ import android.util.Log;
 import jp.lolipop.dcc.lib.IGLRenderer;
 
 public class MyRenderer extends IGLRenderer {
+	private MyGLShader mShader = null;
 	@Override
 	public void onDrawFrame(GL10 gl) {
 		GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
-		
+		GLES20.glDrawArrays(GLES20.GL_POINTS, 0, 1);
 	}
 
 	@Override
@@ -25,7 +26,9 @@ public class MyRenderer extends IGLRenderer {
 	@Override
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
 		Log.v("info", "MyRenderer#onSurfaceCreated ");
-		GLES20.glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+		GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		mShader = new MyGLShader();
+		mShader.build(TapGirlActivity.getInstance());
 		
 	}
 
