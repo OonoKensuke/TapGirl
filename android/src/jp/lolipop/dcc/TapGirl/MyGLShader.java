@@ -16,26 +16,15 @@ public class MyGLShader extends IGLShader {
 	static final int VA_POSITION = 0;
 	static final int VA_TEXCOORD = 1;
 	
-	// 頂点シェーダのプログラム
-	private static final String VSHADER_SOURCE =
-		"attribute vec4 a_Position;\n" + // attribute変数
-		"void main() {\n" +
-		"  gl_Position = a_Position;\n" + // 点の座標を設定する
-		"  gl_PointSize = 20.0;\n" +      // 点のサイズを設定する
-		"}\n";
-
-	// フラグメントシェーダのプログラム
-	private static final String FSHADER_SOURCE =
-		"void main() {\n" +
-		"    gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);\n" + // 点の色を設定する
-		"}\n";
 	private boolean mTest = true;
 	public boolean build(Activity activity)
 	{
 		boolean result = false;
 		if (mTest) {
+        	String vshSrc = loadTextAsset("vshader.txt", activity);
+        	String fshSrc = loadTextAsset("fshader.txt", activity);
 			// シェーダを初期化する
-			int program = MyGLUtil.initShaders(VSHADER_SOURCE, FSHADER_SOURCE);
+			int program = MyGLUtil.initShaders(vshSrc, fshSrc);
 
 			// attribute変数の格納場所を取得する
 			int a_Position = GLES20.glGetAttribLocation(program, "a_Position");
