@@ -38,8 +38,8 @@ public class MyGLShader extends IGLShader {
         	
         	result = buildWithVsh(vshSrc, fshSrc, attrs, uniforms);
         	if (result) {
-       	     FloatBuffer vertex = MyGLUtil.makeFloatBuffer(new float[] { 0.0f, 0.0f, 0.0f });
-    	     GLES20.glVertexAttribPointer(VA_POSITION, 3, GLES20.GL_FLOAT, false, 0, vertex);
+       	     FloatBuffer vertex = MyGLUtil.makeFloatBuffer(new float[] { 0.0f, 0.5f });
+    	     GLES20.glVertexAttribPointer(VA_POSITION, 2, GLES20.GL_FLOAT, false, 0, vertex);
     	     GLES20.glEnableVertexAttribArray(VA_POSITION);
         	}
 		}
