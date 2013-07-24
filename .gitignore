@@ -18,3 +18,4 @@ android/gen/jp/lolipop/dcc/TapGirl/BuildConfig.java
 android/gen/jp/lolipop/dcc/TapGirl/R.java
 MyGLUtil.class
 IGLRenderer.class
+MyRenderer.class

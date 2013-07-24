@@ -4,6 +4,7 @@ import javax.microedition.khronos.opengles.GL10;
 
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
+import android.util.Log;
 
 
 public class IGLRenderer implements GLSurfaceView.Renderer {
@@ -11,6 +12,7 @@ public class IGLRenderer implements GLSurfaceView.Renderer {
 	@Override
 	public void onDrawFrame(GL10 gl) {
 		// TODO 自動生成されたメソッド・スタブ
+		Log.v("info", "");
 		
 	}
 
