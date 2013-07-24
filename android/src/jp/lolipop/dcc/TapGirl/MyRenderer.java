@@ -12,11 +12,16 @@ import jp.lolipop.dcc.lib.IGLRenderer;
 
 public class MyRenderer extends IGLRenderer {
 	
-	private MyGLShader mShader = null;
+	private MyGLShader mShaderCurrent = null;
+	private MyGLShader mShaderNext = null;
 	@Override
 	public void onDrawFrame(GL10 gl) {
 		GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
-		mShader.use();
+		mShaderCurrent.use();
+		mShaderCurrent.testUseMyPosition();
+		GLES20.glDrawArrays(GLES20.GL_POINTS, 0, 1);
+		mShaderNext.use();
+		mShaderNext.testUseMyPosition();
 		GLES20.glDrawArrays(GLES20.GL_POINTS, 0, 1);
 	}
 
@@ -31,9 +36,13 @@ public class MyRenderer extends IGLRenderer {
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
 		Log.v("info", "MyRenderer#onSurfaceCreated ");
 		GLES20.glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
-		mShader = new MyGLShader();
-		mShader.build(TapGirlActivity.getInstance());
+		mShaderNext = new MyGLShader();
+		mShaderNext.build(TapGirlActivity.getInstance());
+		mShaderNext.testPoint(0.0f, -0.5f);
 		
+		mShaderCurrent = new MyGLShader();
+		mShaderCurrent.build(TapGirlActivity.getInstance());
+		mShaderCurrent.testPoint(0.0f, 0.5f);
 	}
 
 }
