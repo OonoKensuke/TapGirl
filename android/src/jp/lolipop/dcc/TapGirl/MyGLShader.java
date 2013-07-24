@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.FloatBuffer;
 
 import android.app.Activity;
 import android.content.res.AssetManager;
@@ -16,7 +17,7 @@ public class MyGLShader extends IGLShader {
 	static final int VA_POSITION = 0;
 	static final int VA_TEXCOORD = 1;
 	
-	private boolean mTest = true;
+	private boolean mTest = false;
 	public boolean build(Activity activity)
 	{
 		boolean result = false;
@@ -41,13 +42,11 @@ public class MyGLShader extends IGLShader {
 		}
 		else {
 			try {
-				String[] attrs = null;
-				/*
+				String[] attrs = 
 					{
 						"a_Position",
 						//"a_TexCoord"					
 				};
-				*/
 				String[] uniforms = null;
 				/*
 					{
@@ -59,6 +58,11 @@ public class MyGLShader extends IGLShader {
 	        	
 	        	
 	        	result = buildWithVsh(vshSrc, fshSrc, attrs, uniforms);
+	        	if (result) {
+	       	     FloatBuffer vertex = MyGLUtil.makeFloatBuffer(new float[] { 0.0f, 0.0f, 0.0f });
+	    	     GLES20.glVertexAttribPointer(VA_POSITION, 3, GLES20.GL_FLOAT, false, 0, vertex);
+	    	     GLES20.glEnableVertexAttribArray(VA_POSITION);
+	        	}
 			}
 			catch (Exception exp)
 			{
