@@ -4,3 +4,15 @@ ios/TapGirl/TapGirl.xcodeproj/xcuserdata/nakano_michiharu.xcuserdatad/xcschemes/
 Breakpoints.xcbkptlist
 localize.py
 jarlist.cache
+android/bin/TapGirl.apk
+android/bin/classes.dex
+android/bin/classes/jp/lolipop/dcc/TapGirl/BuildConfig.class
+android/bin/classes/jp/lolipop/dcc/TapGirl/R$attr.class
+android/bin/classes/jp/lolipop/dcc/TapGirl/R$drawable.class
+android/bin/classes/jp/lolipop/dcc/TapGirl/R$layout.class
+android/bin/classes/jp/lolipop/dcc/TapGirl/R$string.class
+android/bin/classes/jp/lolipop/dcc/TapGirl/R.class
+android/bin/classes/jp/lolipop/dcc/TapGirl/TapGirlActivity.class
+android/bin/resources.ap_
+android/gen/jp/lolipop/dcc/TapGirl/BuildConfig.java
+android/gen/jp/lolipop/dcc/TapGirl/R.java
