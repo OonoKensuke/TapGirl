@@ -17,21 +17,18 @@ public class MyRenderer extends IGLRenderer {
 	private MyGLShader mShaderCurrent = null;
 	private MyGLShader mShaderNext = null;
 	
-	private FloatBuffer mFloatBufferCurrent = null;
-	private FloatBuffer mFloatBufferNext = null;
-	
-	private int mVertexBufferCurrent = -1;
-	private int mVertexBufferNext = -1;
+	CPrimitive mPrimCurrent = null;
+	CPrimitive mPrimNext = null;
 	
 	@Override
 	public void onDrawFrame(GL10 gl) {
 		GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
+
 		mShaderCurrent.use();
-//		mShaderCurrent.testUseMyPosition();
-//		GLES20.glDrawArrays(GLES20.GL_POINTS, 0, 1);
-		mShaderCurrent.drawArraysMy(GLES20.GL_POINTS, mVertexBufferCurrent, 0, 1, null, 1.0f);
+		mShaderCurrent.drawArraysMy(mPrimCurrent.getPrimitiveType(), mPrimCurrent.getVertexBufferId(), 0, mPrimCurrent.getNumVertices(), null, 1.0f);
+		
 		mShaderNext.use();
-		mShaderNext.drawArraysMy(GLES20.GL_POINTS, mVertexBufferNext, 0, 1, null, 1.0f);
+		mShaderNext.drawArraysMy(mPrimNext.getPrimitiveType(), mPrimNext.getVertexBufferId(), 0, mPrimNext.getNumVertices(), null, 1.0f);
 	}
 
 	@Override
@@ -45,27 +42,11 @@ public class MyRenderer extends IGLRenderer {
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
 		Log.v("info", "MyRenderer#onSurfaceCreated ");
 		GLES20.glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
-		mFloatBufferCurrent = MyGLUtil.makeFloatBuffer(new float[] { 0.0f, 0.5f });
-		mFloatBufferNext = MyGLUtil.makeFloatBuffer(new float[] { 0.0f, -0.5f });
-		{
-			int [] vertexBufVal = new int [1];
-			GLES20.glGenBuffers(1, vertexBufVal, 0);
-			mVertexBufferCurrent = vertexBufVal[0];
-			assert(mVertexBufferCurrent >= 0);
-			GLES20.glGenBuffers(1, vertexBufVal, 0);
-			mVertexBufferNext = vertexBufVal[0];
-			assert(mVertexBufferNext >= 0);
-		}
+		mPrimCurrent = new CPrimitive();
+		mPrimCurrent.testSetUp(0.0f, 0.5f);
 		
-		//
-		// バッファオブジェクトをターゲットにバインドする
-		GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, mVertexBufferCurrent);
-		// バッファオブジェクトにデータを書き込む
-		GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, MyGLShader.FSIZE * mFloatBufferCurrent.limit(), mFloatBufferCurrent, GLES20.GL_DYNAMIC_DRAW);
-		// バッファオブジェクトをターゲットにバインドする
-		GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, mVertexBufferNext);
-		// バッファオブジェクトにデータを書き込む
-		GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, MyGLShader.FSIZE * mFloatBufferNext.limit(), mFloatBufferNext, GLES20.GL_DYNAMIC_DRAW);
+		mPrimNext = new CPrimitive();
+		mPrimNext.testSetUp(0.0f, -0.5f);
 		
 		mShaderCurrent = new MyGLShader();
 		mShaderCurrent.build(TapGirlActivity.getInstance(), "vshader.txt", "fshader_red.txt");
