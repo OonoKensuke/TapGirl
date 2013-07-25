@@ -18,6 +18,10 @@ import jp.lolipop.dcc.lib.MyGLUtil;
 public class MyGLShader extends IGLShader {
 	static final int VA_POSITION = 0;
 	static final int VA_TEXCOORD = 1;
+
+	static final int UL_TEXTURE = 0;
+	static final int UL_COLOR = 1;
+	static final int UL_ALPHA = 2;
 	
 //	private int mVertexBuffer = -1;
 //	private FloatBuffer mPositions = null;
@@ -32,14 +36,14 @@ public class MyGLShader extends IGLShader {
 			String[] attrs = 
 				{
 					"a_Position",
-					//"a_TexCoord"					
+					"a_TexCoord",
 			};
-			String[] uniforms = null;
-			/*
+			String[] uniforms =
 				{
-				"u_Sampler"
+				"u_texture",
+//				"u_color",
+//				"u_alpha",
 			};
-			*/
         	String vshSrc = loadTextAsset(fileVertexShader, activity);
         	String fshSrc = loadTextAsset(fileFragShader, activity);
         	
@@ -66,13 +70,22 @@ public class MyGLShader extends IGLShader {
 	public void drawArraysMy(int primitive, int vertexBuffer,
 			int textureId, int count, CColor color, float alpha)
 	{
+		GLES20.glEnable(GLES20.GL_BLEND);
+		GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
+		{
+			GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
+			GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureId);
+			GLES20.glUniform1i(getUniformLocationOf(UL_TEXTURE), 0);
+		}
 		// バッファオブジェクトをターゲットにバインドする
 		GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vertexBuffer);
 		// a_Position変数にバッファオブジェクトを割り当てる
-		GLES20.glVertexAttribPointer(VA_POSITION, 2, GLES20.GL_FLOAT, false, 0, 0);
-
-		// a_Position変数でのバッファオブジェクトの割り当てを有効にする
+		GLES20.glVertexAttribPointer(VA_POSITION, 2, GLES20.GL_FLOAT, false, FSIZE * 4, 0);
 		GLES20.glEnableVertexAttribArray(VA_POSITION);
+		
+		// a_Texcoord
+		GLES20.glVertexAttribPointer(VA_TEXCOORD, 2, GLES20.GL_FLOAT, false, FSIZE * 4,  FSIZE * 2);
+		GLES20.glEnableVertexAttribArray(VA_TEXCOORD);
 		
 		GLES20.glDrawArrays(primitive, 0, count);
 	}

@@ -35,10 +35,10 @@ public class CPrimitive {
 	{
 		float size = 0.25f;
 		mFloatBuffer = MyGLUtil.makeFloatBuffer(new float[] {
-				x - size, y + size,
-				x - size, y - size,
-				x + size, y + size,
-				x + size, y - size,
+				x - size, y + size,  0.0f, 0.0f,
+				x - size, y - size,  0.0f, 1.0f,
+				x + size, y + size,  1.0f, 0.0f,
+				x + size, y - size,  1.0f, 1.0f,
 				});
 		int [] vertexBufVal = new int [1];
 		GLES20.glGenBuffers(1, vertexBufVal, 0);
@@ -48,6 +48,9 @@ public class CPrimitive {
 		GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, mVertexBufferId);
 		// バッファオブジェクトにデータを書き込む
 		GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, MyGLShader.FSIZE * mFloatBuffer.limit(), mFloatBuffer, GLES20.GL_DYNAMIC_DRAW);
+		
+		
+		
 		setPrimitiveType(GLES20.GL_TRIANGLE_STRIP);
 		mNumVertices = 4;
 	}
