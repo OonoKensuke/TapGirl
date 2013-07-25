@@ -25,3 +25,4 @@ CColor.class
 CPrimitive.class
 android/bin/classes/jp/lolipop/dcc/lib/AndroidFileIO.class
 android/bin/classes/jp/lolipop/dcc/lib/FileIO.class
+CTexture.class
