@@ -25,7 +25,7 @@ public class MyGLShader extends IGLShader {
 
 	public static final int FSIZE = Float.SIZE / Byte.SIZE; // floatのバイト数
 	
-	public boolean build(Activity activity)
+	public boolean build(Activity activity, String fileVertexShader, String fileFragShader)
 	{
 		boolean result = false;
 		try {
@@ -40,8 +40,8 @@ public class MyGLShader extends IGLShader {
 				"u_Sampler"
 			};
 			*/
-        	String vshSrc = loadTextAsset("vshader.txt", activity);
-        	String fshSrc = loadTextAsset("fshader.txt", activity);
+        	String vshSrc = loadTextAsset(fileVertexShader, activity);
+        	String fshSrc = loadTextAsset(fileFragShader, activity);
         	
         	
         	result = buildWithVsh(vshSrc, fshSrc, attrs, uniforms);

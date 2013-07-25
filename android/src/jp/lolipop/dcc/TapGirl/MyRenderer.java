@@ -68,11 +68,11 @@ public class MyRenderer extends IGLRenderer {
 		GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, MyGLShader.FSIZE * mFloatBufferNext.limit(), mFloatBufferNext, GLES20.GL_DYNAMIC_DRAW);
 		
 		mShaderCurrent = new MyGLShader();
-		mShaderCurrent.build(TapGirlActivity.getInstance());
+		mShaderCurrent.build(TapGirlActivity.getInstance(), "vshader.txt", "fshader_red.txt");
 
 	
 		mShaderNext = new MyGLShader();
-		mShaderNext.build(TapGirlActivity.getInstance());
+		mShaderNext.build(TapGirlActivity.getInstance(), "vshader.txt", "fshader_green.txt");
 	
 	}
 
