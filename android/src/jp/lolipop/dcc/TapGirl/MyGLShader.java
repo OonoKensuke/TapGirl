@@ -8,8 +8,10 @@ import java.nio.FloatBuffer;
 
 import android.app.Activity;
 import android.content.res.AssetManager;
+import android.graphics.Color;
 import android.opengl.GLES20;
 import android.util.Log;
+import jp.lolipop.dcc.lib.CColor;
 import jp.lolipop.dcc.lib.IGLShader;
 import jp.lolipop.dcc.lib.MyGLUtil;
 
@@ -20,6 +22,8 @@ public class MyGLShader extends IGLShader {
 	private int mVertexBuffer = -1;
 	private FloatBuffer mPositions = null;
 	private int mNumVertices = 0;
+
+	public static final int FSIZE = Float.SIZE / Byte.SIZE; // floatのバイト数
 	
 	public boolean build(Activity activity)
 	{
@@ -62,22 +66,25 @@ public class MyGLShader extends IGLShader {
 
 		mVertexBuffer = vertexBuffer[0];
 		assert(mVertexBuffer >= 0);
+		
+		//
+		// バッファオブジェクトをターゲットにバインドする
+		GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, mVertexBuffer);
+		// バッファオブジェクトにデータを書き込む
+		GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, FSIZE * mPositions.limit(), mPositions, GLES20.GL_DYNAMIC_DRAW);
 	}
 	
 	public void testUseMyPosition()
 	{
- 		final int FSIZE = Float.SIZE / Byte.SIZE; // floatのバイト数
 		// バッファオブジェクトをターゲットにバインドする
 		GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, mVertexBuffer);
-		// バッファオブジェクトにデータを書き込む
-		GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, FSIZE * mPositions.limit(), mPositions, GLES20.GL_STATIC_DRAW);
 		// a_Position変数にバッファオブジェクトを割り当てる
 		GLES20.glVertexAttribPointer(VA_POSITION, 2, GLES20.GL_FLOAT, false, 0, 0);
 
 		// a_Position変数でのバッファオブジェクトの割り当てを有効にする
 		GLES20.glEnableVertexAttribArray(VA_POSITION);
 	}
-		
+	
 	/**
 	 * @param fileName 読み込むファイルのパス
 	 * @param activity リソースマネージャーを使うのに必要なアクティビティのインスタンス
