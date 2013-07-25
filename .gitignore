@@ -21,3 +21,4 @@ IGLRenderer.class
 MyRenderer.class
 IGLShader.class
 MyGLShader.class
+CColor.class
