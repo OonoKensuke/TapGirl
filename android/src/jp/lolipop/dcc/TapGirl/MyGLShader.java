@@ -80,6 +80,11 @@ public class MyGLShader extends IGLShader {
 			GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureId);
 			GLES20.glUniform1i(getUniformLocationOf(UL_TEXTURE), 0);
 		}
+		if (getUniformCount() > UL_COLOR) {
+			assert(color != null);
+			GLES20.glUniform4f(getUniformLocationOf(UL_COLOR),
+					color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
+		}
 		// バッファオブジェクトをターゲットにバインドする
 		GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vertexBuffer);
 		// a_Position変数にバッファオブジェクトを割り当てる

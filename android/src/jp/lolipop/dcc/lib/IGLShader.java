@@ -25,6 +25,13 @@ public abstract class IGLShader {
 		result = mUniformLocations[index];
 		return result;
 	}
+	public int getUniformCount()
+	{
+		if (mUniformLocations != null) {
+			return mUniformLocations.length;
+		}
+		return 0;
+	}
 	
 	public IGLShader()
 	{

@@ -8,6 +8,7 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 import jp.lolipop.dcc.lib.AndroidFileIO;
+import jp.lolipop.dcc.lib.CColor;
 import jp.lolipop.dcc.lib.CTexture;
 import jp.lolipop.dcc.lib.MyGLUtil;
 
@@ -32,6 +33,8 @@ public class MyRenderer extends IGLRenderer {
 	private CTexture mTextureCurrent = null;
 	private CTexture mTextureNext = null;
 	
+	private CColor mTestColor = new CColor(1.0f, 1.0f, 1.0f, 0.3f);
+	
 	@Override
 	public void onDrawFrame(GL10 gl) {
 		GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
@@ -40,7 +43,7 @@ public class MyRenderer extends IGLRenderer {
 		mShaderCurrent.drawArraysMy(mPrimCurrent.getPrimitiveType(), mPrimCurrent.getVertexBufferId(), mTextureCurrent.getTextureId(), mPrimCurrent.getNumVertices(), null, 1.0f);
 		
 		mShaderNext.use();
-		mShaderNext.drawArraysMy(mPrimNext.getPrimitiveType(), mPrimNext.getVertexBufferId(), mTextureNext.getTextureId(), mPrimNext.getNumVertices(), null, 1.0f);
+		mShaderNext.drawArraysMy(mPrimNext.getPrimitiveType(), mPrimNext.getVertexBufferId(), mTextureNext.getTextureId(), mPrimNext.getNumVertices(), mTestColor, 1.0f);
 	}
 
 	@Override
@@ -65,27 +68,34 @@ public class MyRenderer extends IGLRenderer {
 				"a_Position",
 				"a_TexCoord",
 		};
-		String[] uniforms =
+		String[] uniformsNormal =
 			{
 			"u_texture",
 //			"u_color",
 //			"u_alpha",
 		};
+		String[] uniformsFade =
+			{
+			"u_texture",
+			"u_color",
+		};
 		
 		
 		mShaderCurrent = new MyGLShader();
-		mShaderCurrent.build(TapGirlActivity.getInstance(), "vshader.txt", "fshader_normal.txt", attrs, uniforms);
+		mShaderCurrent.build(TapGirlActivity.getInstance(), "vshader.txt", "fshader_normal.txt", attrs, uniformsNormal);
 
 	
 		mShaderNext = new MyGLShader();
-		mShaderNext.build(TapGirlActivity.getInstance(), "vshader.txt", "fshader_normal.txt", attrs, uniforms);
+		mShaderNext.build(TapGirlActivity.getInstance(), "vshader.txt", "fshader_fade.txt", attrs, uniformsFade);
 	
 		{
 			mTextureCurrent= new CTexture();
 			int id = mTextureCurrent.loadTexture("graphic/texture/sky.jpg", TapGirlActivity.getInstance());
+			Log.v("info", "texture id = " + id);
 			
 			mTextureNext= new CTexture();
-			id = mTextureNext.loadTexture("graphic/texture/image02_01.jpg", TapGirlActivity.getInstance());
+			id = mTextureNext.loadTexture("graphic/texture/image03_01.jpg", TapGirlActivity.getInstance());
+			Log.v("info", "texture id = " + id);
 		}
 	}
 
