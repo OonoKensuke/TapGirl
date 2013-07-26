@@ -101,6 +101,14 @@ public class TapGirlActivity extends Activity {
         this.setYDpi(displayMetrics.ydpi);
         TapGirlActivity.setDensity(displayMetrics.density);
 	}
+	//１インチ＝2.54cm
+	private final float _CM_PER_INCH =	2.54f;
+	//1cm当たりのピクセル数
+	public float pixelPerCM()
+	{
+		float dpi = (getXDpi() + getYDpi()) / 2.0f;
+		return (dpi / _CM_PER_INCH);
+	}
 	
 	
     /** Called when the activity is first created. */
