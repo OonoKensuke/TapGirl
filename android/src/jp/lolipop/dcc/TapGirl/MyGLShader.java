@@ -21,7 +21,7 @@ public class MyGLShader extends IGLShader {
 
 	static final int UL_TEXTURE = 0;
 	static final int UL_COLOR = 1;
-	static final int UL_ALPHA = 2;
+//	static final int UL_ALPHA = 2;
 	
 //	private int mVertexBuffer = -1;
 //	private FloatBuffer mPositions = null;
@@ -73,8 +73,6 @@ public class MyGLShader extends IGLShader {
 	public void drawArraysMy(int primitive, int vertexBuffer,
 			int textureId, int count, CColor color, float alpha)
 	{
-		GLES20.glEnable(GLES20.GL_BLEND);
-		GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
 		{
 			GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
 			GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureId);

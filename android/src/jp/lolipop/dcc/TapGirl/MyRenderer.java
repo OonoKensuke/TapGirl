@@ -28,8 +28,6 @@ public class MyRenderer extends IGLRenderer {
 	CPrimitive mPrimCurrent = null;
 	CPrimitive mPrimNext = null;
 	
-//	private int mTextureCurrent = -1;
-//	private int mTextureNext = -1;
 	private CTexture mTextureCurrent = null;
 	private CTexture mTextureNext = null;
 	
@@ -38,6 +36,8 @@ public class MyRenderer extends IGLRenderer {
 	@Override
 	public void onDrawFrame(GL10 gl) {
 		GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
+		GLES20.glEnable(GLES20.GL_BLEND);
+		GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
 
 		mShaderCurrent.use();
 		mShaderCurrent.drawArraysMy(mPrimCurrent.getPrimitiveType(), mPrimCurrent.getVertexBufferId(), mTextureCurrent.getTextureId(), mPrimCurrent.getNumVertices(), null, 1.0f);
@@ -71,8 +71,6 @@ public class MyRenderer extends IGLRenderer {
 		String[] uniformsNormal =
 			{
 			"u_texture",
-//			"u_color",
-//			"u_alpha",
 		};
 		String[] uniformsFade =
 			{
