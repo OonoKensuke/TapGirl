@@ -27,3 +27,5 @@ android/bin/classes/jp/lolipop/dcc/lib/AndroidFileIO.class
 android/bin/classes/jp/lolipop/dcc/lib/FileIO.class
 CTexture.class
 MyRenderer$Step.class
+android/bin/classes/jp/lolipop/dcc/TapGirl/CChangeData.class
+android/bin/classes/jp/lolipop/dcc/TapGirl/CChangeParam.class

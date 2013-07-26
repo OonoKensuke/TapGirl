@@ -46,9 +46,9 @@ public class MyRenderer extends IGLRenderer {
 //	private MyGLShader mShaderCurrent = null;
 //	private MyGLShader mShaderNext = null;
 	private MyGLShader[] mShaders = null;
-	private final int FRSH_NORMAL = 0;
-	private final int FRSH_FADE = 1;
-	private final int FRSH_MAX = 2;
+	public static final int FRSH_NORMAL = 0;
+	public static final int FRSH_FADE = 1;
+	public static final int FRSH_MAX = 2;
 	
 	CPrimitive mPrimCurrent = null;
 	CPrimitive mPrimNext = null;
