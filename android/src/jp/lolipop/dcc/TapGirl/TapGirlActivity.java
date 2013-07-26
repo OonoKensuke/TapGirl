@@ -7,6 +7,8 @@ import android.app.Activity;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Window;
+import android.view.WindowManager;
 
 public class TapGirlActivity extends Activity {
 	private GLSurfaceView mGLSurfaceView = null;
@@ -26,6 +28,10 @@ public class TapGirlActivity extends Activity {
         super.onCreate(savedInstanceState);
         assert(s_Instance == null);
         s_Instance = this;
+        
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+
         mRenderer = new MyRenderer();
         mGLSurfaceView = MyGLUtil.initGLES20(this, mRenderer);
         mGLSurfaceView.setDebugFlags(GLSurfaceView.DEBUG_CHECK_GL_ERROR	 | 	GLSurfaceView.DEBUG_LOG_GL_CALLS);
