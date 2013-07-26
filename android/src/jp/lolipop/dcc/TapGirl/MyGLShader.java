@@ -29,10 +29,12 @@ public class MyGLShader extends IGLShader {
 
 	public static final int FSIZE = Float.SIZE / Byte.SIZE; // floatのバイト数
 	
-	public boolean build(Activity activity, String fileVertexShader, String fileFragShader)
+	public boolean build(Activity activity, String fileVertexShader, String fileFragShader,
+			String[] attrs , String [] uniforms)
 	{
 		boolean result = false;
 		try {
+			/*
 			String[] attrs = 
 				{
 					"a_Position",
@@ -44,6 +46,7 @@ public class MyGLShader extends IGLShader {
 //				"u_color",
 //				"u_alpha",
 			};
+			*/
         	String vshSrc = loadTextAsset(fileVertexShader, activity);
         	String fshSrc = loadTextAsset(fileFragShader, activity);
         	

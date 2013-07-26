@@ -60,12 +60,25 @@ public class MyRenderer extends IGLRenderer {
 		mPrimNext = new CPrimitive();
 		mPrimNext.testSetUp(0.0f, -0.5f);
 		
+		String[] attrs = 
+			{
+				"a_Position",
+				"a_TexCoord",
+		};
+		String[] uniforms =
+			{
+			"u_texture",
+//			"u_color",
+//			"u_alpha",
+		};
+		
+		
 		mShaderCurrent = new MyGLShader();
-		mShaderCurrent.build(TapGirlActivity.getInstance(), "vshader.txt", "fshader_normal.txt");
+		mShaderCurrent.build(TapGirlActivity.getInstance(), "vshader.txt", "fshader_normal.txt", attrs, uniforms);
 
 	
 		mShaderNext = new MyGLShader();
-		mShaderNext.build(TapGirlActivity.getInstance(), "vshader.txt", "fshader_normal.txt");
+		mShaderNext.build(TapGirlActivity.getInstance(), "vshader.txt", "fshader_normal.txt", attrs, uniforms);
 	
 		{
 			mTextureCurrent= new CTexture();
