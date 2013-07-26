@@ -33,7 +33,7 @@ public class CPrimitive {
 	
 	void testSetUp(float x, float y)
 	{
-		float size = 0.25f;
+		float size = 1.0f;
 		mFloatBuffer = MyGLUtil.makeFloatBuffer(new float[] {
 				x - size, y + size,  0.0f, 0.0f,
 				x - size, y - size,  0.0f, 1.0f,

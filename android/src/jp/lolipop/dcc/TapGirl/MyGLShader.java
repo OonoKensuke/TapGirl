@@ -73,6 +73,7 @@ public class MyGLShader extends IGLShader {
 	public void drawArraysMy(int primitive, int vertexBuffer,
 			int textureId, int count, CColor color, float alpha)
 	{
+		use();
 		{
 			GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
 			GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureId);
