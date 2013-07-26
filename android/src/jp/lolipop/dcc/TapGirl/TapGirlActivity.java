@@ -38,4 +38,28 @@ public class TapGirlActivity extends Activity {
     	s_Instance = null;
     	super.onDestroy();
     }
+	@Override
+	protected void onPause()
+	{
+		super.onPause();
+		if (mGLSurfaceView != null)
+		{
+			mGLSurfaceView.onPause();
+		}
+		Log.v("info", "activity.onPause");
+		if (isFinishing())
+		{
+			Log.v("info", "acitvity will be finished");
+			s_Instance = null;
+		}
+	}
+	@Override
+	protected void onResume()
+	{
+		super.onResume();
+		if (mGLSurfaceView != null)
+		{
+			mGLSurfaceView.onResume();
+		}
+	}
 }
