@@ -30,3 +30,8 @@ MyRenderer$Step.class
 android/bin/classes/jp/lolipop/dcc/TapGirl/CChangeData.class
 android/bin/classes/jp/lolipop/dcc/TapGirl/CChangeParam.class
 MyRenderer$CChangeWork.class
+android/bin/res/drawable-hdpi/ic_launcher.png
+android/bin/res/drawable-ldpi/ic_launcher.png
+android/bin/res/drawable-mdpi/ic_launcher.png
+android/bin/res/drawable-xhdpi/ic_launcher.png
+CVec2D.class

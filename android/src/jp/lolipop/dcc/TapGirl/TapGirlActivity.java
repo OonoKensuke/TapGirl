@@ -1,15 +1,19 @@
 package jp.lolipop.dcc.TapGirl;
 
+import jp.lolipop.dcc.lib.CVec2D;
 import jp.lolipop.dcc.lib.MyGLUtil;
+import jp.lolipop.dcc.*;
 
 import jp.lolipop.dcc.lib.IGLRenderer;
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
+import android.graphics.Point;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
+import android.view.MotionEvent;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -28,6 +32,11 @@ public class TapGirlActivity extends Activity {
 	private static float mXDpi = 0f;
 	private static float mYDpi = 0f;
 	private static float mDensity = 0f;
+	
+	private CVec2D mPosActivity = new CVec2D();
+	
+
+	
 	
 	protected void setPixelsWidth(int pixelsWidth)
 	{
@@ -131,6 +140,7 @@ public class TapGirlActivity extends Activity {
         mGLSurfaceView = MyGLUtil.initGLES20(this, mRenderer);
         mGLSurfaceView.setDebugFlags(GLSurfaceView.DEBUG_CHECK_GL_ERROR	 | 	GLSurfaceView.DEBUG_LOG_GL_CALLS);
         setContentView(mGLSurfaceView);
+        
     }
     
     protected void onDestroy()
@@ -162,5 +172,36 @@ public class TapGirlActivity extends Activity {
 		{
 			mGLSurfaceView.onResume();
 		}
+	}
+	@Override
+	public boolean onTouchEvent(MotionEvent event)
+	{
+		try {
+			switch (event.getAction())
+			{
+			case MotionEvent.ACTION_DOWN:
+			{
+				mRenderer.getPosTouch().setX(event.getX());
+				mRenderer.getPosTouch().setY(event.getY());
+			}
+			break;
+			case MotionEvent.ACTION_MOVE:
+			{
+				mRenderer.reqUpdateTouchPos(event);
+			}
+			break;
+			case MotionEvent.ACTION_UP:
+			{
+				mRenderer.reqUpdateTouchPos(event);
+				mRenderer.getPosTouch().init();
+			}
+			break;
+			}
+		}
+		catch (Exception exp)
+		{
+			
+		}
+		return super.onTouchEvent(event);
 	}
 }

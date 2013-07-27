@@ -10,6 +10,7 @@ import javax.microedition.khronos.opengles.GL10;
 import jp.lolipop.dcc.lib.AndroidFileIO;
 import jp.lolipop.dcc.lib.CColor;
 import jp.lolipop.dcc.lib.CTexture;
+import jp.lolipop.dcc.lib.CVec2D;
 import jp.lolipop.dcc.lib.MyGLUtil;
 
 import android.graphics.Bitmap;
@@ -17,6 +18,7 @@ import android.graphics.BitmapFactory;
 import android.opengl.GLES20;
 import android.opengl.GLUtils;
 import android.util.Log;
+import android.view.MotionEvent;
 
 import jp.lolipop.dcc.lib.IGLRenderer;
 
@@ -54,6 +56,9 @@ public class MyRenderer extends IGLRenderer {
 	public static final int FRSH_MAX = 2;
 	//浮動小数点で誤差が生じる可能性があるとき、十分小さな値として使う
 	public final static float NEAR0 = ((float)(1.0f / 65536.0f));
+	//スコアに換算する最低距離(cm)
+	public final static float  _MIN_LEN	= 0.3f;
+	
 	
 	CPrimitive mPrimCurrent = null;
 	CPrimitive mPrimNext = null;
@@ -107,6 +112,47 @@ public class MyRenderer extends IGLRenderer {
 	private void updateLabelInfo()
 	{
 		//TODO 実装
+	}
+	private CVec2D mPosTouch = new CVec2D();
+	
+	public CVec2D getPosTouch() {
+		return mPosTouch;
+	}
+
+//	private void setPosTouch(CVec2D posTouch) {
+//		mPosTouch = posTouch;
+//	}
+
+	public void reqUpdateTouchPos(MotionEvent posUpdate)
+	{
+		if (mChangeData.getRestLength() == 0.0f)
+		{
+			return;
+		}
+		if ((mPosTouch.getX() < 0.0f) && (mPosTouch.getY() < 0.0f)) {
+			mPosTouch.setParam(posUpdate);
+		}
+		else {
+			float curLen = 0.0f;
+			{
+				float curLenX = mPosTouch.getX() - posUpdate.getX();
+				curLenX *= curLenX;
+				float curLenY = mPosTouch.getY() - posUpdate.getY();
+				curLenY *= curLenY;
+				curLen = (float) Math.sqrt(curLenX + curLenY);
+				curLen /= TapGirlActivity.getInstance().pixelPerCM();
+			}
+			if (_MIN_LEN < curLen)
+			{
+				mTouchLength += curLen;
+				mTouchLength = Math.min(mTouchLength, CChangeData.getObjectiveLength());
+				mPosTouch.setParam(posUpdate);
+				updateLabelInfo();
+			}
+			else {
+				Log.v("info", "距離が短すぎる:" + curLen);
+			}
+		}
 	}
 	
 	private void drawTextureCurrent(boolean isCurrent, int indexShader)
