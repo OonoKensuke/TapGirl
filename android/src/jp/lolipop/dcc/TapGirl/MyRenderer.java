@@ -84,12 +84,18 @@ public class MyRenderer extends IGLRenderer {
 		shader.drawArraysMy(prim.getPrimitiveType(), prim.getVertexBufferId(), texture.getTextureId(), prim.getNumVertices(), mColor, 1.0f);
 	}
 	
+	private int getIndexOfTexSize()
+	{
+		return 3;
+	}
+	
 	private boolean loadTextureFromIndex(int index, boolean bLoadCurrent)
 	{
 		boolean result = false;
 		try {
-			final String prev = "graphic/texture/image03_";
-			String assetName = prev + String.format("%02d", index) + ".jpg";
+			final int texSize = getIndexOfTexSize();
+			final String prev = "graphic/texture/image";
+			String assetName = prev + String.format("%02d_%02d", texSize, index) + ".jpg";
 			Log.v("info", assetName + "をテクスチャとして読み込みます");
 			int id = -1;
 			if (bLoadCurrent)
