@@ -65,9 +65,48 @@ public class MyRenderer extends IGLRenderer {
 
 	private CChangeData mChangeData = new CChangeData(0.0f);
 	
+	private float mTouchLength = 0.0f;
+	
+	class CChangeWork
+	{
+		private  CChangeParam changeParam = null;
+		public final CChangeParam getChangeParam() {
+			return changeParam;
+		}
+
+		public void setChangeParam(final CChangeParam changeParam) {
+			this.changeParam = changeParam;
+		}
+
+		long timeBegin = 0;
+		
+		public void init()
+		{
+			changeParam = null;
+			timeBegin = 0;
+		}
+	}
+	
+	private CChangeWork mChangeWork = new CChangeWork();
+	
 	public MyRenderer()
 	{
 		Log.v("info", "MyRender#MyRender");
+	}
+	
+	private void resetTouchLength(float length)
+	{
+		mTouchLength = length;
+		if (mChangeData != null) {
+			Log.v("info", "changeData will be renewal");
+			mChangeData = null;
+		}
+		mChangeData = new CChangeData(mTouchLength);
+	}
+	
+	private void updateLabelInfo()
+	{
+		//TODO 実装
 	}
 	
 	private void drawTextureCurrent(boolean isCurrent, int indexShader)
@@ -139,6 +178,12 @@ public class MyRenderer extends IGLRenderer {
 		{
 			case STEP_INIT:
 			{
+				if (mChangeData.getRestLength() == 0.0f)
+				{
+					Log.v("info", "タッチ距離を初期化します");
+					resetTouchLength(0.0f);
+					updateLabelInfo();
+				}
 				mStep = Step.STEP_NORMAL;
 				final CChangeParam changeParam = mChangeData.getChangeParam();
 				loadTextureFromIndex(changeParam.indexImage, true);
@@ -146,7 +191,66 @@ public class MyRenderer extends IGLRenderer {
 			break;
 			case STEP_NORMAL:
 			{
+				float processedLenght = CChangeData.getObjectiveLength() - mChangeData.getRestLength();
+				float restTemp = mTouchLength - processedLenght;
+				//TODO ?サウンドの前準備
+				if (restTemp > NEAR0)
+				{
+					mChangeData.requestAddTouchLength(restTemp);
+					if (mChangeData.isChange())
+					{
+						mChangeData.setIsChange(false);
+						mChangeWork.init();
+						mChangeWork.setChangeParam(mChangeData.getChangeParam());
+						loadTextureFromIndex(mChangeWork.getChangeParam().indexImage, false);
+						mStep = Step.STEP_CROSS_FADE;
+						//TODO 実装
+//						_player.numberOfLoops = 0;
+//						if (!controller.btnToggleSound.highlighted) {
+//							[_player play];
+//						}
+						Log.v("info", "change effect");
+						//アルファなどの変更に使う基準となる現在時刻
+						mChangeWork.timeBegin = System.currentTimeMillis();
+					}
+				}
+			}
+			break;
+			case STEP_CROSS_FADE:
+			{
+				boolean bChangeStep = false;
+				double timeDelta = (double)(time - mChangeWork.timeBegin) / 1000.0;
+				if (timeDelta >= mChangeWork.getChangeParam().delayIn)
+				{
+					bChangeStep = true;
+				}
+				float theta = (float) (((Math.PI / 2.0) * timeDelta) / mChangeWork.getChangeParam().delayIn);
+				mColor.setAlpha((float) Math.sin(theta));
+				if (bChangeStep)
+				{
+					mColor.setAlpha(1.0f);
+				}
+				Log.v("info", "delta:" + timeDelta + ", alpha" + mColor.getAlpha());
 				
+				drawTextureCurrent(true, FRSH_NORMAL);
+				drawTextureCurrent(false, FRSH_FADE);
+				
+				bDrawNormal = false;
+				
+				if (bChangeStep)
+				{
+					mStep = Step.STEP_WAIT_SE_END;
+					mChangeWork.timeBegin = time;
+					mTextureCurrent.dispose();
+					mTextureCurrent  = null;
+					mTextureCurrent = mTextureNext;
+					mTextureNext = null;
+				}
+			}
+			break;
+			case STEP_WAIT_SE_END:
+			{
+				//TODO サウンド終了待ち
 			}
 			break;
 		}
