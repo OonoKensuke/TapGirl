@@ -62,6 +62,8 @@ public class MyRenderer extends IGLRenderer {
 	private CTexture mTextureNext = null;
 	
 	private CColor mColor = new CColor(1.0f, 1.0f, 1.0f, 1.0f);
+
+	private CChangeData mChangeData = new CChangeData(0.0f);
 	
 	public MyRenderer()
 	{
@@ -129,18 +131,17 @@ public class MyRenderer extends IGLRenderer {
 		return result;
 	}
 	
-	@Override
-	public void onDrawFrame(GL10 gl) {
+	private void drawMain()
+	{
 		boolean bDrawNormal = true;
-		GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
-		GLES20.glEnable(GLES20.GL_BLEND);
-		GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
-		
+		long time = System.currentTimeMillis();
 		switch (mStep)
 		{
 			case STEP_INIT:
 			{
-				
+				mStep = Step.STEP_NORMAL;
+				final CChangeParam changeParam = mChangeData.getChangeParam();
+				loadTextureFromIndex(changeParam.indexImage, true);
 			}
 			break;
 			case STEP_NORMAL:
@@ -152,6 +153,15 @@ public class MyRenderer extends IGLRenderer {
 		if (bDrawNormal) {
 			drawTextureCurrent(true, FRSH_NORMAL);
 		}
+	}
+	
+	@Override
+	public void onDrawFrame(GL10 gl) {
+		GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
+		GLES20.glEnable(GLES20.GL_BLEND);
+		GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
+		
+		drawMain();
 	}
 
 	@Override
@@ -198,10 +208,6 @@ public class MyRenderer extends IGLRenderer {
 		mShaders[FRSH_NORMAL] =  shaderNormal;
 		mShaders[FRSH_FADE] = shaderFade;
 	
-		{
-			loadTextureFromIndex(1, true);
-			loadTextureFromIndex(2, false);
-		}
 	}
 
 }
