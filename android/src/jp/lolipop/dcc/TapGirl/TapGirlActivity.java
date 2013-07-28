@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.media.MediaPlayer;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -145,9 +146,46 @@ public class TapGirlActivity extends Activity {
 		layoutCountLable.setMargins(x, y, 0, 0);
 		mUILayout.addView(mCountLabel, layoutCountLable);
 	}
-	
-	
-    android.os.Handler mHandler = null;    
+    android.os.Handler mHandler = null;
+    
+    
+    /**
+     * 音声再生用プレイヤー
+     */
+    private MediaPlayer mPlayer = null;
+    public void prepareSE(int indexSE)
+    {
+    	if (mPlayer != null)
+    	{
+    		mPlayer.release();
+    		mPlayer = null;
+    	}
+    	int resId = 0;
+    	String fileName = "sound_" + String.format("%02d", indexSE);
+		resId = getResources().getIdentifier(
+				fileName,
+				"raw",
+				"jp.lolipop.dcc.TapGirl");
+		Log.v("info", fileName + " resId = " + String.valueOf(resId));
+		mPlayer = MediaPlayer.create(this, resId);
+		mPlayer.start();
+    }
+    
+    public boolean isSoundPlaying()
+    {
+    	boolean result = false;
+    	if (mPlayer != null) {
+    		if (mPlayer.isPlaying()) {
+    			result = true;
+    		}
+    		else {
+    			mPlayer.release();
+    			mPlayer = null;
+    		}
+    	}
+    	return result;
+    }
+    
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {

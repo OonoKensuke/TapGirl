@@ -121,7 +121,7 @@ public class MyRenderer extends IGLRenderer {
 			if (Thread.currentThread().getName().equalsIgnoreCase("main"))
 			{
 				//同じスレッドからrunをpostするとデッドロックになるようだ
-				Log.v("info", "call from main");
+				//Log.v("info", "call from main");
 				textView.setText(string);
 			}
 			else if (mHandlerActivity != null) {
@@ -272,6 +272,7 @@ public class MyRenderer extends IGLRenderer {
 	{
 		boolean bDrawNormal = true;
 		long time = System.currentTimeMillis();
+		TapGirlActivity activity = TapGirlActivity.getInstance();
 		switch (mStep)
 		{
 			case STEP_INIT:
@@ -302,11 +303,7 @@ public class MyRenderer extends IGLRenderer {
 						mChangeWork.setChangeParam(mChangeData.getChangeParam());
 						loadTextureFromIndex(mChangeWork.getChangeParam().indexImage, false);
 						mStep = Step.STEP_CROSS_FADE;
-						//TODO 実装
-//						_player.numberOfLoops = 0;
-//						if (!controller.btnToggleSound.highlighted) {
-//							[_player play];
-//						}
+						activity.prepareSE(mChangeData.getChangeParam().indexSE);
 						Log.v("info", "change effect");
 						//アルファなどの変更に使う基準となる現在時刻
 						mChangeWork.timeBegin = System.currentTimeMillis();
