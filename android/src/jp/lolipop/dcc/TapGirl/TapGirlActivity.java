@@ -7,6 +7,7 @@ import jp.lolipop.dcc.*;
 import jp.lolipop.dcc.lib.IGLRenderer;
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
@@ -14,8 +15,11 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 public class TapGirlActivity extends Activity {
 	private GLSurfaceView mGLSurfaceView = null;
@@ -118,8 +122,32 @@ public class TapGirlActivity extends Activity {
 		float dpi = (getXDpi() + getYDpi()) / 2.0f;
 		return (dpi / _CM_PER_INCH);
 	}
+	private RelativeLayout mUILayout = null;
+	private TextView mCountLabel = null;
+	public TextView getCountLabel() {
+		return mCountLabel;
+	}
+	private void initUI()
+	{
+		RelativeLayout.LayoutParams layout = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+		mUILayout = new RelativeLayout(this);
+		addContentView(mUILayout, layout);
+		
+		int x = 100;
+		int y = 100;
+		int width = 300;
+		int height = 50;
+		mCountLabel = new TextView(this);
+		mCountLabel.setText("テスト");
+		mCountLabel.setTextColor(Color.BLACK);
+		mCountLabel.setTextSize(30);
+		RelativeLayout.LayoutParams layoutCountLable = new RelativeLayout.LayoutParams(width, height);
+		layoutCountLable.setMargins(x, y, 0, 0);
+		mUILayout.addView(mCountLabel, layoutCountLable);
+	}
 	
 	
+    android.os.Handler mHandler = null;    
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -141,6 +169,10 @@ public class TapGirlActivity extends Activity {
         mGLSurfaceView.setDebugFlags(GLSurfaceView.DEBUG_CHECK_GL_ERROR	 | 	GLSurfaceView.DEBUG_LOG_GL_CALLS);
         setContentView(mGLSurfaceView);
         
+        initUI();
+        //UIアクセスのためのハンドル
+        mHandler  = new android.os.Handler();
+        mRenderer.setHandlerForUI(mHandler);
     }
     
     protected void onDestroy()

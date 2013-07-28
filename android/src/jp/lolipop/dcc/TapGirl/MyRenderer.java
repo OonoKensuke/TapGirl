@@ -3,6 +3,7 @@ package jp.lolipop.dcc.TapGirl;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.FloatBuffer;
+import java.util.concurrent.CountDownLatch;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -17,8 +18,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.opengl.GLES20;
 import android.opengl.GLUtils;
+import android.os.Handler;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.View;
+import android.widget.TextView;
 
 import jp.lolipop.dcc.lib.IGLRenderer;
 
@@ -98,7 +102,58 @@ public class MyRenderer extends IGLRenderer {
 	{
 		Log.v("info", "MyRender#MyRender");
 	}
+
+	/**
+	 * アクティビティのUIにアクセスする時に描画スレッドなど
+	 * mainスレッド以外からアクセスする時に使う
+	 */
+	private Handler mHandlerActivity = null;
+	public void setHandlerForUI(Handler handler)
+	{
+		mHandlerActivity = handler;
+	}
 	
+	private Runnable mRunSetText;
+	private CountDownLatch mLatchForButton = null;
+	private void setTextInfoToView(final TextView textView, final String string)
+	{
+		try {
+			if (Thread.currentThread().getName().equalsIgnoreCase("main"))
+			{
+				//同じスレッドからrunをpostするとデッドロックになるようだ
+				Log.v("info", "call from main");
+				textView.setText(string);
+			}
+			else if (mHandlerActivity != null) {
+				Log.v("info", "current thread name is " + Thread.currentThread().getName());
+				mLatchForButton = new CountDownLatch(1);
+				mRunSetText  = new Runnable() {
+					
+					@Override
+					public void run() {
+						textView.setText(string);
+						mLatchForButton.countDown();
+					}
+				};
+				mHandlerActivity.post(mRunSetText);
+				//UIスレッドでの画像設定がすむのを待つ
+				mLatchForButton.await();
+				mLatchForButton = null;
+			}
+		}
+		catch (Exception exp)
+		{
+			Log.d("exception", exp.getMessage());
+		}
+	}
+	
+	private void updateLabelInfo()
+	{
+		TapGirlActivity activity = TapGirlActivity.getInstance();
+		int iLength = (int) (mChangeData.getObjectiveLength() - (int)(mTouchLength));
+		String strTouch = String.valueOf(iLength);
+		setTextInfoToView(activity.getCountLabel(), strTouch);
+	}
 	private void resetTouchLength(float length)
 	{
 		mTouchLength = length;
@@ -109,10 +164,6 @@ public class MyRenderer extends IGLRenderer {
 		mChangeData = new CChangeData(mTouchLength);
 	}
 	
-	private void updateLabelInfo()
-	{
-		//TODO 実装
-	}
 	private CVec2D mPosTouch = new CVec2D();
 	
 	public CVec2D getPosTouch() {
@@ -146,11 +197,12 @@ public class MyRenderer extends IGLRenderer {
 			{
 				mTouchLength += curLen;
 				mTouchLength = Math.min(mTouchLength, CChangeData.getObjectiveLength());
+				Log.v("info", "touch length = " + String.valueOf( mTouchLength));
 				mPosTouch.setParam(posUpdate);
 				updateLabelInfo();
 			}
 			else {
-				Log.v("info", "距離が短すぎる:" + curLen);
+				//Log.v("info", "距離が短すぎる:" + curLen);
 			}
 		}
 	}
