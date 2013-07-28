@@ -345,7 +345,19 @@ public class MyRenderer extends IGLRenderer {
 			break;
 			case STEP_WAIT_SE_END:
 			{
-				//TODO サウンド終了待ち
+				//サウンド終了待ち
+				if (!activity.isSoundPlaying())
+				{
+					if (mChangeData.getRestLength() == 0.0f)
+					{
+						Log.v("inof", "実装");
+						assert(false);
+					}
+					else
+					{
+						mStep = Step.STEP_NORMAL;
+					}
+				}
 			}
 			break;
 		}
