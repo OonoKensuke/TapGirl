@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -85,6 +86,37 @@ public class TapGirlActivity extends Activity {
 	public static void setDensity(float density) {
 		mDensity = density;
 	}
+	/**
+	 * iOSに対する幅の拡大率
+	 */
+	private static float WidthRatio = 0.0f;
+	public static float getWidthRatio() {
+		return WidthRatio;
+	}
+
+	/**
+	 * iOSに対する高さの拡大率
+	 */
+	private static float HeightRatio = 0.0f;
+	public static float getHeightRatio() {
+		return HeightRatio;
+	}
+	
+	/**
+	 * 拡大率。幅と高さのうち、小さい方を用いる
+	 */
+	private static float MagRatio = 0.0f;
+	public static float getMagRatio() {
+		return MagRatio;
+	}
+	
+	/**
+	 * iOSにあわせてUIを配置するとき上あるいは左に開ける間隔
+	 */
+	private static CVec2D UIMargin = new CVec2D(); 
+	public static CVec2D getUIMargin() {
+		return UIMargin;
+	}
 	private void initDispInfo()
 	{
         //画面解像度の取得
@@ -114,6 +146,30 @@ public class TapGirlActivity extends Activity {
         this.setXDpi(displayMetrics.xdpi);
         this.setYDpi(displayMetrics.ydpi);
         TapGirlActivity.setDensity(displayMetrics.density);
+        
+        {
+        	//座標はRetinaディスプレイの半分の解像度
+        	final float widthOfIOS = 320.0f;
+        	final float heightOfIOS = 568.0f;
+        	WidthRatio = (float)getPixelsWidth() / widthOfIOS;
+        	HeightRatio = (float)getPixelsHeight() / heightOfIOS;
+    		float margin  = 0.0f;
+        	if (WidthRatio < HeightRatio) {
+        		MagRatio = WidthRatio;
+        		UIMargin.setX(0.0f);
+        		//上だけ開ける
+        		margin = (float)getPixelsHeight() - (heightOfIOS * MagRatio);
+        		UIMargin.setY(margin);
+        	}
+        	else {
+        		MagRatio = HeightRatio;
+        		UIMargin.setY(0.0f);
+        		//左右に同じだけ開けるので、2で割る
+        		margin =  ((float)getPixelsWidth() - (widthOfIOS * MagRatio) / 2.0f);
+        		UIMargin.setX(margin);
+        	}
+        	Log.v("info", "wr = " + String.valueOf(WidthRatio)  + " hr = " + String.valueOf(HeightRatio) + " mag = " + String.valueOf(MagRatio));
+        }
 	}
 	//１インチ＝2.54cm
 	private final float _CM_PER_INCH =	2.54f;
@@ -128,22 +184,48 @@ public class TapGirlActivity extends Activity {
 	public TextView getCountLabel() {
 		return mCountLabel;
 	}
+	
+	private RelativeLayout.LayoutParams getLayoutFrom_iOSSize(float widthOfIOS, float heightOfIOS)
+	{
+		widthOfIOS *= getMagRatio();
+		heightOfIOS *= getMagRatio();
+		RelativeLayout.LayoutParams layout = new RelativeLayout.LayoutParams((int)widthOfIOS, (int)heightOfIOS);
+		return layout;
+	}
+	
+	private float getXofLayoutMargin(float xOfIOS)
+	{
+		xOfIOS *= getMagRatio();
+		xOfIOS += UIMargin.getX();
+		return xOfIOS;
+	}
+	
+	private float getYofLayoutMargin(float yOfIOS)
+	{
+		yOfIOS *= getMagRatio();
+		yOfIOS += UIMargin.getY();
+		return yOfIOS;
+	}
+	
 	private void initUI()
 	{
 		RelativeLayout.LayoutParams layout = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 		mUILayout = new RelativeLayout(this);
 		addContentView(mUILayout, layout);
-		
-		int x = 100;
-		int y = 100;
-		int width = 300;
-		int height = 50;
+		//****** countLabel *******
+		//座標とサイズ
+		float xOfIOS = 130;
+		float yOfIOS = 40;
+		float widthOfIOS = 160;
+		float heightOfIOS = 61;
 		mCountLabel = new TextView(this);
-		mCountLabel.setText("テスト");
+		mCountLabel.setText("100");
 		mCountLabel.setTextColor(Color.BLACK);
-		mCountLabel.setTextSize(30);
-		RelativeLayout.LayoutParams layoutCountLable = new RelativeLayout.LayoutParams(width, height);
-		layoutCountLable.setMargins(x, y, 0, 0);
+		//cap Heightが3/4
+		mCountLabel.setTextSize(42.0f  * 0.75f *  getMagRatio());
+		mCountLabel.setGravity(Gravity.RIGHT);
+		RelativeLayout.LayoutParams layoutCountLable = getLayoutFrom_iOSSize(widthOfIOS, heightOfIOS);
+		layoutCountLable.setMargins((int)getXofLayoutMargin(xOfIOS), (int)getYofLayoutMargin(yOfIOS), 0, 0);
 		mUILayout.addView(mCountLabel, layoutCountLable);
 	}
     android.os.Handler mHandler = null;
@@ -219,6 +301,7 @@ public class TapGirlActivity extends Activity {
     	s_Instance = null;
     	super.onDestroy();
     }
+    /*
 	@Override
 	protected void onPause()
 	{
@@ -237,12 +320,14 @@ public class TapGirlActivity extends Activity {
 	@Override
 	protected void onResume()
 	{
+		Log.v("info", "activity.onResume");
 		super.onResume();
 		if (mGLSurfaceView != null)
 		{
 			mGLSurfaceView.onResume();
 		}
 	}
+	*/
 	@Override
 	public boolean onTouchEvent(MotionEvent event)
 	{
