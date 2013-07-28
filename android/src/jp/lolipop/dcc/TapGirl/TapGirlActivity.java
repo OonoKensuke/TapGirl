@@ -211,6 +211,21 @@ public class TapGirlActivity extends Activity {
 	public TextView getmRoundLabel() {
 		return mRoundLabel;
 	}
+	private TextView initLabel(float xOfIOS, float yOfIOS, float widthOfIOS, float heightOfIOS, float fontSize, int gravity, String strInit)
+	{
+		TextView textView= new TextView(this);
+		textView.setText(strInit);
+		textView.setTextColor(Color.BLACK);
+		//cap Heightが3/4
+		textView.setTextSize(fontSize  * 0.75f *  getMagRatio());
+		textView.setGravity(gravity);
+		RelativeLayout.LayoutParams layoutCountLable = getLayoutFrom_iOSSize(widthOfIOS, heightOfIOS);
+		layoutCountLable.setMargins((int)getXofLayoutMargin(xOfIOS), (int)getYofLayoutMargin(yOfIOS), 0, 0);
+		mUILayout.addView(textView, layoutCountLable);
+		return textView;
+	}
+
+	
 	private void initUI()
 	{
 		RelativeLayout.LayoutParams layout = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -222,28 +237,13 @@ public class TapGirlActivity extends Activity {
 		float yOfIOS = 40;
 		float widthOfIOS = 160;
 		float heightOfIOS = 61;
-		mCountLabel = new TextView(this);
-		mCountLabel.setText("100");
-		mCountLabel.setTextColor(Color.BLACK);
-		//cap Heightが3/4
-		mCountLabel.setTextSize(42.0f  * 0.75f *  getMagRatio());
-		mCountLabel.setGravity(Gravity.RIGHT);
-		RelativeLayout.LayoutParams layoutCountLable = getLayoutFrom_iOSSize(widthOfIOS, heightOfIOS);
-		layoutCountLable.setMargins((int)getXofLayoutMargin(xOfIOS), (int)getYofLayoutMargin(yOfIOS), 0, 0);
-		mUILayout.addView(mCountLabel, layoutCountLable);
+		mCountLabel = initLabel(xOfIOS, yOfIOS, widthOfIOS, heightOfIOS, 42.0f, Gravity.RIGHT, "100");
 		//****** roundLabel *******
 		xOfIOS = 213;
 		yOfIOS = 148;
 		widthOfIOS = 80;
 		heightOfIOS = 21;
-		mRoundLabel = new TextView(this);
-		mRoundLabel.setText("1周目");
-		mRoundLabel.setTextColor(Color.BLACK);
-		mRoundLabel.setTextSize(17.0f  * 0.75f *  getMagRatio());
-		mRoundLabel.setGravity(Gravity.LEFT);
-		RelativeLayout.LayoutParams layourRoundLabel = getLayoutFrom_iOSSize(widthOfIOS, heightOfIOS);
-		layourRoundLabel.setMargins((int)getXofLayoutMargin(xOfIOS), (int)getYofLayoutMargin(yOfIOS), 0, 0);
-		mUILayout.addView(mRoundLabel, layourRoundLabel);
+		mRoundLabel = initLabel(xOfIOS, yOfIOS, widthOfIOS, heightOfIOS, 17.0f, Gravity.LEFT, "1周目");
 	}
     android.os.Handler mHandler = null;
     
