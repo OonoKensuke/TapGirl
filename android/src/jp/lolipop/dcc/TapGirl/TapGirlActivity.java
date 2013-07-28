@@ -179,11 +179,6 @@ public class TapGirlActivity extends Activity {
 		float dpi = (getXDpi() + getYDpi()) / 2.0f;
 		return (dpi / _CM_PER_INCH);
 	}
-	private RelativeLayout mUILayout = null;
-	private TextView mCountLabel = null;
-	public TextView getCountLabel() {
-		return mCountLabel;
-	}
 	
 	private RelativeLayout.LayoutParams getLayoutFrom_iOSSize(float widthOfIOS, float heightOfIOS)
 	{
@@ -207,13 +202,22 @@ public class TapGirlActivity extends Activity {
 		return yOfIOS;
 	}
 	
+	private RelativeLayout mUILayout = null;
+	private TextView mCountLabel = null;
+	public TextView getCountLabel() {
+		return mCountLabel;
+	}
+	private TextView mRoundLabel = null;
+	public TextView getmRoundLabel() {
+		return mRoundLabel;
+	}
 	private void initUI()
 	{
 		RelativeLayout.LayoutParams layout = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 		mUILayout = new RelativeLayout(this);
 		addContentView(mUILayout, layout);
 		//****** countLabel *******
-		//座標とサイズ
+		//座標とサイズはXCodeから
 		float xOfIOS = 130;
 		float yOfIOS = 40;
 		float widthOfIOS = 160;
@@ -227,6 +231,19 @@ public class TapGirlActivity extends Activity {
 		RelativeLayout.LayoutParams layoutCountLable = getLayoutFrom_iOSSize(widthOfIOS, heightOfIOS);
 		layoutCountLable.setMargins((int)getXofLayoutMargin(xOfIOS), (int)getYofLayoutMargin(yOfIOS), 0, 0);
 		mUILayout.addView(mCountLabel, layoutCountLable);
+		//****** roundLabel *******
+		xOfIOS = 213;
+		yOfIOS = 148;
+		widthOfIOS = 80;
+		heightOfIOS = 21;
+		mRoundLabel = new TextView(this);
+		mRoundLabel.setText("1周目");
+		mRoundLabel.setTextColor(Color.BLACK);
+		mRoundLabel.setTextSize(17.0f  * 0.75f *  getMagRatio());
+		mRoundLabel.setGravity(Gravity.LEFT);
+		RelativeLayout.LayoutParams layourRoundLabel = getLayoutFrom_iOSSize(widthOfIOS, heightOfIOS);
+		layourRoundLabel.setMargins((int)getXofLayoutMargin(xOfIOS), (int)getYofLayoutMargin(yOfIOS), 0, 0);
+		mUILayout.addView(mRoundLabel, layourRoundLabel);
 	}
     android.os.Handler mHandler = null;
     
