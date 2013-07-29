@@ -241,6 +241,7 @@ public class TapGirlActivity extends Activity implements View.OnClickListener, O
 		
 		
 		textView.setBackgroundColor(0);
+		textView.setSingleLine(true);
 		mUILayout.addView(textView, layoutCountLable);
 		return textView;
 	}

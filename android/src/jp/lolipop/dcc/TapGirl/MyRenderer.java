@@ -352,14 +352,23 @@ public class MyRenderer extends IGLRenderer {
 				{
 					if (mChangeData.getRestLength() == 0.0f)
 					{
-						Log.v("inof", "実装");
-						assert(false);
+						Log.v("info", "to end");
+						mChangeWork.init();
+						mChangeWork.timeBegin = time;
+						mStep = Step.STEP_DISP_CONGRATULATIONS;
+						setTextInfoToView(activity.getCountLabel(), CDefines.CONGRATURATIONS_MESSAGE);
 					}
 					else
 					{
 						mStep = Step.STEP_NORMAL;
 					}
 				}
+			}
+			break;
+			case STEP_DISP_CONGRATULATIONS:
+			{
+				//TODO 実装
+				assert(false);
 			}
 			break;
 		}
