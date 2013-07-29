@@ -180,10 +180,11 @@ public class TapGirlActivity extends Activity {
 		return (dpi / _CM_PER_INCH);
 	}
 	
-	private RelativeLayout.LayoutParams getLayoutFrom_iOSSize(float widthOfIOS, float heightOfIOS)
+	private RelativeLayout.LayoutParams getLayoutFrom_iOSSize(float widthOfIOS, float heightOfIOS, float minimumHeight)
 	{
 		widthOfIOS *= getMagRatio();
 		heightOfIOS *= getMagRatio();
+		heightOfIOS = Math.max(heightOfIOS, minimumHeight);
 		RelativeLayout.LayoutParams layout = new RelativeLayout.LayoutParams((int)widthOfIOS, (int)heightOfIOS);
 		return layout;
 	}
@@ -216,11 +217,19 @@ public class TapGirlActivity extends Activity {
 		TextView textView= new TextView(this);
 		textView.setText(strInit);
 		textView.setTextColor(Color.BLACK);
+		textView.setPadding(0, 0, 0, 0);
 		//cap Heightが3/4
-		textView.setTextSize(fontSize  * 0.75f *  getMagRatio());
+		float _fontSize = fontSize  * 0.75f *  getMagRatio();
+		textView.setTextSize(_fontSize);
 		textView.setGravity(gravity);
-		RelativeLayout.LayoutParams layoutCountLable = getLayoutFrom_iOSSize(widthOfIOS, heightOfIOS);
-		layoutCountLable.setMargins((int)getXofLayoutMargin(xOfIOS), (int)getYofLayoutMargin(yOfIOS), 0, 0);
+		//レイアウトをフォントよりもある程度大きく取らないとフォントの下部が表示されない
+		RelativeLayout.LayoutParams layoutCountLable = getLayoutFrom_iOSSize(widthOfIOS, heightOfIOS, _fontSize + 16.0f);
+		int iX = (int)getXofLayoutMargin(xOfIOS);
+		int iY = (int)getYofLayoutMargin(yOfIOS);
+		layoutCountLable.setMargins(iX, iY, 0, 0);
+		
+		
+		textView.setBackgroundColor(Color.RED);
 		mUILayout.addView(textView, layoutCountLable);
 		return textView;
 	}
@@ -237,19 +246,19 @@ public class TapGirlActivity extends Activity {
 		float yOfIOS = 40;
 		float widthOfIOS = 160;
 		float heightOfIOS = 61;
-		mCountLabel = initLabel(xOfIOS, yOfIOS, widthOfIOS, heightOfIOS, 42.0f, Gravity.RIGHT, "100");
+		mCountLabel = initLabel(xOfIOS, yOfIOS, widthOfIOS, heightOfIOS, 42.0f, Gravity.RIGHT | Gravity.TOP, "100");
 		//****** roundLabel *******
 		xOfIOS = 213;
 		yOfIOS = 148;
 		widthOfIOS = 80;
 		heightOfIOS = 21;
-		mRoundLabel = initLabel(xOfIOS, yOfIOS, widthOfIOS, heightOfIOS, 17.0f, Gravity.LEFT, "1周目");
+		mRoundLabel = initLabel(xOfIOS, yOfIOS, widthOfIOS, heightOfIOS, 17.0f, Gravity.LEFT | Gravity.TOP, "1周目");
 		//****** ♪ *******
 		xOfIOS = 14;
 		yOfIOS = 10;
 		widthOfIOS = 42;
 		heightOfIOS = 21;
-		initLabel(xOfIOS, yOfIOS, widthOfIOS, heightOfIOS, 24.0f, Gravity.LEFT, "♪");
+		initLabel(xOfIOS, yOfIOS, widthOfIOS, heightOfIOS, 24.0f, Gravity.LEFT | Gravity.TOP, "♪");
 	}
     android.os.Handler mHandler = null;
     
