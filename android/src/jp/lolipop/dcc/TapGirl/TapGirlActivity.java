@@ -27,6 +27,7 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageButton;
 import android.widget.ImageView.ScaleType;
+import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -286,6 +287,12 @@ public class TapGirlActivity extends Activity implements View.OnClickListener{
 			int iX = (int)getXofLayoutMargin(xOfIOS);
 			int iY = (int)getYofLayoutMargin(yOfIOS);
 			layoutButton.setMargins(iX, iY, 0, 0);
+			int resIdOn = getResIdOfRaw(fileNameOnImage);
+			int resIdOff = getResIdOfRaw(fileNameOffImage);
+			tglBtn.setBackgroundResource(resIdOff);
+			tglBtn.setTextOn("");
+			tglBtn.setTextOff("");
+			tglBtn.setText("");
 			mUILayout.addView(tglBtn, layoutButton);
 		}
 		catch (Exception exp)
