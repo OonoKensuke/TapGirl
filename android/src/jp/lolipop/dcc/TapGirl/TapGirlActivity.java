@@ -274,6 +274,27 @@ public class TapGirlActivity extends Activity implements View.OnClickListener{
 		}
 		return imgBtn;
 	}
+	
+	private ToggleButton mBtnToggleSound = null;
+	
+	private ToggleButton initToggleButton(float xOfIOS, float yOfIOS, float widthOfIOS, float heightOfIOS, String fileNameOnImage, String fileNameOffImage, boolean setClickListener )
+	{
+		ToggleButton tglBtn = null;
+		try {
+			tglBtn = new ToggleButton(this);
+			RelativeLayout.LayoutParams layoutButton = getLayoutFrom_iOSSize(widthOfIOS, heightOfIOS, 0.0f);
+			int iX = (int)getXofLayoutMargin(xOfIOS);
+			int iY = (int)getYofLayoutMargin(yOfIOS);
+			layoutButton.setMargins(iX, iY, 0, 0);
+			mUILayout.addView(tglBtn, layoutButton);
+		}
+		catch (Exception exp)
+		{
+			Log.d("exception", exp.getMessage());
+		}
+		return tglBtn;
+		
+	}
 
 	
 	private void initUI()
@@ -326,14 +347,7 @@ public class TapGirlActivity extends Activity implements View.OnClickListener{
 		yOfIOS = 142;
 		widthOfIOS = 46;
 		heightOfIOS = 34;
-		{
-			ToggleButton tglBtn = new ToggleButton(this);
-			RelativeLayout.LayoutParams layoutButton = getLayoutFrom_iOSSize(widthOfIOS, heightOfIOS, 0.0f);
-			int iX = (int)getXofLayoutMargin(xOfIOS);
-			int iY = (int)getYofLayoutMargin(yOfIOS);
-			layoutButton.setMargins(iX, iY, 0, 0);
-			mUILayout.addView(tglBtn, layoutButton);
-		}
+		mBtnToggleSound = initToggleButton(xOfIOS, yOfIOS, widthOfIOS, heightOfIOS, "graphic_sound_on", "graphic_sound_off", true);
 	}
     android.os.Handler mHandler = null;
     
