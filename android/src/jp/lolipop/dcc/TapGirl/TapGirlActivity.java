@@ -165,7 +165,7 @@ public class TapGirlActivity extends Activity {
         		MagRatio = HeightRatio;
         		UIMargin.setY(0.0f);
         		//左右に同じだけ開けるので、2で割る
-        		margin =  ((float)getPixelsWidth() - (widthOfIOS * MagRatio) / 2.0f);
+        		margin =  ((float)getPixelsWidth() - (widthOfIOS * MagRatio)) / 2.0f;
         		UIMargin.setX(margin);
         	}
         	Log.v("info", "wr = " + String.valueOf(WidthRatio)  + " hr = " + String.valueOf(HeightRatio) + " mag = " + String.valueOf(MagRatio));
@@ -244,6 +244,12 @@ public class TapGirlActivity extends Activity {
 		widthOfIOS = 80;
 		heightOfIOS = 21;
 		mRoundLabel = initLabel(xOfIOS, yOfIOS, widthOfIOS, heightOfIOS, 17.0f, Gravity.LEFT, "1周目");
+		//****** ♪ *******
+		xOfIOS = 14;
+		yOfIOS = 10;
+		widthOfIOS = 42;
+		heightOfIOS = 21;
+		initLabel(xOfIOS, yOfIOS, widthOfIOS, heightOfIOS, 24.0f, Gravity.LEFT, "♪");
 	}
     android.os.Handler mHandler = null;
     
