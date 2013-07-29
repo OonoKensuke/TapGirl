@@ -292,7 +292,7 @@ public class MyRenderer extends IGLRenderer {
 			{
 				float processedLenght = CChangeData.getObjectiveLength() - mChangeData.getRestLength();
 				float restTemp = mTouchLength - processedLenght;
-				//TODO ?サウンドの前準備
+				//サウンド
 				if (restTemp > NEAR0)
 				{
 					mChangeData.requestAddTouchLength(restTemp);
@@ -303,7 +303,9 @@ public class MyRenderer extends IGLRenderer {
 						mChangeWork.setChangeParam(mChangeData.getChangeParam());
 						loadTextureFromIndex(mChangeWork.getChangeParam().indexImage, false);
 						mStep = Step.STEP_CROSS_FADE;
-						activity.prepareSE(mChangeData.getChangeParam().indexSE);
+						if (!activity.getBtnToggleSound().isChecked()) {
+							activity.prepareSE(mChangeData.getChangeParam().indexSE);
+						}
 						Log.v("info", "change effect");
 						//アルファなどの変更に使う基準となる現在時刻
 						mChangeWork.timeBegin = System.currentTimeMillis();

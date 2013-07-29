@@ -279,6 +279,9 @@ public class TapGirlActivity extends Activity implements View.OnClickListener, O
 	
 	private MyToggleButton mBtnToggleSound = null;
 	
+	public MyToggleButton getBtnToggleSound() {
+		return mBtnToggleSound;
+	}
 	private MyToggleButton initToggleButton(float xOfIOS, float yOfIOS, float widthOfIOS, float heightOfIOS, String fileNameOnImage, String fileNameOffImage, boolean setClickListener )
 	{
 		MyToggleButton tglBtn = null;
