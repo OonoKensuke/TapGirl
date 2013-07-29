@@ -6,6 +6,8 @@ import jp.lolipop.dcc.*;
 
 import jp.lolipop.dcc.lib.IGLRenderer;
 import android.app.Activity;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -17,13 +19,19 @@ import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.ImageButton;
+import android.widget.ImageView.ScaleType;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class TapGirlActivity extends Activity {
+public class TapGirlActivity extends Activity implements View.OnClickListener{
 	private GLSurfaceView mGLSurfaceView = null;
 	private MyRenderer mRenderer = null;
 	private static TapGirlActivity s_Instance = null;
@@ -217,11 +225,11 @@ public class TapGirlActivity extends Activity {
 		TextView textView= new TextView(this);
 		textView.setText(strInit);
 		textView.setTextColor(Color.BLACK);
-		textView.setPadding(0, 0, 0, 0);
-		//cap Heightが3/4
-		float _fontSize = fontSize  * 0.75f *  getMagRatio();
+		//フォントサイズはある程度小さくしないと下部が消える
+		float _fontSize = fontSize  * 0.6f *  getMagRatio();
 		textView.setTextSize(_fontSize);
 		textView.setGravity(gravity);
+		textView.setPadding(0, 0, 0, 0);
 		//レイアウトをフォントよりもある程度大きく取らないとフォントの下部が表示されない
 		RelativeLayout.LayoutParams layoutCountLable = getLayoutFrom_iOSSize(widthOfIOS, heightOfIOS, _fontSize + 16.0f);
 		int iX = (int)getXofLayoutMargin(xOfIOS);
@@ -229,9 +237,41 @@ public class TapGirlActivity extends Activity {
 		layoutCountLable.setMargins(iX, iY, 0, 0);
 		
 		
-		textView.setBackgroundColor(Color.RED);
+		textView.setBackgroundColor(0);
 		mUILayout.addView(textView, layoutCountLable);
 		return textView;
+	}
+	
+	private ImageButton mBtnTweet = null;
+	private ImageButton mBtnMoreApps = null;
+	private ImageButton mBtnFacebook = null;
+	
+	private ImageButton initButton(float xOfIOS, float yOfIOS, float widthOfIOS, float heightOfIOS, String fileName, boolean setClickListener )
+	{
+		ImageButton imgBtn = null;
+		try {
+			imgBtn = new ImageButton(this);
+			int resId = getResIdOfRaw(fileName);
+			assert(resId > 0);
+			imgBtn.setImageResource(resId);
+			imgBtn.setScaleType(ScaleType.FIT_XY);
+			imgBtn.setPadding(0, 0, 0, 0);
+			imgBtn.setBackgroundColor(0);
+			RelativeLayout.LayoutParams layoutButton = getLayoutFrom_iOSSize(widthOfIOS, heightOfIOS, 0.0f);
+			int iX = (int)getXofLayoutMargin(xOfIOS);
+			int iY = (int)getYofLayoutMargin(yOfIOS);
+			layoutButton.setMargins(iX, iY, 0, 0);
+			mUILayout.addView(imgBtn, layoutButton);
+			if (setClickListener)
+			{
+				imgBtn.setOnClickListener(this);
+			}
+		}
+		catch (Exception exp)
+		{
+			Log.d("exception", exp.getMessage());
+		}
+		return imgBtn;
 	}
 
 	
@@ -240,6 +280,7 @@ public class TapGirlActivity extends Activity {
 		RelativeLayout.LayoutParams layout = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 		mUILayout = new RelativeLayout(this);
 		addContentView(mUILayout, layout);
+		//****** ラベル *******
 		//****** countLabel *******
 		//座標とサイズはXCodeから
 		float xOfIOS = 130;
@@ -259,9 +300,44 @@ public class TapGirlActivity extends Activity {
 		widthOfIOS = 42;
 		heightOfIOS = 21;
 		initLabel(xOfIOS, yOfIOS, widthOfIOS, heightOfIOS, 24.0f, Gravity.LEFT | Gravity.TOP, "♪");
+
+		//****** ボタン *******
+		//****** Twitter *******
+		xOfIOS = 5;
+		yOfIOS = 39;
+		widthOfIOS = 31;
+		heightOfIOS = 31;
+		mBtnTweet = initButton(xOfIOS, yOfIOS, widthOfIOS, heightOfIOS, "graphic_twitter1", true);
+		//****** facebook *******
+		xOfIOS = 6;
+		yOfIOS = 73;
+		widthOfIOS = 29;
+		heightOfIOS = 29;
+		mBtnFacebook = initButton(xOfIOS, yOfIOS, widthOfIOS, heightOfIOS, "graphic_facebook1", true);
+		xOfIOS = 48;
+		yOfIOS = 215;
+		widthOfIOS = 44;
+		heightOfIOS = 28;
+		mBtnMoreApps = initButton(xOfIOS, yOfIOS, widthOfIOS, heightOfIOS, "graphic_moreapps", true);
 	}
     android.os.Handler mHandler = null;
     
+    private int getResIdOfRaw(String fileName)
+    {
+    	int resId = 0;
+    	try {
+    		resId = getResources().getIdentifier(
+    				fileName,
+    				"raw",
+    				"jp.lolipop.dcc.TapGirl");
+    		Log.v("info", fileName + " resId = " + String.valueOf(resId));
+    	}
+    	catch (Exception exp)
+    	{
+    		Log.d("exception", exp.getMessage());
+    	}
+    	return resId;
+    }
     
     /**
      * 音声再生用プレイヤー
@@ -276,11 +352,7 @@ public class TapGirlActivity extends Activity {
     	}
     	int resId = 0;
     	String fileName = "sound_" + String.format("%02d", indexSE);
-		resId = getResources().getIdentifier(
-				fileName,
-				"raw",
-				"jp.lolipop.dcc.TapGirl");
-		Log.v("info", fileName + " resId = " + String.valueOf(resId));
+    	resId = getResIdOfRaw(fileName);
 		mPlayer = MediaPlayer.create(this, resId);
 		mPlayer.start();
     }
@@ -390,5 +462,10 @@ public class TapGirlActivity extends Activity {
 			
 		}
 		return super.onTouchEvent(event);
+	}
+	@Override
+	public void onClick(View v) {
+		Log.v("info", "TapGirlActivity#onClick");
+		
 	}
 }
