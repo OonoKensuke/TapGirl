@@ -37,8 +37,3 @@ android/bin/res/drawable-xhdpi/ic_launcher.png
 CVec2D.class
 MyRenderer$1.class
 R$raw.class
-android/bin/res/raw/graphic_facebook1.png
-android/bin/res/raw/graphic_moreapps.png
-android/bin/res/raw/graphic_sound_off.png
-android/bin/res/raw/graphic_sound_on.png
-android/bin/res/raw/graphic_twitter1.png
