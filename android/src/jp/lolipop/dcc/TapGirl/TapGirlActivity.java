@@ -2,6 +2,7 @@ package jp.lolipop.dcc.TapGirl;
 
 import jp.lolipop.dcc.lib.CVec2D;
 import jp.lolipop.dcc.lib.MyGLUtil;
+import jp.lolipop.dcc.lib.MyToggleButton;
 import jp.lolipop.dcc.*;
 
 import jp.lolipop.dcc.lib.IGLRenderer;
@@ -276,20 +277,23 @@ public class TapGirlActivity extends Activity implements View.OnClickListener, O
 		return imgBtn;
 	}
 	
-	private ToggleButton mBtnToggleSound = null;
+	private MyToggleButton mBtnToggleSound = null;
 	
-	private ToggleButton initToggleButton(float xOfIOS, float yOfIOS, float widthOfIOS, float heightOfIOS, String fileNameOnImage, String fileNameOffImage, boolean setClickListener )
+	private MyToggleButton initToggleButton(float xOfIOS, float yOfIOS, float widthOfIOS, float heightOfIOS, String fileNameOnImage, String fileNameOffImage, boolean setClickListener )
 	{
-		ToggleButton tglBtn = null;
+		MyToggleButton tglBtn = null;
 		try {
-			tglBtn = new ToggleButton(this);
+			tglBtn = new MyToggleButton(this);
 			RelativeLayout.LayoutParams layoutButton = getLayoutFrom_iOSSize(widthOfIOS, heightOfIOS, 0.0f);
 			int iX = (int)getXofLayoutMargin(xOfIOS);
 			int iY = (int)getYofLayoutMargin(yOfIOS);
 			layoutButton.setMargins(iX, iY, 0, 0);
 			int resIdOn = getResIdOfRaw(fileNameOnImage);
 			int resIdOff = getResIdOfRaw(fileNameOffImage);
+			tglBtn.setResIdOff(resIdOff);
+			tglBtn.setResIdOn(resIdOn);
 			tglBtn.setBackgroundResource(resIdOff);
+			tglBtn.setChecked(false);
 			tglBtn.setTextOn("");
 			tglBtn.setTextOff("");
 			tglBtn.setText("");
@@ -510,6 +514,9 @@ public class TapGirlActivity extends Activity implements View.OnClickListener, O
 	@Override
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 		Log.v("info", "TapGirlActivity#onCheckedChanged :" + String.valueOf(isChecked));
-		
+		if (buttonView.equals(mBtnToggleSound))
+		{
+			mBtnToggleSound.onCheckedChanged(isChecked);
+		}
 	}
 }
