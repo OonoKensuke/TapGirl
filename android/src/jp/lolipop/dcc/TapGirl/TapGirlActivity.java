@@ -33,7 +33,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-public class TapGirlActivity extends Activity implements View.OnClickListener{
+public class TapGirlActivity extends Activity implements View.OnClickListener, OnCheckedChangeListener{
 	private GLSurfaceView mGLSurfaceView = null;
 	private MyRenderer mRenderer = null;
 	private static TapGirlActivity s_Instance = null;
@@ -294,6 +294,9 @@ public class TapGirlActivity extends Activity implements View.OnClickListener{
 			tglBtn.setTextOff("");
 			tglBtn.setText("");
 			mUILayout.addView(tglBtn, layoutButton);
+			if (setClickListener) {
+				tglBtn.setOnCheckedChangeListener(this);
+			}
 		}
 		catch (Exception exp)
 		{
@@ -502,6 +505,11 @@ public class TapGirlActivity extends Activity implements View.OnClickListener{
 	@Override
 	public void onClick(View v) {
 		Log.v("info", "TapGirlActivity#onClick");
+		
+	}
+	@Override
+	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+		Log.v("info", "TapGirlActivity#onCheckedChanged :" + String.valueOf(isChecked));
 		
 	}
 }
