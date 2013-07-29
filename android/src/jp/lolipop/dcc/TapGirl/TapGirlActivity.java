@@ -30,6 +30,7 @@ import android.widget.ImageView.ScaleType;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 public class TapGirlActivity extends Activity implements View.OnClickListener{
 	private GLSurfaceView mGLSurfaceView = null;
@@ -319,6 +320,20 @@ public class TapGirlActivity extends Activity implements View.OnClickListener{
 		widthOfIOS = 44;
 		heightOfIOS = 28;
 		mBtnMoreApps = initButton(xOfIOS, yOfIOS, widthOfIOS, heightOfIOS, "graphic_moreapps", true);
+		
+		//****** トグルボタン *******
+		xOfIOS = 56;
+		yOfIOS = 142;
+		widthOfIOS = 46;
+		heightOfIOS = 34;
+		{
+			ToggleButton tglBtn = new ToggleButton(this);
+			RelativeLayout.LayoutParams layoutButton = getLayoutFrom_iOSSize(widthOfIOS, heightOfIOS, 0.0f);
+			int iX = (int)getXofLayoutMargin(xOfIOS);
+			int iY = (int)getYofLayoutMargin(yOfIOS);
+			layoutButton.setMargins(iX, iY, 0, 0);
+			mUILayout.addView(tglBtn, layoutButton);
+		}
 	}
     android.os.Handler mHandler = null;
     
