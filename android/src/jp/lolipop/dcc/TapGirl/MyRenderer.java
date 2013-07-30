@@ -462,7 +462,7 @@ public class MyRenderer extends IGLRenderer {
 	@Override
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
 		Log.v("info", "MyRenderer#onSurfaceCreated ");
-		GLES20.glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
+		GLES20.glClearColor(CDefines.CLEAR_RED, CDefines.CLEAR_GREEN, CDefines.CLEAR_BLUE, 1.0f);
 		mPrimCurrent = new CPrimitive();
 		mPrimCurrent.testSetUp(0.0f, 0.0f);
 		

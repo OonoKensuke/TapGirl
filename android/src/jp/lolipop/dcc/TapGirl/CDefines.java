@@ -31,14 +31,18 @@ static public final String _NEND_SPOT_ID =	"3172";
 static public final String NAME_SAVE_FILE = "tapgirlsavedata";
 // mark -More Apps
 static public final String MORE_APPS_SITE =	"http://sekai-seifuku.com/";
-
+//IOS デバイス関連の値
 static public final float IOS_SCREEN_WIDTH = 320.0f;
 static public final float IOS_SCREEN_HEIGHT = 568.0f;
 static public final float IOS_ADS_HEIGHT = 50.0f;
 static public final float IOS_RETINA_RATIO = 2.0f;
-
+//テクスチャ
 static public final float TEXTURE_WIDTH = 1024.0f;
 static public final float TEXTURE_HEIGHT = 2048.0f;
+//画面クリアの色関係 0 ~ 1.0f
+static public final float CLEAR_RED = 0.0f;
+static public final float CLEAR_GREEN = 0.0f;
+static public final float CLEAR_BLUE = 1.0f;
 
 
 // mark -congratulations おめでとう画面
