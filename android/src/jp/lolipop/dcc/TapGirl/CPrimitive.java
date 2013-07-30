@@ -22,7 +22,7 @@ public class CPrimitive {
 	public void setPrimitiveType(int primitiveType) {
 		mPrimitiveType = primitiveType;
 	}
-	
+		
 	private int mNumVertices = 0;
 	
 	public int getNumVertices() {
@@ -33,14 +33,21 @@ public class CPrimitive {
 	
 	void testSetUp(float x, float y)
 	{
-		float size = 1.0f;
-		float u = 640.0f / 1024.0f;
-		float v = (1136.0f - 100.0f) / 2048.0f;
+		TapGirlActivity activity = TapGirlActivity.getInstance();
+		float wSize = (CDefines.IOS_SCREEN_WIDTH * TapGirlActivity.getMagRatio()) / (float)(activity.getPixelsWidth());
+		float ratio = ((CDefines.IOS_SCREEN_HEIGHT - CDefines.IOS_ADS_HEIGHT) / CDefines.IOS_SCREEN_HEIGHT);
+		float hSize = wSize * ratio;
+		float yAdjust = 1.0f - hSize;
+		//boolean isWRatio = TapGirlActivity.isUseWRatio();
+
+		float u = (CDefines.IOS_SCREEN_WIDTH * CDefines.IOS_RETINA_RATIO) / CDefines.TEXTURE_WIDTH;
+		float texturePixelsOfY = (CDefines.IOS_SCREEN_HEIGHT - CDefines.IOS_ADS_HEIGHT) * CDefines.IOS_RETINA_RATIO;
+		float v = texturePixelsOfY / CDefines.TEXTURE_HEIGHT;
 		mFloatBuffer = MyGLUtil.makeFloatBuffer(new float[] {
-				x - size, y + size,  0.0f, 0.0f,
-				x - size, y - size,  0.0f, v,
-				x + size, y + size,  u,    0.0f,
-				x + size, y - size,  u,    v,
+				x - wSize, y + hSize + yAdjust,  0.0f, 0.0f,
+				x - wSize, y - hSize + yAdjust,  0.0f, v,
+				x + wSize, y + hSize + yAdjust,  u,    0.0f,
+				x + wSize, y - hSize + yAdjust,  u,    v,
 				});
 		int [] vertexBufVal = new int [1];
 		GLES20.glGenBuffers(1, vertexBufVal, 0);

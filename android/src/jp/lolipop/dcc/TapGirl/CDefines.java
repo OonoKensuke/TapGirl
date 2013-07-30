@@ -32,6 +32,14 @@ static public final String NAME_SAVE_FILE = "tapgirlsavedata";
 // mark -More Apps
 static public final String MORE_APPS_SITE =	"http://sekai-seifuku.com/";
 
+static public final float IOS_SCREEN_WIDTH = 320.0f;
+static public final float IOS_SCREEN_HEIGHT = 568.0f;
+static public final float IOS_ADS_HEIGHT = 50.0f;
+static public final float IOS_RETINA_RATIO = 2.0f;
+
+static public final float TEXTURE_WIDTH = 1024.0f;
+static public final float TEXTURE_HEIGHT = 2048.0f;
+
 
 // mark -congratulations おめでとう画面
 //最後に数字の場所に表示するメッセージ

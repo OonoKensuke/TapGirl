@@ -82,12 +82,12 @@ public class TapGirlActivity extends Activity implements View.OnClickListener, O
 		mYDpi = ydpi;
 	}
 	
-	protected int getPixelsWidth()
+	public int getPixelsWidth()
 	{
 		return mWidthPixels;
 	}
 	
-	protected int getPixelsHeight()
+	public int getPixelsHeight()
 	{
 		return mHeightPixels;
 	}
@@ -138,6 +138,15 @@ public class TapGirlActivity extends Activity implements View.OnClickListener, O
 	public static CVec2D getUIMargin() {
 		return UIMargin;
 	}
+	
+	public static boolean isUseWRatio()
+	{
+		if (getWidthRatio() == getMagRatio())
+		{
+			return true;
+		}
+		return false;
+	}
 	private void initDispInfo()
 	{
         //画面解像度の取得
@@ -170,13 +179,14 @@ public class TapGirlActivity extends Activity implements View.OnClickListener, O
         
         {
         	//座標はRetinaディスプレイの半分の解像度
-        	final float widthOfIOS = 320.0f;
-        	final float heightOfIOS = 568.0f;
+        	final float widthOfIOS = CDefines.IOS_SCREEN_WIDTH;
+        	final float heightOfIOS = CDefines.IOS_SCREEN_HEIGHT;
         	WidthRatio = (float)getPixelsWidth() / widthOfIOS;
         	HeightRatio = (float)getPixelsHeight() / heightOfIOS;
     		float margin  = 0.0f;
         	if (WidthRatio < HeightRatio) {
         		MagRatio = WidthRatio;
+        		Log.v("info", "幅を元に拡大率を決定" + String.valueOf(MagRatio));
         		UIMargin.setX(0.0f);
         		//上だけ開ける
         		margin = (float)getPixelsHeight() - (heightOfIOS * MagRatio);
@@ -184,6 +194,7 @@ public class TapGirlActivity extends Activity implements View.OnClickListener, O
         	}
         	else {
         		MagRatio = HeightRatio;
+        		Log.v("info", "高さを元に拡大率を決定" + String.valueOf(MagRatio));
         		UIMargin.setY(0.0f);
         		//左右に同じだけ開けるので、2で割る
         		margin =  ((float)getPixelsWidth() - (widthOfIOS * MagRatio)) / 2.0f;
