@@ -9,10 +9,12 @@ import jp.lolipop.dcc.lib.IGLRenderer;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -417,6 +419,13 @@ public class TapGirlActivity extends Activity implements View.OnClickListener, O
     		}
     	}
     	return result;
+    }
+    
+    public void showSite(String url)
+    {
+    	Uri uri = Uri.parse(url);
+    	Intent i = new Intent(Intent.ACTION_VIEW, uri);
+    	startActivity(i);
     }
     
     /** Called when the activity is first created. */

@@ -14,8 +14,10 @@ import jp.lolipop.dcc.lib.CTexture;
 import jp.lolipop.dcc.lib.CVec2D;
 import jp.lolipop.dcc.lib.MyGLUtil;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.opengl.GLES20;
 import android.opengl.GLUtils;
 import android.os.Handler;
@@ -228,6 +230,13 @@ public class MyRenderer extends IGLRenderer {
 		return 3;
 	}
 	
+	private void setupDispPasswordWithTime(long time)
+	{
+		TapGirlActivity activity = TapGirlActivity.getInstance();
+		setTextInfoToView(activity.getCountLabel(), CDefines.SHOP_PASSWORD);
+		mChangeWork.timeBegin = time;
+	}
+	
 	private boolean loadTextureFromIndex(int index, boolean bLoadCurrent)
 	{
 		boolean result = false;
@@ -367,10 +376,58 @@ public class MyRenderer extends IGLRenderer {
 			break;
 			case STEP_DISP_CONGRATULATIONS:
 			{
-				//TODO 実装
-				assert(false);
+				double timeDelta = (double)(time - mChangeWork.timeBegin) / 1000.0;
+				if (timeDelta >= CDefines.CONGRATULATIONS_WAIT_TO_PASSWORD)
+				{
+					setupDispPasswordWithTime(time);
+					mStep = Step.STEP_DISP_PASSWORD;
+				}
 			}
 			break;
+			case STEP_DISP_PASSWORD:
+			{
+				double timeDelta = (double)(time - mChangeWork.timeBegin) / 1000.0;
+				if (timeDelta >= CDefines.CONGRATULATIONS_WAIT_TO_SHOP)
+				{
+					//TODO 周回数インクリメント
+					mStep = Step.STEP_SHOW_SITE;
+					try {
+						if (Thread.currentThread().getName().equalsIgnoreCase("main"))
+						{
+							//同じスレッドからrunをpostするとデッドロックになるようだ
+							TapGirlActivity.getInstance().showSite(CDefines.SHOP_SITE_URL);
+						}
+						else if (mHandlerActivity != null) {
+							Log.v("info", "current thread name is " + Thread.currentThread().getName());
+							mLatchForButton = new CountDownLatch(1);
+							mRunSetText  = new Runnable() {
+								
+								@Override
+								public void run() {
+									TapGirlActivity.getInstance().showSite(CDefines.SHOP_SITE_URL);
+									mLatchForButton.countDown();
+								}
+							};
+							mHandlerActivity.post(mRunSetText);
+							//UIスレッドでの画像設定がすむのを待つ
+							mLatchForButton.await();
+							mLatchForButton = null;
+						}
+					}
+					catch (Exception exp)
+					{
+						Log.d("exception", exp.getMessage());
+					}
+				}
+			}
+			break;
+			case STEP_SHOW_SITE:
+			{
+				//特に何も決まっていない
+			}
+			break;
+			default:
+				break;
 		}
 		if (bDrawNormal) {
 			drawTextureCurrent(true, FRSH_NORMAL);

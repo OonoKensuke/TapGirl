@@ -44,3 +44,4 @@ android/bin/res/raw/graphic_sound_on.png
 android/bin/res/raw/graphic_twitter1.png
 MyToggleButton.class
 CDefines.class
+MyRenderer$2.class
