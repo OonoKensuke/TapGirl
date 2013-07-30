@@ -156,7 +156,7 @@ public class MyRenderer extends IGLRenderer {
 		String strTouch = String.valueOf(iLength);
 		setTextInfoToView(activity.getCountLabel(), strTouch);
 	}
-	private void resetTouchLength(float length)
+	public void resetTouchLength(float length)
 	{
 		mTouchLength = length;
 		if (mChangeData != null) {

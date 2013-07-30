@@ -102,6 +102,21 @@ public class CChangeData {
 	{
 		return s_InstanceChangeData;
 	}
+	//保存用データ：タッチ距離
+	public int getTouchLength()
+	{
+		int iLength = (int)(getObjectiveLength() - getRestLength());
+		return iLength;
+	}
+	//保存用データ：周回数
+	private int mLoopNumber = 1;
+	
+	public int getLoopNumber() {
+		return mLoopNumber;
+	}
+	public void setLoopNumber(int loopNumber) {
+		mLoopNumber = loopNumber;
+	}
 	
 	public CChangeData(float length)
 	{

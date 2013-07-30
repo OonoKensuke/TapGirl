@@ -1,5 +1,12 @@
 package jp.lolipop.dcc.TapGirl;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.nio.ByteBuffer;
+import java.util.zip.CRC32;
+
 import jp.lolipop.dcc.lib.CVec2D;
 import jp.lolipop.dcc.lib.MyGLUtil;
 import jp.lolipop.dcc.lib.MyToggleButton;
@@ -7,6 +14,7 @@ import jp.lolipop.dcc.*;
 
 import jp.lolipop.dcc.lib.IGLRenderer;
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
@@ -329,7 +337,12 @@ public class TapGirlActivity extends Activity implements View.OnClickListener, O
 		float yOfIOS = 40;
 		float widthOfIOS = 160;
 		float heightOfIOS = 61;
-		mCountLabel = initLabel(xOfIOS, yOfIOS, widthOfIOS, heightOfIOS, 42.0f, Gravity.RIGHT | Gravity.TOP, "100");
+		{
+			CChangeData changeData = CChangeData.getInstance();
+			int iLen = (int)(changeData.getRestLength());
+			String strRest = String.valueOf(iLen);
+			mCountLabel = initLabel(xOfIOS, yOfIOS, widthOfIOS, heightOfIOS, 42.0f, Gravity.RIGHT | Gravity.TOP, strRest);
+		}
 		//****** roundLabel *******
 		xOfIOS = 213;
 		yOfIOS = 148;
@@ -428,6 +441,170 @@ public class TapGirlActivity extends Activity implements View.OnClickListener, O
     	startActivity(i);
     }
     
+    public boolean saveData()
+    {
+    	boolean result = false;
+    	try {
+			FileOutputStream outStream = openFileOutput(CDefines.NAME_SAVE_FILE, Context.MODE_PRIVATE);
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			CChangeData changeData = CChangeData.getInstance();
+			{
+				int iLength = changeData.getTouchLength();
+				byte [] array = intToByteArray(iLength);
+				bos.write(array);
+			}
+			{
+				int loopNumber = changeData.getLoopNumber();
+				byte [] array = intToByteArray(loopNumber);
+				bos.write(array);
+			}
+			byte [] dataArray = bos.toByteArray();
+			CRC32 crc = new CRC32();
+			crc.reset();
+			crc.update(dataArray);
+			long lCrc = crc.getValue();
+			byte [] arrayCrc = longToByteArray(lCrc);
+			
+			outStream.write(dataArray);
+			outStream.write(arrayCrc);
+
+			outStream.close();
+			Log.v("info", "save was end");
+			result = true;
+    	}
+    	catch (Exception exp)
+    	{
+    		Log.d("exception", exp.getMessage());
+    	}
+    	return result;
+    }
+    
+    public boolean loadData()
+    {
+    	boolean result = false;
+    	try {
+			boolean bExists = isExistsSaveData();
+			if (bExists) {
+				FileInputStream file = getApplicationContext().openFileInput(CDefines.NAME_SAVE_FILE);
+				ByteArrayOutputStream bos = new ByteArrayOutputStream();
+				//
+				byte [] buf = new byte[1024];
+				int byteRead = 0;
+				while ((byteRead = file.read(buf)) != -1) {
+					bos.write(buf, 0, byteRead);
+				}
+				byte[] bufAll = bos.toByteArray();
+				int indexOfBuffer = 0;
+				{
+					byte [] arrayForLength = new byte [4];
+					for (int i = 0; i < arrayForLength.length; i++)
+					{
+						arrayForLength[i] = bufAll[indexOfBuffer];
+						indexOfBuffer++;
+					}
+					int iLen = byteArrayToInt(arrayForLength);
+					mRenderer.resetTouchLength((float)iLen);
+				}
+				CChangeData changeData = CChangeData.getInstance();
+				{
+					byte [] arrayForLoopNumber = new byte [4];
+					for (int i = 0; i < arrayForLoopNumber.length; i++)
+					{
+						arrayForLoopNumber[i] = bufAll[indexOfBuffer];
+						indexOfBuffer++;
+					}
+					int loopNum = byteArrayToInt(arrayForLoopNumber);
+					changeData.setLoopNumber(loopNum);
+				}
+				{
+					//crc
+					byte [] arrayForConvert = new byte[8];
+					for (int indexForConv = 0; indexForConv < arrayForConvert.length; indexForConv++)
+					{
+						arrayForConvert[indexForConv] = bufAll[indexOfBuffer];
+						indexOfBuffer++;
+					}
+					long crcFromBuf = byteArrayToLong(arrayForConvert);
+					
+					CRC32 crc = new CRC32();
+					crc.reset();
+					crc.update(bufAll, 0, bufAll.length - 8);
+					long crcFromData = crc.getValue();
+					if (crcFromBuf != crcFromData) {
+						Log.d("error", "from buffer = " + String.valueOf(crcFromBuf) + " from data = " + String.valueOf(crcFromData));
+						assert(false);
+					}
+					else {
+						Log.v("info", "crc check succeed");
+					}
+				}
+				file.close();
+				Log.v("info", "load was end");
+				result = true;
+			}
+    	}
+    	catch (Exception exp)
+    	{
+    		Log.d("exception", exp.getMessage());
+    	}
+    	return result;
+    }
+	public boolean isExistsSaveData()
+	{
+		boolean result = false;
+		try {
+			File fEx = getFileStreamPath(CDefines.NAME_SAVE_FILE);
+			result = fEx.exists();
+		}
+		catch (Exception exp) {
+			Log.d("exception", exp.getMessage());
+		}
+		return result;
+	}
+	public static byte[] intToByteArray(int target)
+	{
+		byte[] result = null;
+		try {
+			 byte[] bs = new byte[4];
+			 bs[3] = (byte) (0x000000ff & (target));
+			 bs[2] = (byte) (0x000000ff & (target >>> 8));
+			 bs[1] = (byte) (0x000000ff & (target >>> 16));
+			 bs[0] = (byte) (0x000000ff & (target >>> 24));
+			 result = bs;
+		}
+		catch (Exception exp) {
+			Log.d("exception", exp.getMessage());
+		}
+		return result;
+	}
+	public static byte [] longToByteArray(long target)
+	{
+		byte[] result = null;
+		try {
+			int dig8, indexArray;
+			byte [] array = new byte[8];
+			for (dig8 = 0; dig8 < array.length; dig8++)
+			{
+				indexArray = array.length - (1 + dig8);
+				array[indexArray] =(byte)( target & 0xff);
+				target >>= 8;
+			}
+			result = array;
+		}
+		catch (Exception exp) {
+			Log.d("exception", exp.getMessage());
+		}
+		return result;
+	}
+	public static int byteArrayToInt(byte[] array)
+	{
+		return ByteBuffer.wrap(array).asIntBuffer().get();
+	}
+	public static long byteArrayToLong(byte[] array)
+	{
+		return ByteBuffer.wrap(array).asLongBuffer().get();
+	}
+    
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -449,10 +626,17 @@ public class TapGirlActivity extends Activity implements View.OnClickListener, O
         mGLSurfaceView.setDebugFlags(GLSurfaceView.DEBUG_CHECK_GL_ERROR	 | 	GLSurfaceView.DEBUG_LOG_GL_CALLS);
         setContentView(mGLSurfaceView);
         
-        initUI();
         //UIアクセスのためのハンドル
         mHandler  = new android.os.Handler();
         mRenderer.setHandlerForUI(mHandler);
+        
+        //データがあればロード
+        if (isExistsSaveData())
+        {
+        	boolean resultLoad = loadData();
+        	assert(resultLoad);
+        }
+        initUI();
     }
     
     protected void onDestroy()
@@ -470,6 +654,7 @@ public class TapGirlActivity extends Activity implements View.OnClickListener, O
 			mGLSurfaceView.onPause();
 		}
 		Log.v("info", "activity.onPause");
+		saveData();
 		if (isFinishing())
 		{
 			Log.v("info", "acitvity will be finished");

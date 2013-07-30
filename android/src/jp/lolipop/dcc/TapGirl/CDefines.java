@@ -28,6 +28,7 @@ static public final String _NEND_ID =	"a6eca9dd074372c898dd1df549301f277c53f2b9"
 static public final String _NEND_SPOT_ID =	"3172";
 //**********必ずアプリ専用のものに書き換える**********
 
+static public final String NAME_SAVE_FILE = "tapgirlsavedata";
 // mark -More Apps
 static public final String MORE_APPS_SITE =	"http://sekai-seifuku.com/";
 
