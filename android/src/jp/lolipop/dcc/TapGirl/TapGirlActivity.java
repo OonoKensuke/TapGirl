@@ -720,6 +720,15 @@ public class TapGirlActivity extends Activity implements View.OnClickListener, O
 	@Override
 	public void onClick(View v) {
 		Log.v("info", "TapGirlActivity#onClick");
+		if (v.equals(mBtnTweet)) {
+			Log.v("info", "tweet");
+		}
+		else if (v.equals(mBtnFacebook)) {
+			Log.v("info", "facebook");
+		}
+		else if (v.equals(mBtnMoreApps)) {
+			showSite(CDefines.MORE_APPS_SITE);
+		}
 		
 	}
 	@Override
