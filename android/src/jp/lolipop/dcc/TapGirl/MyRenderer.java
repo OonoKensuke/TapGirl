@@ -197,7 +197,7 @@ public class MyRenderer extends IGLRenderer {
 			{
 				mTouchLength += curLen;
 				mTouchLength = Math.min(mTouchLength, CChangeData.getObjectiveLength());
-				Log.v("info", "touch length = " + String.valueOf( mTouchLength));
+				//Log.v("info", "touch length = " + String.valueOf( mTouchLength));
 				mPosTouch.setParam(posUpdate);
 				updateLabelInfo();
 			}
@@ -429,6 +429,15 @@ public class MyRenderer extends IGLRenderer {
 		mShaders = new MyGLShader[FRSH_MAX];
 		mShaders[FRSH_NORMAL] =  shaderNormal;
 		mShaders[FRSH_FADE] = shaderFade;
+		
+		if (mTextureCurrent != null) 
+		{
+			mTextureCurrent.reloadTexture(TapGirlActivity.getInstance());
+		}
+		if (mTextureNext != null) 
+		{
+			mTextureNext.reloadTexture(TapGirlActivity.getInstance());
+		}
 	
 	}
 

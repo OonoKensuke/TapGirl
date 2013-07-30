@@ -17,6 +17,17 @@ public class CTexture {
 		return mTextureId;
 	}
 	
+	/**
+	 * リロード用にアセットの名前を保管する
+	 */
+	private String mNameAsset = null;
+	
+	private String getNameAsset() {
+		return mNameAsset;
+	}
+	private void setNameAsset(String nameAsset) {
+		mNameAsset = nameAsset;
+	}
 	public void dispose()
 	{
 		int [] handles = {mTextureId};
@@ -25,10 +36,8 @@ public class CTexture {
 			mTextureId = -1;
 		}
 	}
-	
-	public int loadTexture(String nameAsset, Activity activity)
+	private int innerLoadTexture(String nameAsset, Activity activity)
 	{
-		assert(mTextureId < 0);
 		mTextureId = -1;
 		AndroidFileIO fileIO = new AndroidFileIO(activity.getResources().getAssets());
 		InputStream is = null;
@@ -61,7 +70,34 @@ public class CTexture {
 	    GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_LINEAR);
 	    // テクスチャ画像を書き込む
 	    GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bmp, 0);
-		return mTextureId;
+	    return mTextureId;
+	}
+	
+	/**アプリの流れでテクスチャをロードする
+	 * @param nameAsset　アセットのパス
+	 * @param activity
+	 * @return
+	 */
+	public int loadTexture(String nameAsset, Activity activity)
+	{
+		assert(mTextureId < 0);
+		int result = innerLoadTexture(nameAsset, activity);
+		assert(result > 0);
+		//リロードのため、名前を保存する
+		setNameAsset(nameAsset);
+		return result;
+	}
+	
+	/**復帰したときテクスチャをリロードする
+	 * @param activity
+	 * @return
+	 */
+	public int reloadTexture(Activity activity)
+	{
+		assert(getNameAsset() != null);
+		int result = innerLoadTexture(getNameAsset(), activity);
+		assert(result > 0);
+		return result;
 	}
 
 }

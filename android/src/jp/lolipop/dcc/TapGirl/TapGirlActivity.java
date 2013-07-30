@@ -452,7 +452,6 @@ public class TapGirlActivity extends Activity implements View.OnClickListener, O
     	s_Instance = null;
     	super.onDestroy();
     }
-    /*
 	@Override
 	protected void onPause()
 	{
@@ -478,7 +477,6 @@ public class TapGirlActivity extends Activity implements View.OnClickListener, O
 			mGLSurfaceView.onResume();
 		}
 	}
-	*/
 	@Override
 	public boolean onTouchEvent(MotionEvent event)
 	{
