@@ -159,11 +159,15 @@ public class MyRenderer extends IGLRenderer {
 	public void resetTouchLength(float length)
 	{
 		mTouchLength = length;
+		//インスタンスを作り直すので、値を一時保管する
+		int loopNumber = 1;
 		if (mChangeData != null) {
 			Log.v("info", "changeData will be renewal");
+			loopNumber = mChangeData.getLoopNumber();
 			mChangeData = null;
 		}
 		mChangeData = new CChangeData(mTouchLength);
+		mChangeData.setLoopNumber(loopNumber);
 	}
 	
 	private CVec2D mPosTouch = new CVec2D();
@@ -389,7 +393,12 @@ public class MyRenderer extends IGLRenderer {
 				double timeDelta = (double)(time - mChangeWork.timeBegin) / 1000.0;
 				if (timeDelta >= CDefines.CONGRATULATIONS_WAIT_TO_SHOP)
 				{
-					//TODO 周回数インクリメント
+					//周回数インクリメント
+					{
+						int loopNum = mChangeData.getLoopNumber();
+						loopNum++;
+						mChangeData.setLoopNumber(loopNum);
+					}
 					mStep = Step.STEP_SHOW_SITE;
 					try {
 						if (Thread.currentThread().getName().equalsIgnoreCase("main"))

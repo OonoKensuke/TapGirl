@@ -330,6 +330,7 @@ public class TapGirlActivity extends Activity implements View.OnClickListener, O
 		RelativeLayout.LayoutParams layout = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 		mUILayout = new RelativeLayout(this);
 		addContentView(mUILayout, layout);
+		CChangeData changeData = CChangeData.getInstance();
 		//****** ラベル *******
 		//****** countLabel *******
 		//座標とサイズはXCodeから
@@ -338,7 +339,6 @@ public class TapGirlActivity extends Activity implements View.OnClickListener, O
 		float widthOfIOS = 160;
 		float heightOfIOS = 61;
 		{
-			CChangeData changeData = CChangeData.getInstance();
 			int iLen = (int)(changeData.getRestLength());
 			String strRest = String.valueOf(iLen);
 			mCountLabel = initLabel(xOfIOS, yOfIOS, widthOfIOS, heightOfIOS, 42.0f, Gravity.RIGHT | Gravity.TOP, strRest);
@@ -348,7 +348,11 @@ public class TapGirlActivity extends Activity implements View.OnClickListener, O
 		yOfIOS = 148;
 		widthOfIOS = 80;
 		heightOfIOS = 21;
-		mRoundLabel = initLabel(xOfIOS, yOfIOS, widthOfIOS, heightOfIOS, 17.0f, Gravity.LEFT | Gravity.TOP, "1周目");
+		{
+			int loopNum = changeData.getLoopNumber();
+			String strLoop = loopNum + "周目";
+			mRoundLabel = initLabel(xOfIOS, yOfIOS, widthOfIOS, heightOfIOS, 17.0f, Gravity.LEFT | Gravity.TOP, strLoop);
+		}
 		//****** ♪ *******
 		xOfIOS = 14;
 		yOfIOS = 10;
