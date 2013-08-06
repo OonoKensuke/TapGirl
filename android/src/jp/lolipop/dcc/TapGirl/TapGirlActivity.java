@@ -7,6 +7,13 @@ import java.io.FileOutputStream;
 import java.nio.ByteBuffer;
 import java.util.zip.CRC32;
 
+import twitter4j.Twitter;
+import twitter4j.TwitterException;
+import twitter4j.TwitterFactory;
+import twitter4j.auth.AccessToken;
+import twitter4j.auth.RequestToken;
+import twitter4j.conf.ConfigurationBuilder;
+
 import jp.lolipop.dcc.lib.CVec2D;
 import jp.lolipop.dcc.lib.MyGLUtil;
 import jp.lolipop.dcc.lib.MyToggleButton;
@@ -18,7 +25,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.media.MediaPlayer;
@@ -619,6 +629,30 @@ public class TapGirlActivity extends Activity implements View.OnClickListener, O
 	{
 		return ByteBuffer.wrap(array).asLongBuffer().get();
 	}
+	//twitter4j
+	private static SharedPreferences mSharedPreferences;
+	private static Twitter twitter;
+	private static RequestToken requestToken;
+	/**
+	 * check if the account is authorized
+	 * @return
+	 */
+	private boolean isConnected() {
+		return mSharedPreferences.getString(CDefines.PREF_KEY_TOKEN, null) != null;
+	}
+	private void askOAuth() {
+		ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
+		configurationBuilder.setOAuthConsumerKey(CDefines.CONSUMER_KEY);
+		configurationBuilder.setOAuthConsumerSecret(CDefines.CONSUMER_SECRET);
+		twitter4j.conf.Configuration configuration = configurationBuilder.build();
+		twitter = new TwitterFactory(configuration).getInstance();
+		try {
+			requestToken = twitter.getOAuthRequestToken(CDefines.CALLBACK_URL);
+			this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(requestToken.getAuthenticationURL())));
+		} catch (TwitterException e) {
+			e.printStackTrace();
+		}
+	}
     
     /** Called when the activity is first created. */
     @Override
@@ -652,6 +686,28 @@ public class TapGirlActivity extends Activity implements View.OnClickListener, O
         	assert(resultLoad);
         }
         initUI();
+        {
+        	//twitter4j
+    		mSharedPreferences = getSharedPreferences(CDefines.PREFERENCE_NAME, MODE_PRIVATE);
+    		Uri uri = getIntent().getData();
+    		if (uri != null) {
+    			Log.v("info", "uri = " + uri.toString());
+    		}
+    		if (uri != null && uri.toString().startsWith(CDefines.CALLBACK_URL)) {
+    			String verifier = uri.getQueryParameter(CDefines.IEXTRA_OAUTH_VERIFIER);
+                try {
+                    AccessToken accessToken = twitter.getOAuthAccessToken(requestToken, verifier); 
+                    Editor e = mSharedPreferences.edit();
+                    e.putString(CDefines.PREF_KEY_TOKEN, accessToken.getToken()); 
+                    Log.v("info", "token = " + accessToken.getToken());
+                    e.putString(CDefines.PREF_KEY_SECRET, accessToken.getTokenSecret());
+                    Log.v("info", "tokenSecret = " + accessToken.getTokenSecret());
+                    e.commit();
+    	        } catch (Exception e) { 
+	                Log.e("exception", e.getMessage());
+    	        }
+    		}
+        }
     }
     
     protected void onDestroy()
