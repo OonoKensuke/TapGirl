@@ -44,6 +44,20 @@ static public final float CLEAR_RED = 0.0f;
 static public final float CLEAR_GREEN = 0.0f;
 static public final float CLEAR_BLUE = 1.0f;
 
+//********** twitter4j **********
+static String CONSUMER_KEY = "lE1AOoS0x2XtSAVTRSVw";
+static String CONSUMER_SECRET = "UjDeJYnClD520OCiWBnQgcnGSMweejphJJIRoUulgyw";
+static String PREFERENCE_NAME = "twitter_oauth";
+static final String PREF_KEY_SECRET = "oauth_token_secret";
+static final String PREF_KEY_TOKEN = "oauth_token";
+
+static final String CALLBACK_URL = "oauth://tapgirltwitter";
+
+static final String IEXTRA_AUTH_URL = "auth_url";
+static final String IEXTRA_OAUTH_VERIFIER = "oauth_verifier";
+static final String IEXTRA_OAUTH_TOKEN = "oauth_token";
+
+
 
 // mark -congratulations おめでとう画面
 //最後に数字の場所に表示するメッセージ
