@@ -1,9 +1,14 @@
 package jp.lolipop.dcc.TapGirl;
 
+import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.nio.ByteBuffer;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.zip.CRC32;
@@ -702,26 +707,34 @@ public class TapGirlActivity extends Activity implements View.OnClickListener, O
         }
         initUI();
         {
-        	//twitter4j
-    		mSharedPreferences = getSharedPreferences(CDefines.PREFERENCE_NAME, MODE_PRIVATE);
-    		Uri uri = getIntent().getData();
-    		if (uri != null) {
-    			Log.v("info", "uri = " + uri.toString());
-    		}
-    		if (uri != null && uri.toString().startsWith(CDefines.CALLBACK_URL)) {
-    			String verifier = uri.getQueryParameter(CDefines.IEXTRA_OAUTH_VERIFIER);
-                try {
-                    AccessToken accessToken = twitter.getOAuthAccessToken(requestToken, verifier); 
-                    Editor e = mSharedPreferences.edit();
-                    e.putString(CDefines.PREF_KEY_TOKEN, accessToken.getToken()); 
-                    Log.v("info", "token = " + accessToken.getToken());
-                    e.putString(CDefines.PREF_KEY_SECRET, accessToken.getTokenSecret());
-                    Log.v("info", "tokenSecret = " + accessToken.getTokenSecret());
-                    e.commit();
-    	        } catch (Exception e) { 
-	                Log.e("exception", e.getMessage());
-    	        }
-    		}
+        	Thread trd = new Thread(new Runnable() {
+				
+				@Override
+				public void run() {
+		        	//twitter4j
+		    		mSharedPreferences = getSharedPreferences(CDefines.PREFERENCE_NAME, MODE_PRIVATE);
+		    		Uri uri = getIntent().getData();
+		    		if (uri != null) {
+		    			Log.v("info", "uri = " + uri.toString());
+		    		}
+		    		if (uri != null && uri.toString().startsWith(CDefines.CALLBACK_URL)) {
+		    			String verifier = uri.getQueryParameter(CDefines.IEXTRA_OAUTH_VERIFIER);
+		                try {
+		                    AccessToken accessToken = twitter.getOAuthAccessToken(requestToken, verifier); 
+		                    Editor e = mSharedPreferences.edit();
+		                    e.putString(CDefines.PREF_KEY_TOKEN, accessToken.getToken()); 
+		                    Log.v("info", "token = " + accessToken.getToken());
+		                    e.putString(CDefines.PREF_KEY_SECRET, accessToken.getTokenSecret());
+		                    Log.v("info", "tokenSecret = " + accessToken.getTokenSecret());
+		                    e.commit();
+		    	        } catch (Exception e) { 
+			                Log.e("exception", e.getMessage());
+		    	        }
+		    		}
+					
+				}
+			});
+        	trd.start();
         }
     }
     
@@ -807,6 +820,30 @@ public class TapGirlActivity extends Activity implements View.OnClickListener, O
 		Log.v("info", "TapGirlActivity#onClick");
 		if (v.equals(mBtnTweet)) {
 			Log.v("info", "tweet");
+			if (false)
+			{
+				//http://www.yahoo.co.jp/
+				try {
+					URL url = new URL("http://www.yahoo.co.jp/index.html");
+					try {
+						HttpURLConnection con = (HttpURLConnection)url.openConnection();
+						con.setRequestMethod("GET");
+						con.connect();
+						BufferedInputStream bis = new BufferedInputStream(con.getInputStream());
+						int data;
+						while ((data = bis.read())!= -1)
+						{
+							System.out.write(data);
+						}
+						Log.v("info", "end");
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				} catch (MalformedURLException e) {
+					// TODO 自動生成された catch ブロック
+					e.printStackTrace();
+				}
+			}
 			if (isConnected()) {
 				if (mAtomTweet.get() > 0)
 				{
@@ -875,9 +912,17 @@ public class TapGirlActivity extends Activity implements View.OnClickListener, O
 				}
 			}
 			else {
-				askOAuth();
-				Log.v("info", "to finish");
-				finish();
+				Thread trd = new Thread(new Runnable() {
+					
+					@Override
+					public void run() {
+						askOAuth();
+						Log.v("info", "to finish");
+						finish();
+						
+					}
+				});
+				trd.start();
 			}
 		}
 		else if (v.equals(mBtnFacebook)) {
