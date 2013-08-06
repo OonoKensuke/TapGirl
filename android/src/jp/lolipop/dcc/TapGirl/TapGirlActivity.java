@@ -5,11 +5,17 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.nio.ByteBuffer;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.zip.CRC32;
 
+import twitter4j.AsyncTwitter;
+import twitter4j.AsyncTwitterFactory;
+import twitter4j.Status;
 import twitter4j.Twitter;
+import twitter4j.TwitterAdapter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
+import twitter4j.TwitterMethod;
 import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
 import twitter4j.conf.ConfigurationBuilder;
@@ -633,6 +639,7 @@ public class TapGirlActivity extends Activity implements View.OnClickListener, O
 	private static SharedPreferences mSharedPreferences;
 	private static Twitter twitter;
 	private static RequestToken requestToken;
+	private AtomicInteger mAtomTweet = new AtomicInteger(0);
 	/**
 	 * check if the account is authorized
 	 * @return
@@ -652,6 +659,14 @@ public class TapGirlActivity extends Activity implements View.OnClickListener, O
 		} catch (TwitterException e) {
 			e.printStackTrace();
 		}
+	}
+	private String getSNSString()
+	{
+		String result = null;
+		CChangeData changeData = CChangeData.getInstance();
+		int iLength = changeData.getTouchLength();
+		result = String.format("%dcmこすった", iLength);
+		return result;
 	}
     
     /** Called when the activity is first created. */
@@ -741,6 +756,20 @@ public class TapGirlActivity extends Activity implements View.OnClickListener, O
 		{
 			mGLSurfaceView.onResume();
 		}
+		//twitter4j
+//		if (isConnected()) {
+//			String oauthAccessToken = mSharedPreferences.getString(CDefines.PREF_KEY_TOKEN, "");
+//			Log.v("info", "oauthAccessToken = " + oauthAccessToken);
+//			String oAuthAccessTokenSecret = mSharedPreferences.getString(CDefines.PREF_KEY_SECRET, "");
+//			Log.v("info", "oAuthAccessTokenSecret = " + oAuthAccessTokenSecret);
+//			ConfigurationBuilder confbuilder = new ConfigurationBuilder();
+//			twitter4j.conf.Configuration conf = confbuilder
+//								.setOAuthConsumerKey(CDefines.CONSUMER_KEY)
+//								.setOAuthConsumerSecret(CDefines.CONSUMER_SECRET)
+//								.setOAuthAccessToken(oauthAccessToken)
+//								.setOAuthAccessTokenSecret(oAuthAccessTokenSecret)
+//								.build();
+//		}
 	}
 	@Override
 	public boolean onTouchEvent(MotionEvent event)
@@ -778,6 +807,78 @@ public class TapGirlActivity extends Activity implements View.OnClickListener, O
 		Log.v("info", "TapGirlActivity#onClick");
 		if (v.equals(mBtnTweet)) {
 			Log.v("info", "tweet");
+			if (isConnected()) {
+				if (mAtomTweet.get() > 0)
+				{
+					return;
+				}
+				String strTweet = getSNSString();
+				Log.v("info", "strTweet = " + strTweet);
+				{
+					mAtomTweet.incrementAndGet();
+					boolean bAsync = true;
+					String oauthAccessToken = mSharedPreferences.getString(CDefines.PREF_KEY_TOKEN, "");
+					Log.v("info", "oauthAccessToken = " + oauthAccessToken);
+					String oAuthAccessTokenSecret = mSharedPreferences.getString(CDefines.PREF_KEY_SECRET, "");
+					Log.v("info", "oAuthAccessTokenSecret = " + oAuthAccessTokenSecret);
+
+					ConfigurationBuilder confbuilder = new ConfigurationBuilder();
+					twitter4j.conf.Configuration conf = confbuilder
+										.setOAuthConsumerKey(CDefines.CONSUMER_KEY)
+										.setOAuthConsumerSecret(CDefines.CONSUMER_SECRET)
+										.setOAuthAccessToken(oauthAccessToken)
+										.setOAuthAccessTokenSecret(oAuthAccessTokenSecret)
+										.build();
+					if (bAsync)
+					{
+						Log.v("info", "in async");
+						AsyncTwitterFactory factory = new AsyncTwitterFactory(conf);
+						AsyncTwitter twitter = factory.getInstance();
+						twitter.addListener(new TwitterAdapter() {
+							@Override
+							public void updatedStatus(Status status)
+							{
+								Log.v("info", "Successfully updated the status to [" +
+				                        status.getText() + "].");
+								mAtomTweet.decrementAndGet();
+							}
+							@Override
+							public void onException(TwitterException exp, twitter4j.TwitterMethod method)
+							{
+								if (method == TwitterMethod.UPDATE_STATUS)
+								{
+									exp.printStackTrace();
+									mAtomTweet.decrementAndGet();
+								}
+								else {
+									mAtomTweet.decrementAndGet();
+									throw new AssertionError("Should not happen");
+								}
+							}
+						});
+						Log.v("info", "before update");
+						twitter.updateStatus(strTweet);
+						Log.v("info", "after update");
+					}
+					else {
+						TwitterFactory factory = new TwitterFactory(conf);
+						Twitter tmpTwitter = factory.getInstance();
+						Status status = null;
+						try {
+							status = tmpTwitter.updateStatus(strTweet);
+						}
+						catch (TwitterException exp)
+						{
+							exp.printStackTrace();
+						}
+					}
+				}
+			}
+			else {
+				askOAuth();
+				Log.v("info", "to finish");
+				finish();
+			}
 		}
 		else if (v.equals(mBtnFacebook)) {
 			Log.v("info", "facebook");
