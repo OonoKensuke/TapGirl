@@ -371,6 +371,35 @@ public class TapGirlActivity extends CBaseActivity {
 	private static Twitter twitter;
 	private static RequestToken requestToken;
 	private AtomicInteger mAtomTweet = new AtomicInteger(0);
+	
+	private void saveTwitterToken(final String verifier)
+	{
+    	// Android3.0以後、ネットワーク利用はメインスレッドでできない
+    	// http://rainbowdevil.jp/?p=967
+    	Thread trd = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				mAtomTweet.incrementAndGet();
+	    		{
+	                try {
+	                    AccessToken accessToken = twitter.getOAuthAccessToken(requestToken, verifier); 
+	                    Editor e = mSharedPreferences.edit();
+	                    e.putString(CDefines.PREF_KEY_TOKEN, accessToken.getToken()); 
+	                    Log.v("info", "token = " + accessToken.getToken());
+	                    e.putString(CDefines.PREF_KEY_SECRET, accessToken.getTokenSecret());
+	                    Log.v("info", "tokenSecret = " + accessToken.getTokenSecret());
+	                    e.commit();
+	    	        } catch (Exception e) { 
+		                Log.e("exception", e.getMessage());
+	    	        }
+	    		}
+	    		mAtomTweet.decrementAndGet();
+				
+			}
+		});
+    	trd.start();
+	}
 	/**
 	 * check if the account is authorized
 	 * @return
@@ -424,39 +453,16 @@ public class TapGirlActivity extends CBaseActivity {
         	assert(resultLoad);
         }
         initUI();
+		mSharedPreferences = getSharedPreferences(CDefines.PREFERENCE_NAME, MODE_PRIVATE);
         {
-        	// Android3.0以後、ネットワーク利用はメインスレッドでできない
-        	// http://rainbowdevil.jp/?p=967
-        	Thread trd = new Thread(new Runnable() {
-				
-				@Override
-				public void run() {
-					mAtomTweet.incrementAndGet();
-		        	//twitter4j
-		    		mSharedPreferences = getSharedPreferences(CDefines.PREFERENCE_NAME, MODE_PRIVATE);
-		    		Uri uri = getIntent().getData();
-		    		if (uri != null) {
-		    			Log.v("info", "uri = " + uri.toString());
-		    		}
-		    		if (uri != null && uri.toString().startsWith(CDefines.CALLBACK_URL)) {
-		    			String verifier = uri.getQueryParameter(CDefines.IEXTRA_OAUTH_VERIFIER);
-		                try {
-		                    AccessToken accessToken = twitter.getOAuthAccessToken(requestToken, verifier); 
-		                    Editor e = mSharedPreferences.edit();
-		                    e.putString(CDefines.PREF_KEY_TOKEN, accessToken.getToken()); 
-		                    Log.v("info", "token = " + accessToken.getToken());
-		                    e.putString(CDefines.PREF_KEY_SECRET, accessToken.getTokenSecret());
-		                    Log.v("info", "tokenSecret = " + accessToken.getTokenSecret());
-		                    e.commit();
-		    	        } catch (Exception e) { 
-			                Log.e("exception", e.getMessage());
-		    	        }
-		    		}
-		    		mAtomTweet.decrementAndGet();
-					
-				}
-			});
-        	trd.start();
+    		Uri uri = getIntent().getData();
+    		if (uri != null) {
+    			Log.v("info", "uri = " + uri.toString());
+    		}
+    		if (uri != null && uri.toString().startsWith(CDefines.CALLBACK_URL)) {
+    			String verifier = uri.getQueryParameter(CDefines.IEXTRA_OAUTH_VERIFIER);
+            	saveTwitterToken(verifier);
+    		}
         }
     }
     
