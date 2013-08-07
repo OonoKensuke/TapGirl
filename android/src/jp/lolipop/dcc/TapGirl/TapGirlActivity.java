@@ -60,7 +60,8 @@ import android.widget.ToggleButton;
 public class TapGirlActivity extends CBaseActivity {
 	private GLSurfaceView mGLSurfaceView = null;
 	private MyRenderer mRenderer = null;
-	private static TapGirlActivity s_Instance = null;
+
+	//****** UI *******
 	private ImageButton mBtnTweet = null;
 	private ImageButton mBtnMoreApps = null;
 	private ImageButton mBtnFacebook = null;
@@ -69,14 +70,6 @@ public class TapGirlActivity extends CBaseActivity {
 	public MyToggleButton getBtnToggleSound() {
 		return mBtnToggleSound;
 	}
-	
-	
-	
-	public static TapGirlActivity getInstance()
-	{
-		return s_Instance;
-	}
-	
 	private TextView mCountLabel = null;
 	public TextView getCountLabel() {
 		return mCountLabel;
@@ -148,8 +141,19 @@ public class TapGirlActivity extends CBaseActivity {
 		mBtnToggleSound = initToggleButton(xOfIOS, yOfIOS, widthOfIOS, heightOfIOS, "graphic_sound_on", "graphic_sound_off", true);
 	}
     android.os.Handler mHandler = null;
+	
+	
+    // **********　Instance **********
+	
+	private static TapGirlActivity s_Instance = null;
+	public static TapGirlActivity getInstance()
+	{
+		return s_Instance;
+	}
+	
     
     
+    // **********　Sound **********
     /**
      * 音声再生用プレイヤー
      */
@@ -189,7 +193,7 @@ public class TapGirlActivity extends CBaseActivity {
     	Intent i = new Intent(Intent.ACTION_VIEW, uri);
     	startActivity(i);
     }
-    
+    // **********　Save & Load **********
     public boolean saveData()
     {
     	boolean result = false;
@@ -353,7 +357,16 @@ public class TapGirlActivity extends CBaseActivity {
 	{
 		return ByteBuffer.wrap(array).asLongBuffer().get();
 	}
-	//twitter4j
+	// *************** SNS ***************
+	private String getSNSString()
+	{
+		String result = null;
+		CChangeData changeData = CChangeData.getInstance();
+		int iLength = changeData.getTouchLength();
+		result = String.format("%dcmこすった", iLength);
+		return result;
+	}
+
 	private static SharedPreferences mSharedPreferences;
 	private static Twitter twitter;
 	private static RequestToken requestToken;
@@ -377,14 +390,6 @@ public class TapGirlActivity extends CBaseActivity {
 		} catch (TwitterException e) {
 			e.printStackTrace();
 		}
-	}
-	private String getSNSString()
-	{
-		String result = null;
-		CChangeData changeData = CChangeData.getInstance();
-		int iLength = changeData.getTouchLength();
-		result = String.format("%dcmこすった", iLength);
-		return result;
 	}
     
     /** Called when the activity is first created. */
