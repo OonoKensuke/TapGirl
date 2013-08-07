@@ -358,12 +358,12 @@ public class TapGirlActivity extends CBaseActivity {
 		return ByteBuffer.wrap(array).asLongBuffer().get();
 	}
 	// *************** SNS ***************
-	private String getSNSString()
+	public static String getSNSString()
 	{
 		String result = null;
 		CChangeData changeData = CChangeData.getInstance();
 		int iLength = changeData.getTouchLength();
-		result = String.format("%dcmこすった", iLength);
+		result = String.format(CDefines.SNS_STR_FORMAT, iLength);
 		return result;
 	}
 
@@ -373,8 +373,11 @@ public class TapGirlActivity extends CBaseActivity {
 	}
 	private static Twitter twitter;
 	private static RequestToken requestToken;
+	// 排他処理用のAtomicなカウンタ
 	private AtomicInteger mAtomTweet = new AtomicInteger(0);
-	
+	public AtomicInteger getAtomTweet() {
+		return mAtomTweet;
+	}
 	private void saveTwitterToken()
 	{
 		mAtomTweet.incrementAndGet();

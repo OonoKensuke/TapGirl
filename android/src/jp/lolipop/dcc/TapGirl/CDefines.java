@@ -58,6 +58,8 @@ static final String TWITTER_IEXTRA_AUTH_URL = "auth_url";
 static final String TWITTER_IEXTRA_OAUTH_VERIFIER = "oauth_verifier";
 static final String TWITTER_IEXTRA_OAUTH_TOKEN = "oauth_token";
 
+static final String SNS_STR_FORMAT = "%dcmこすった";
+
 
 
 // mark -congratulations おめでとう画面

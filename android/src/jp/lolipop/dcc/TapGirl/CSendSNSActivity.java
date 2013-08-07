@@ -9,7 +9,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout.LayoutParams;
 
-public class CSendSNSActivity extends Activity {
+public class CSendSNSActivity extends Activity  {
 	private EditText mEdtText = null;
 	private Button mBtnSend = null;
     /** Called when the activity is first created. */
@@ -29,6 +29,7 @@ public class CSendSNSActivity extends Activity {
     	int pixels = (int)(100.0f * TapGirlActivity.getDensity());
     	mEdtText.setHeight(pixels);
     	mEdtText.setWidth(mainActivity.getPixelsWidth());
+    	mEdtText.setText(TapGirlActivity.getSNSString());
     	
     	mBtnSend = new Button(this);
     	mBtnSend.setText("送信");
