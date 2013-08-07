@@ -559,56 +559,6 @@ public class TapGirlActivity extends CBaseActivity {
 				}
 				else
 				{
-					if (mAtomTweet.get() > 0)
-					{
-						return;
-					}
-					String strTweet = getSNSString();
-					Log.v("info", "strTweet = " + strTweet);
-					{
-						mAtomTweet.incrementAndGet();
-						String oauthAccessToken = mSharedPreferences.getString(CDefines.TWITTER_PREF_KEY_TOKEN, "");
-						Log.v("info", "oauthAccessToken = " + oauthAccessToken);
-						String oAuthAccessTokenSecret = mSharedPreferences.getString(CDefines.TWITTER_PREF_KEY_SECRET, "");
-						Log.v("info", "oAuthAccessTokenSecret = " + oAuthAccessTokenSecret);
-
-						ConfigurationBuilder confbuilder = new ConfigurationBuilder();
-						twitter4j.conf.Configuration conf = confbuilder
-											.setOAuthConsumerKey(CDefines.TWITTER_CONSUMER_KEY)
-											.setOAuthConsumerSecret(CDefines.TWITTER_CONSUMER_SECRET)
-											.setOAuthAccessToken(oauthAccessToken)
-											.setOAuthAccessTokenSecret(oAuthAccessTokenSecret)
-											.build();
-						{
-							AsyncTwitterFactory factory = new AsyncTwitterFactory(conf);
-							AsyncTwitter twitter = factory.getInstance();
-							twitter.addListener(new TwitterAdapter() {
-								@Override
-								public void updatedStatus(Status status)
-								{
-									Log.v("info", "Successfully updated the status to [" +
-					                        status.getText() + "].");
-									mAtomTweet.decrementAndGet();
-								}
-								@Override
-								public void onException(TwitterException exp, twitter4j.TwitterMethod method)
-								{
-									if (method == TwitterMethod.UPDATE_STATUS)
-									{
-										exp.printStackTrace();
-										mAtomTweet.decrementAndGet();
-									}
-									else {
-										mAtomTweet.decrementAndGet();
-										throw new AssertionError("Should not happen");
-									}
-								}
-							});
-							Log.v("info", "before update");
-							twitter.updateStatus(strTweet);
-							Log.v("info", "after update");
-						}
-					}
 				}
 			}
 			else {
