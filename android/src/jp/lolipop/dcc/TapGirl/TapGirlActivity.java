@@ -532,7 +532,6 @@ public class TapGirlActivity extends CBaseActivity {
 				Log.v("info", "strTweet = " + strTweet);
 				{
 					mAtomTweet.incrementAndGet();
-					boolean bAsync = true;
 					String oauthAccessToken = mSharedPreferences.getString(CDefines.PREF_KEY_TOKEN, "");
 					Log.v("info", "oauthAccessToken = " + oauthAccessToken);
 					String oAuthAccessTokenSecret = mSharedPreferences.getString(CDefines.PREF_KEY_SECRET, "");
@@ -545,9 +544,7 @@ public class TapGirlActivity extends CBaseActivity {
 										.setOAuthAccessToken(oauthAccessToken)
 										.setOAuthAccessTokenSecret(oAuthAccessTokenSecret)
 										.build();
-					if (bAsync)
 					{
-						Log.v("info", "in async");
 						AsyncTwitterFactory factory = new AsyncTwitterFactory(conf);
 						AsyncTwitter twitter = factory.getInstance();
 						twitter.addListener(new TwitterAdapter() {
@@ -575,18 +572,6 @@ public class TapGirlActivity extends CBaseActivity {
 						Log.v("info", "before update");
 						twitter.updateStatus(strTweet);
 						Log.v("info", "after update");
-					}
-					else {
-						TwitterFactory factory = new TwitterFactory(conf);
-						Twitter tmpTwitter = factory.getInstance();
-						Status status = null;
-						try {
-							status = tmpTwitter.updateStatus(strTweet);
-						}
-						catch (TwitterException exp)
-						{
-							exp.printStackTrace();
-						}
 					}
 				}
 			}
