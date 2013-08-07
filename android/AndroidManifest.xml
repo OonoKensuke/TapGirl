@@ -24,7 +24,8 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="oauth" android:host="tapgirltwitter"/>
             </intent-filter>
-            </activity>
+        </activity>
+        <activity android:name=".CSendSNSActivity"></activity>
     </application>
 
 </manifest>

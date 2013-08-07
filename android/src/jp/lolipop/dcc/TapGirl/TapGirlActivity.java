@@ -368,6 +368,9 @@ public class TapGirlActivity extends CBaseActivity {
 	}
 
 	private static SharedPreferences mSharedPreferences;
+	public static SharedPreferences getSharedPreferences() {
+		return mSharedPreferences;
+	}
 	private static Twitter twitter;
 	private static RequestToken requestToken;
 	private AtomicInteger mAtomTweet = new AtomicInteger(0);
@@ -546,54 +549,62 @@ public class TapGirlActivity extends CBaseActivity {
 		if (v.equals(mBtnTweet)) {
 			Log.v("info", "tweet");
 			if (isConnected()) {
-				if (mAtomTweet.get() > 0)
+				if (true)
 				{
-					return;
+					Intent intent = new Intent(TapGirlActivity.this, CSendSNSActivity.class);
+					startActivity(intent);
 				}
-				String strTweet = getSNSString();
-				Log.v("info", "strTweet = " + strTweet);
+				else
 				{
-					mAtomTweet.incrementAndGet();
-					String oauthAccessToken = mSharedPreferences.getString(CDefines.TWITTER_PREF_KEY_TOKEN, "");
-					Log.v("info", "oauthAccessToken = " + oauthAccessToken);
-					String oAuthAccessTokenSecret = mSharedPreferences.getString(CDefines.TWITTER_PREF_KEY_SECRET, "");
-					Log.v("info", "oAuthAccessTokenSecret = " + oAuthAccessTokenSecret);
-
-					ConfigurationBuilder confbuilder = new ConfigurationBuilder();
-					twitter4j.conf.Configuration conf = confbuilder
-										.setOAuthConsumerKey(CDefines.TWITTER_CONSUMER_KEY)
-										.setOAuthConsumerSecret(CDefines.TWITTER_CONSUMER_SECRET)
-										.setOAuthAccessToken(oauthAccessToken)
-										.setOAuthAccessTokenSecret(oAuthAccessTokenSecret)
-										.build();
+					if (mAtomTweet.get() > 0)
 					{
-						AsyncTwitterFactory factory = new AsyncTwitterFactory(conf);
-						AsyncTwitter twitter = factory.getInstance();
-						twitter.addListener(new TwitterAdapter() {
-							@Override
-							public void updatedStatus(Status status)
-							{
-								Log.v("info", "Successfully updated the status to [" +
-				                        status.getText() + "].");
-								mAtomTweet.decrementAndGet();
-							}
-							@Override
-							public void onException(TwitterException exp, twitter4j.TwitterMethod method)
-							{
-								if (method == TwitterMethod.UPDATE_STATUS)
+						return;
+					}
+					String strTweet = getSNSString();
+					Log.v("info", "strTweet = " + strTweet);
+					{
+						mAtomTweet.incrementAndGet();
+						String oauthAccessToken = mSharedPreferences.getString(CDefines.TWITTER_PREF_KEY_TOKEN, "");
+						Log.v("info", "oauthAccessToken = " + oauthAccessToken);
+						String oAuthAccessTokenSecret = mSharedPreferences.getString(CDefines.TWITTER_PREF_KEY_SECRET, "");
+						Log.v("info", "oAuthAccessTokenSecret = " + oAuthAccessTokenSecret);
+
+						ConfigurationBuilder confbuilder = new ConfigurationBuilder();
+						twitter4j.conf.Configuration conf = confbuilder
+											.setOAuthConsumerKey(CDefines.TWITTER_CONSUMER_KEY)
+											.setOAuthConsumerSecret(CDefines.TWITTER_CONSUMER_SECRET)
+											.setOAuthAccessToken(oauthAccessToken)
+											.setOAuthAccessTokenSecret(oAuthAccessTokenSecret)
+											.build();
+						{
+							AsyncTwitterFactory factory = new AsyncTwitterFactory(conf);
+							AsyncTwitter twitter = factory.getInstance();
+							twitter.addListener(new TwitterAdapter() {
+								@Override
+								public void updatedStatus(Status status)
 								{
-									exp.printStackTrace();
+									Log.v("info", "Successfully updated the status to [" +
+					                        status.getText() + "].");
 									mAtomTweet.decrementAndGet();
 								}
-								else {
-									mAtomTweet.decrementAndGet();
-									throw new AssertionError("Should not happen");
+								@Override
+								public void onException(TwitterException exp, twitter4j.TwitterMethod method)
+								{
+									if (method == TwitterMethod.UPDATE_STATUS)
+									{
+										exp.printStackTrace();
+										mAtomTweet.decrementAndGet();
+									}
+									else {
+										mAtomTweet.decrementAndGet();
+										throw new AssertionError("Should not happen");
+									}
 								}
-							}
-						});
-						Log.v("info", "before update");
-						twitter.updateStatus(strTweet);
-						Log.v("info", "after update");
+							});
+							Log.v("info", "before update");
+							twitter.updateStatus(strTweet);
+							Log.v("info", "after update");
+						}
 					}
 				}
 			}
