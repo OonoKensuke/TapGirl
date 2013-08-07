@@ -45,17 +45,17 @@ static public final float CLEAR_GREEN = 0.0f;
 static public final float CLEAR_BLUE = 1.0f;
 
 //********** twitter4j **********
-static String CONSUMER_KEY = "lE1AOoS0x2XtSAVTRSVw";
-static String CONSUMER_SECRET = "UjDeJYnClD520OCiWBnQgcnGSMweejphJJIRoUulgyw";
-static String PREFERENCE_NAME = "twitter_oauth";
-static final String PREF_KEY_SECRET = "oauth_token_secret";
-static final String PREF_KEY_TOKEN = "oauth_token";
+static String TWITTER_CONSUMER_KEY = "lE1AOoS0x2XtSAVTRSVw";
+static String TWITTER_CONSUMER_SECRET = "UjDeJYnClD520OCiWBnQgcnGSMweejphJJIRoUulgyw";
+static String TWITTER_PREFERENCE_NAME = "twitter_oauth";
+static final String TWITTER_PREF_KEY_SECRET = "oauth_token_secret";
+static final String TWITTER_PREF_KEY_TOKEN = "oauth_token";
 
-static final String CALLBACK_URL = "oauth://tapgirltwitter";
+static final String TWITTER_CALLBACK_URL = "oauth://tapgirltwitter";
 
-static final String IEXTRA_AUTH_URL = "auth_url";
-static final String IEXTRA_OAUTH_VERIFIER = "oauth_verifier";
-static final String IEXTRA_OAUTH_TOKEN = "oauth_token";
+static final String TWITTER_IEXTRA_AUTH_URL = "auth_url";
+static final String TWITTER_IEXTRA_OAUTH_VERIFIER = "oauth_verifier";
+static final String TWITTER_IEXTRA_OAUTH_TOKEN = "oauth_token";
 
 
 

@@ -385,9 +385,9 @@ public class TapGirlActivity extends CBaseActivity {
 	                try {
 	                    AccessToken accessToken = twitter.getOAuthAccessToken(requestToken, verifier); 
 	                    Editor e = mSharedPreferences.edit();
-	                    e.putString(CDefines.PREF_KEY_TOKEN, accessToken.getToken()); 
+	                    e.putString(CDefines.TWITTER_PREF_KEY_TOKEN, accessToken.getToken()); 
 	                    Log.v("info", "token = " + accessToken.getToken());
-	                    e.putString(CDefines.PREF_KEY_SECRET, accessToken.getTokenSecret());
+	                    e.putString(CDefines.TWITTER_PREF_KEY_SECRET, accessToken.getTokenSecret());
 	                    Log.v("info", "tokenSecret = " + accessToken.getTokenSecret());
 	                    e.commit();
 	    	        } catch (Exception e) { 
@@ -405,16 +405,16 @@ public class TapGirlActivity extends CBaseActivity {
 	 * @return
 	 */
 	private boolean isConnected() {
-		return mSharedPreferences.getString(CDefines.PREF_KEY_TOKEN, null) != null;
+		return mSharedPreferences.getString(CDefines.TWITTER_PREF_KEY_TOKEN, null) != null;
 	}
 	private void askOAuth() {
 		ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
-		configurationBuilder.setOAuthConsumerKey(CDefines.CONSUMER_KEY);
-		configurationBuilder.setOAuthConsumerSecret(CDefines.CONSUMER_SECRET);
+		configurationBuilder.setOAuthConsumerKey(CDefines.TWITTER_CONSUMER_KEY);
+		configurationBuilder.setOAuthConsumerSecret(CDefines.TWITTER_CONSUMER_SECRET);
 		twitter4j.conf.Configuration configuration = configurationBuilder.build();
 		twitter = new TwitterFactory(configuration).getInstance();
 		try {
-			requestToken = twitter.getOAuthRequestToken(CDefines.CALLBACK_URL);
+			requestToken = twitter.getOAuthRequestToken(CDefines.TWITTER_CALLBACK_URL);
 			this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(requestToken.getAuthenticationURL())));
 		} catch (TwitterException e) {
 			e.printStackTrace();
@@ -453,14 +453,14 @@ public class TapGirlActivity extends CBaseActivity {
         	assert(resultLoad);
         }
         initUI();
-		mSharedPreferences = getSharedPreferences(CDefines.PREFERENCE_NAME, MODE_PRIVATE);
+		mSharedPreferences = getSharedPreferences(CDefines.TWITTER_PREFERENCE_NAME, MODE_PRIVATE);
         {
     		Uri uri = getIntent().getData();
     		if (uri != null) {
     			Log.v("info", "uri = " + uri.toString());
     		}
-    		if (uri != null && uri.toString().startsWith(CDefines.CALLBACK_URL)) {
-    			String verifier = uri.getQueryParameter(CDefines.IEXTRA_OAUTH_VERIFIER);
+    		if (uri != null && uri.toString().startsWith(CDefines.TWITTER_CALLBACK_URL)) {
+    			String verifier = uri.getQueryParameter(CDefines.TWITTER_IEXTRA_OAUTH_VERIFIER);
             	saveTwitterToken(verifier);
     		}
         }
@@ -543,15 +543,15 @@ public class TapGirlActivity extends CBaseActivity {
 				Log.v("info", "strTweet = " + strTweet);
 				{
 					mAtomTweet.incrementAndGet();
-					String oauthAccessToken = mSharedPreferences.getString(CDefines.PREF_KEY_TOKEN, "");
+					String oauthAccessToken = mSharedPreferences.getString(CDefines.TWITTER_PREF_KEY_TOKEN, "");
 					Log.v("info", "oauthAccessToken = " + oauthAccessToken);
-					String oAuthAccessTokenSecret = mSharedPreferences.getString(CDefines.PREF_KEY_SECRET, "");
+					String oAuthAccessTokenSecret = mSharedPreferences.getString(CDefines.TWITTER_PREF_KEY_SECRET, "");
 					Log.v("info", "oAuthAccessTokenSecret = " + oAuthAccessTokenSecret);
 
 					ConfigurationBuilder confbuilder = new ConfigurationBuilder();
 					twitter4j.conf.Configuration conf = confbuilder
-										.setOAuthConsumerKey(CDefines.CONSUMER_KEY)
-										.setOAuthConsumerSecret(CDefines.CONSUMER_SECRET)
+										.setOAuthConsumerKey(CDefines.TWITTER_CONSUMER_KEY)
+										.setOAuthConsumerSecret(CDefines.TWITTER_CONSUMER_SECRET)
 										.setOAuthAccessToken(oauthAccessToken)
 										.setOAuthAccessTokenSecret(oAuthAccessTokenSecret)
 										.build();
