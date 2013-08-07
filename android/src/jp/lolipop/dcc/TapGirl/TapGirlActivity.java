@@ -372,17 +372,23 @@ public class TapGirlActivity extends CBaseActivity {
 	private static RequestToken requestToken;
 	private AtomicInteger mAtomTweet = new AtomicInteger(0);
 	
-	private void saveTwitterToken(final String verifier)
+	private void saveTwitterToken()
 	{
+		mAtomTweet.incrementAndGet();
     	// Android3.0以後、ネットワーク利用はメインスレッドでできない
     	// http://rainbowdevil.jp/?p=967
     	Thread trd = new Thread(new Runnable() {
 			
 			@Override
 			public void run() {
-				mAtomTweet.incrementAndGet();
 	    		{
 	                try {
+	                	String strUri = mSharedPreferences.getString(CDefines.TWITTER_PREF_KEY_INTENT_URI, "");
+	                	Uri uri = Uri.parse(strUri);
+	            		if (uri != null) {
+	            			Log.v("info", "saveTwitterToken uri = " + uri.toString());
+	            		}
+	        			String verifier = uri.getQueryParameter(CDefines.TWITTER_IEXTRA_OAUTH_VERIFIER);
 	                    AccessToken accessToken = twitter.getOAuthAccessToken(requestToken, verifier); 
 	                    Editor e = mSharedPreferences.edit();
 	                    e.putString(CDefines.TWITTER_PREF_KEY_TOKEN, accessToken.getToken()); 
@@ -457,11 +463,16 @@ public class TapGirlActivity extends CBaseActivity {
         {
     		Uri uri = getIntent().getData();
     		if (uri != null) {
-    			Log.v("info", "uri = " + uri.toString());
+    			Log.v("info", "onCreate uri = " + uri.toString());
     		}
     		if (uri != null && uri.toString().startsWith(CDefines.TWITTER_CALLBACK_URL)) {
-    			String verifier = uri.getQueryParameter(CDefines.TWITTER_IEXTRA_OAUTH_VERIFIER);
-            	saveTwitterToken(verifier);
+        		{
+                    Editor e = mSharedPreferences.edit();
+                    String strUri = uri.toString();
+                    e.putString(CDefines.TWITTER_PREF_KEY_INTENT_URI, strUri); 
+                    e.commit();
+        		}
+            	saveTwitterToken();
     		}
         }
     }

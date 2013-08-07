@@ -50,6 +50,7 @@ static String TWITTER_CONSUMER_SECRET = "UjDeJYnClD520OCiWBnQgcnGSMweejphJJIRoUu
 static String TWITTER_PREFERENCE_NAME = "twitter_oauth";
 static final String TWITTER_PREF_KEY_SECRET = "oauth_token_secret";
 static final String TWITTER_PREF_KEY_TOKEN = "oauth_token";
+static final String TWITTER_PREF_KEY_INTENT_URI = "intent_uri";
 
 static final String TWITTER_CALLBACK_URL = "oauth://tapgirltwitter";
 
