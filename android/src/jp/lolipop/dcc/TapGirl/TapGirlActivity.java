@@ -1,14 +1,9 @@
 package jp.lolipop.dcc.TapGirl;
 
-import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.nio.ByteBuffer;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.zip.CRC32;
@@ -33,15 +28,11 @@ import jp.lolipop.dcc.*;
 import jp.lolipop.dcc.lib.IGLRenderer;
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
 import android.graphics.Color;
-import android.graphics.Point;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.opengl.GLSurfaceView;
@@ -769,20 +760,6 @@ public class TapGirlActivity extends Activity implements View.OnClickListener, O
 		{
 			mGLSurfaceView.onResume();
 		}
-		//twitter4j
-//		if (isConnected()) {
-//			String oauthAccessToken = mSharedPreferences.getString(CDefines.PREF_KEY_TOKEN, "");
-//			Log.v("info", "oauthAccessToken = " + oauthAccessToken);
-//			String oAuthAccessTokenSecret = mSharedPreferences.getString(CDefines.PREF_KEY_SECRET, "");
-//			Log.v("info", "oAuthAccessTokenSecret = " + oAuthAccessTokenSecret);
-//			ConfigurationBuilder confbuilder = new ConfigurationBuilder();
-//			twitter4j.conf.Configuration conf = confbuilder
-//								.setOAuthConsumerKey(CDefines.CONSUMER_KEY)
-//								.setOAuthConsumerSecret(CDefines.CONSUMER_SECRET)
-//								.setOAuthAccessToken(oauthAccessToken)
-//								.setOAuthAccessTokenSecret(oAuthAccessTokenSecret)
-//								.build();
-//		}
 	}
 	@Override
 	public boolean onTouchEvent(MotionEvent event)
@@ -820,30 +797,6 @@ public class TapGirlActivity extends Activity implements View.OnClickListener, O
 		Log.v("info", "TapGirlActivity#onClick");
 		if (v.equals(mBtnTweet)) {
 			Log.v("info", "tweet");
-			if (false)
-			{
-				//http://www.yahoo.co.jp/
-				try {
-					URL url = new URL("http://www.yahoo.co.jp/index.html");
-					try {
-						HttpURLConnection con = (HttpURLConnection)url.openConnection();
-						con.setRequestMethod("GET");
-						con.connect();
-						BufferedInputStream bis = new BufferedInputStream(con.getInputStream());
-						int data;
-						while ((data = bis.read())!= -1)
-						{
-							System.out.write(data);
-						}
-						Log.v("info", "end");
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				} catch (MalformedURLException e) {
-					// TODO 自動生成された catch ブロック
-					e.printStackTrace();
-				}
-			}
 			if (isConnected()) {
 				if (mAtomTweet.get() > 0)
 				{
