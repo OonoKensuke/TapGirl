@@ -363,7 +363,7 @@ public class TapGirlActivity extends CBaseActivity {
 		String result = null;
 		CChangeData changeData = CChangeData.getInstance();
 		int iLength = changeData.getTouchLength();
-		result = String.format(CDefines.SNS_STR_FORMAT, iLength);
+		result = String.format(CDefines.SNS_TWEET_FORMAT, iLength, CDefines.SNS_APP_NAME, CDefines.SNS_HASHTAG);
 		return result;
 	}
 

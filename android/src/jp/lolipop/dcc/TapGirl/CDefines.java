@@ -5,10 +5,6 @@ public class CDefines {
 
 //SNS拡散URL
 static public final String SNS_URL =	"http://sekai-seifuku.com/";
-//SNSアプリ名
-static public final String SNS_APP_NAME =	"アプリ名";
-//SNSハッシュタグ
-static public final String SNS_HASHTAG =	"ハッシュタグ";
 //Twitterフォーマット
 //#define SNS_TWEET_FORMAT	@"アプリを%dcmこすった。%@ #%@ "
 
@@ -58,7 +54,11 @@ static final String TWITTER_IEXTRA_AUTH_URL = "auth_url";
 static final String TWITTER_IEXTRA_OAUTH_VERIFIER = "oauth_verifier";
 static final String TWITTER_IEXTRA_OAUTH_TOKEN = "oauth_token";
 
-static final String SNS_STR_FORMAT = "%dcmこすった";
+//SNSアプリ名
+static public final String SNS_APP_NAME =	"アプリ名";
+//SNSハッシュタグ
+static public final String SNS_HASHTAG =	"ハッシュタグ";
+static final String SNS_TWEET_FORMAT = "アプリを%dcmこすった。%s #%s ";
 
 
 
