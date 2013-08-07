@@ -72,9 +72,6 @@ public class TapGirlActivity extends Activity implements View.OnClickListener, O
 	private static float mYDpi = 0f;
 	private static float mDensity = 0f;
 	
-	private CVec2D mPosActivity = new CVec2D();
-	
-
 	
 	
 	protected void setPixelsWidth(int pixelsWidth)
@@ -698,10 +695,13 @@ public class TapGirlActivity extends Activity implements View.OnClickListener, O
         }
         initUI();
         {
+        	// Android3.0以後、ネットワーク利用はメインスレッドでできない
+        	// http://rainbowdevil.jp/?p=967
         	Thread trd = new Thread(new Runnable() {
 				
 				@Override
 				public void run() {
+					mAtomTweet.incrementAndGet();
 		        	//twitter4j
 		    		mSharedPreferences = getSharedPreferences(CDefines.PREFERENCE_NAME, MODE_PRIVATE);
 		    		Uri uri = getIntent().getData();
@@ -722,6 +722,7 @@ public class TapGirlActivity extends Activity implements View.OnClickListener, O
 			                Log.e("exception", e.getMessage());
 		    	        }
 		    		}
+		    		mAtomTweet.decrementAndGet();
 					
 				}
 			});
