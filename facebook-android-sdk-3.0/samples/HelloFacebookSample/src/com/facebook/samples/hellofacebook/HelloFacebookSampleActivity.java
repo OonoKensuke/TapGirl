@@ -79,12 +79,14 @@ public class HelloFacebookSampleActivity extends FragmentActivity {
     private Session.StatusCallback callback = new Session.StatusCallback() {
         @Override
         public void call(Session session, SessionState state, Exception exception) {
+        	Log.v("info", "at call");
             onSessionStateChange(session, state, exception);
         }
     };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+    	Log.v("info", "at onCreate");
         super.onCreate(savedInstanceState);
         // キーハッシュを出力するコードを追加する
         try {
@@ -116,6 +118,7 @@ public class HelloFacebookSampleActivity extends FragmentActivity {
         loginButton.setUserInfoChangedCallback(new LoginButton.UserInfoChangedCallback() {
             @Override
             public void onUserInfoFetched(GraphUser user) {
+            	Log.v("info", "at onUserInfoFetched");
                 HelloFacebookSampleActivity.this.user = user;
                 updateUI();
                 // It's possible that we were waiting for this.user to be populated in order to post a
@@ -130,6 +133,7 @@ public class HelloFacebookSampleActivity extends FragmentActivity {
         postStatusUpdateButton = (Button) findViewById(R.id.postStatusUpdateButton);
         postStatusUpdateButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
+            	Log.v("info", "at onClick");
                 onClickPostStatusUpdate();
             }
         });
@@ -137,6 +141,7 @@ public class HelloFacebookSampleActivity extends FragmentActivity {
         postPhotoButton = (Button) findViewById(R.id.postPhotoButton);
         postPhotoButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
+            	Log.v("info", "at onClick");
                 onClickPostPhoto();
             }
         });
@@ -144,6 +149,7 @@ public class HelloFacebookSampleActivity extends FragmentActivity {
         pickFriendsButton = (Button) findViewById(R.id.pickFriendsButton);
         pickFriendsButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
+            	Log.v("info", "at onClick");
                 onClickPickFriends();
             }
         });
@@ -151,6 +157,7 @@ public class HelloFacebookSampleActivity extends FragmentActivity {
         pickPlaceButton = (Button) findViewById(R.id.pickPlaceButton);
         pickPlaceButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
+            	Log.v("info", "at onClick");
                 onClickPickPlace();
             }
         });
@@ -175,6 +182,7 @@ public class HelloFacebookSampleActivity extends FragmentActivity {
         fm.addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
             @Override
             public void onBackStackChanged() {
+            	Log.v("info", "at onBackStackChanged");
                 if (fm.getBackStackEntryCount() == 0) {
                     // We need to re-show our UI.
                     controlsContainer.setVisibility(View.VISIBLE);
@@ -185,6 +193,7 @@ public class HelloFacebookSampleActivity extends FragmentActivity {
 
     @Override
     protected void onResume() {
+    	Log.v("info", "at onResume");
         super.onResume();
         uiHelper.onResume();
 
@@ -193,6 +202,7 @@ public class HelloFacebookSampleActivity extends FragmentActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+    	Log.v("info", "at onSaveInstanceState");
         super.onSaveInstanceState(outState);
         uiHelper.onSaveInstanceState(outState);
 
@@ -201,23 +211,27 @@ public class HelloFacebookSampleActivity extends FragmentActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    	Log.v("info", "at onActivityResult");
         super.onActivityResult(requestCode, resultCode, data);
         uiHelper.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
     public void onPause() {
+    	Log.v("info", "at onPause");
         super.onPause();
         uiHelper.onPause();
     }
 
     @Override
     public void onDestroy() {
+    	Log.v("info", "at onDestroy");
         super.onDestroy();
         uiHelper.onDestroy();
     }
 
     private void onSessionStateChange(Session session, SessionState state, Exception exception) {
+    	Log.v("info", "at onSessionStateChange");
         if (pendingAction != PendingAction.NONE &&
                 (exception instanceof FacebookOperationCanceledException ||
                 exception instanceof FacebookAuthorizationException)) {
@@ -234,6 +248,7 @@ public class HelloFacebookSampleActivity extends FragmentActivity {
     }
 
     private void updateUI() {
+    	Log.v("info", "at updateUI");
         Session session = Session.getActiveSession();
         boolean enableButtons = (session != null && session.isOpened());
 
@@ -253,6 +268,7 @@ public class HelloFacebookSampleActivity extends FragmentActivity {
 
     @SuppressWarnings("incomplete-switch")
     private void handlePendingAction() {
+    	Log.v("info", "at handlePendingAction");
         PendingAction previouslyPendingAction = pendingAction;
         // These actions may re-set pendingAction if they are still pending, but we assume they
         // will succeed.
@@ -273,6 +289,7 @@ public class HelloFacebookSampleActivity extends FragmentActivity {
     }
 
     private void showPublishResult(String message, GraphObject result, FacebookRequestError error) {
+    	Log.v("info", "at showPublishResult");
         String title = null;
         String alertMessage = null;
         if (error == null) {
@@ -292,16 +309,19 @@ public class HelloFacebookSampleActivity extends FragmentActivity {
     }
 
     private void onClickPostStatusUpdate() {
+    	Log.v("info", "at onClickPostStatusUpdate");
         performPublish(PendingAction.POST_STATUS_UPDATE);
     }
 
     private void postStatusUpdate() {
+    	Log.v("info", "at postStatusUpdate");
         if (user != null && hasPublishPermission()) {
             final String message = getString(R.string.status_update, user.getFirstName(), (new Date().toString()));
             Request request = Request
                     .newStatusUpdateRequest(Session.getActiveSession(), message, new Request.Callback() {
                         @Override
                         public void onCompleted(Response response) {
+                        	Log.v("info", "at onCompleted");
                             showPublishResult(message, response.getGraphObject(), response.getError());
                         }
                     });
@@ -312,15 +332,18 @@ public class HelloFacebookSampleActivity extends FragmentActivity {
     }
 
     private void onClickPostPhoto() {
+    	Log.v("info", "at onClickPostPhoto");
         performPublish(PendingAction.POST_PHOTO);
     }
 
     private void postPhoto() {
+    	Log.v("info", "at postPhoto");
         if (hasPublishPermission()) {
             Bitmap image = BitmapFactory.decodeResource(this.getResources(), R.drawable.icon);
             Request request = Request.newUploadPhotoRequest(Session.getActiveSession(), image, new Request.Callback() {
                 @Override
                 public void onCompleted(Response response) {
+                	Log.v("info", "at onCompleted");
                     showPublishResult(getString(R.string.photo_post), response.getGraphObject(), response.getError());
                 }
             });
@@ -331,9 +354,11 @@ public class HelloFacebookSampleActivity extends FragmentActivity {
     }
 
     private void showPickerFragment(PickerFragment<?> fragment) {
+    	Log.v("info", "at showPickerFragment");
         fragment.setOnErrorListener(new PickerFragment.OnErrorListener() {
             @Override
             public void onError(PickerFragment<?> pickerFragment, FacebookException error) {
+            	Log.v("info", "at onError");
                 showAlert(getString(R.string.error), error.getMessage());
             }
         });
@@ -353,6 +378,7 @@ public class HelloFacebookSampleActivity extends FragmentActivity {
     }
 
     private void onClickPickFriends() {
+    	Log.v("info", "at onClickPickFriends");
         final FriendPickerFragment fragment = new FriendPickerFragment();
 
         setFriendPickerListeners(fragment);
@@ -361,15 +387,18 @@ public class HelloFacebookSampleActivity extends FragmentActivity {
     }
 
     private void setFriendPickerListeners(final FriendPickerFragment fragment) {
+    	Log.v("info", "at setFriendPickerListeners");
         fragment.setOnDoneButtonClickedListener(new FriendPickerFragment.OnDoneButtonClickedListener() {
             @Override
             public void onDoneButtonClicked(PickerFragment<?> pickerFragment) {
+            	Log.v("info", "at onDoneButtonClicked");
                 onFriendPickerDone(fragment);
             }
         });
     }
 
     private void onFriendPickerDone(FriendPickerFragment fragment) {
+    	Log.v("info", "at onFriendPickerDone");
         FragmentManager fm = getSupportFragmentManager();
         fm.popBackStack();
 
@@ -390,6 +419,7 @@ public class HelloFacebookSampleActivity extends FragmentActivity {
     }
 
     private void onPlacePickerDone(PlacePickerFragment fragment) {
+    	Log.v("info", "at onPlacePickerDone");
         FragmentManager fm = getSupportFragmentManager();
         fm.popBackStack();
 
@@ -406,6 +436,7 @@ public class HelloFacebookSampleActivity extends FragmentActivity {
     }
 
     private void onClickPickPlace() {
+    	Log.v("info", "at onClickPickPlace");
         final PlacePickerFragment fragment = new PlacePickerFragment();
         fragment.setLocation(SEATTLE_LOCATION);
         fragment.setTitleText(getString(R.string.pick_seattle_place));
@@ -416,15 +447,18 @@ public class HelloFacebookSampleActivity extends FragmentActivity {
     }
 
     private void setPlacePickerListeners(final PlacePickerFragment fragment) {
+    	Log.v("info", "at setPlacePickerListeners");
         fragment.setOnDoneButtonClickedListener(new PlacePickerFragment.OnDoneButtonClickedListener() {
             @Override
             public void onDoneButtonClicked(PickerFragment<?> pickerFragment) {
+            	Log.v("info", "at onDoneButtonClicked");
                 onPlacePickerDone(fragment);
             }
         });
         fragment.setOnSelectionChangedListener(new PlacePickerFragment.OnSelectionChangedListener() {
             @Override
             public void onSelectionChanged(PickerFragment<?> pickerFragment) {
+            	Log.v("info", "at onSelectionChanged");
                 if (fragment.getSelection() != null) {
                     onPlacePickerDone(fragment);
                 }
@@ -433,6 +467,7 @@ public class HelloFacebookSampleActivity extends FragmentActivity {
     }
 
     private void showAlert(String title, String message) {
+    	Log.v("info", "at showAlert");
         new AlertDialog.Builder(this)
                 .setTitle(title)
                 .setMessage(message)
@@ -446,6 +481,7 @@ public class HelloFacebookSampleActivity extends FragmentActivity {
     }
 
     private void performPublish(PendingAction action) {
+    	Log.v("info", "at performPublish");
         Session session = Session.getActiveSession();
         if (session != null) {
             pendingAction = action;
