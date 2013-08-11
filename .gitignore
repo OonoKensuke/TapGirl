@@ -442,3 +442,5 @@ facebook-android-sdk-3.0/samples/SessionLoginSample/bin/resources.ap_
 facebook-android-sdk-3.0/samples/SessionLoginSample/gen/com/facebook/android/R.java
 facebook-android-sdk-3.0/samples/SessionLoginSample/gen/com/facebook/samples/sessionlogin/BuildConfig.java
 facebook-android-sdk-3.0/samples/SessionLoginSample/gen/com/facebook/samples/sessionlogin/R.java
+facebook-android-sdk-3.0/samples/SessionLoginSample/bin/classes/com/facebook/samples/sessionlogin/SessionLoginSampleActivity$4$1.class
+facebook-android-sdk-3.0/samples/SessionLoginSample/bin/classes/com/facebook/samples/sessionlogin/SessionLoginSampleActivity$4.class
