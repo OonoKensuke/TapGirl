@@ -70,8 +70,13 @@ public abstract class FbActivity extends CBaseActivity {
 			
 			Bundle postParams = new Bundle();
 			postParams.putString("name", getPublishName());
-			postParams.putString("caption", getPublishCaption());
-			postParams.putString("description", getPublishDescription());
+			postParams.putString("message", getPublishMessage());
+			if (getPublishCaption() != null) {
+				postParams.putString("caption", getPublishCaption());
+			}
+			if (getPublishDescription() != null) {
+				postParams.putString("description", getPublishDescription());
+			}
 			postParams.putString("link", getPublishLink());
 			//postParams.putString("picture", "https://raw.github.com/fbsamples/ios-3.x-howtos/master/Images/iossdk_logo.png");
 			
@@ -150,6 +155,9 @@ public abstract class FbActivity extends CBaseActivity {
 	}
 	protected String getPublishLink() {
 		return "https://developers.facebook.com/android";
+	}
+	protected String getPublishMessage() {
+		return "ダミーメッセージ #ハッシュタグ";
 	}
 	
     /** Called when the activity is first created. */
