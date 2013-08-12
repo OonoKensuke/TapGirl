@@ -577,7 +577,8 @@ public class TapGirlActivity extends FbActivity {
 			Session session = Session.getActiveSession();
 			if (session != null) {
 				if (session.isOpened()) {
-					
+					// メッセージ投稿
+					publishFacebookStory();
 				}
 				else {
 					Log.v("info", "session is closing");
