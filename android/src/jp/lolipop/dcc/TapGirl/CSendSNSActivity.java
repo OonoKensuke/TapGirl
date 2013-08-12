@@ -93,11 +93,7 @@ public class CSendSNSActivity extends FbActivity implements View.OnClickListener
 			}
 		}
 	}
-	
-	/**
-	 * コールバックからの呼び出しがログインからなのかを判別する
-	 */
-	private boolean mIsLogin = false;
+	private boolean mDoLogin = false;
 	private void sendFacebook()
 	{
 		Log.v("info", "CSendSNSActivity#sendFacebook");
@@ -108,30 +104,6 @@ public class CSendSNSActivity extends FbActivity implements View.OnClickListener
 			}
 			else {
 				Log.v("info", "session is closing");
-				AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
-				alertBuilder.setTitle("確認");
-				alertBuilder.setMessage("メッセージ投稿にはFacebookへのログインが必要です。ログインしてメッセージを送信しますか？");
-				alertBuilder.setPositiveButton("ログインして送信", new DialogInterface.OnClickListener() {
-					
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						// login
-						CSendSNSActivity activity = CSendSNSActivity.getInstance();
-						Session.openActiveSession(activity, true, getFbCallback());
-						mIsLogin = true;
-					}
-				});
-				alertBuilder.setNegativeButton("キャンセル", new DialogInterface.OnClickListener() {
-					
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						Log.v("info", "login cancel");
-						
-					}
-				});
-				alertBuilder.setCancelable(true);
-				AlertDialog alertDialog = alertBuilder.create();
-				alertDialog.show();
 			}
 		}
 		else {
@@ -142,12 +114,6 @@ public class CSendSNSActivity extends FbActivity implements View.OnClickListener
 	protected void onSessionStateChange(Session session, SessionState state, Exception exception) {
 		// ログインコールバックから呼び出される
 		super.onSessionStateChange(session, state, exception);
-		if (mIsLogin) {
-			mIsLogin = false;
-			if (state.isOpened()) {
-				publishFacebookStory();
-			}
-		}
 	}
 	@Override
 	protected String getPublishName() {
@@ -155,6 +121,9 @@ public class CSendSNSActivity extends FbActivity implements View.OnClickListener
 	}
 	@Override
 	protected String getPublishCaption() {
+		return null;
+	}
+	protected String getPublishMessage() {
 		String strTweet = mEdtText.getText().toString();
 		return strTweet;
 	}
@@ -204,6 +173,7 @@ public class CSendSNSActivity extends FbActivity implements View.OnClickListener
     				}
     				else {
     					Log.v("info", "close");
+    					mDoLogin = true;
     				}
     			}
     				break;
@@ -238,6 +208,38 @@ public class CSendSNSActivity extends FbActivity implements View.OnClickListener
 		super.onPause();
 		if (isFinishing()) {
 			s_Instance = null;
+		}
+	}
+	@Override
+	public void onResume() {
+		super.onResume();
+		if (mDoLogin)
+		{
+			mDoLogin = false;
+			AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+			alertBuilder.setTitle("確認");
+			alertBuilder.setMessage("メッセージ投稿にはFacebookへのログインが必要です。Facebookにログインしますか？");
+			alertBuilder.setPositiveButton("ログイン", new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// login
+					CSendSNSActivity activity = CSendSNSActivity.getInstance();
+					Session.openActiveSession(activity, true, getFbCallback());
+				}
+			});
+			alertBuilder.setNegativeButton("キャンセル", new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					Log.v("info", "login cancel");
+					CSendSNSActivity activity = CSendSNSActivity.getInstance();
+					activity.finish();
+				}
+			});
+			alertBuilder.setCancelable(true);
+			AlertDialog alertDialog = alertBuilder.create();
+			alertDialog.show();
 		}
 	}
 
