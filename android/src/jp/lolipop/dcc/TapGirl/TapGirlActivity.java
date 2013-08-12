@@ -57,7 +57,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-public class TapGirlActivity extends CBaseActivity {
+public class TapGirlActivity extends FbActivity {
 	private GLSurfaceView mGLSurfaceView = null;
 	private MyRenderer mRenderer = null;
 
@@ -482,15 +482,15 @@ public class TapGirlActivity extends CBaseActivity {
     		}
         }
     }
-    
-    protected void onDestroy()
+    @Override
+	public void onDestroy()
     {
     	Log.v("info", "TapGirlActivity#onDestroy");
     	s_Instance = null;
     	super.onDestroy();
     }
 	@Override
-	protected void onPause()
+	public void onPause()
 	{
 		super.onPause();
 		if (mGLSurfaceView != null)
@@ -552,14 +552,8 @@ public class TapGirlActivity extends CBaseActivity {
 		if (v.equals(mBtnTweet)) {
 			Log.v("info", "tweet");
 			if (isConnected()) {
-				if (true)
-				{
-					Intent intent = new Intent(TapGirlActivity.this, CSendSNSActivity.class);
-					startActivity(intent);
-				}
-				else
-				{
-				}
+				Intent intent = new Intent(TapGirlActivity.this, CSendSNSActivity.class);
+				startActivity(intent);
 			}
 			else {
 				Thread trd = new Thread(new Runnable() {
