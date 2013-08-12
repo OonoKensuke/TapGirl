@@ -396,15 +396,15 @@ public class TapGirlActivity extends CBaseActivity {
 	                	String strUri = mSharedPreferences.getString(CDefines.TWITTER_PREF_KEY_INTENT_URI, "");
 	                	Uri uri = Uri.parse(strUri);
 	            		if (uri != null) {
-	            			Log.v("info", "saveTwitterToken uri = " + uri.toString());
+	            			//Log.v("info", "saveTwitterToken uri = " + uri.toString());
 	            		}
 	        			String verifier = uri.getQueryParameter(CDefines.TWITTER_IEXTRA_OAUTH_VERIFIER);
 	                    AccessToken accessToken = twitter.getOAuthAccessToken(requestToken, verifier); 
 	                    Editor e = mSharedPreferences.edit();
 	                    e.putString(CDefines.TWITTER_PREF_KEY_TOKEN, accessToken.getToken()); 
-	                    Log.v("info", "token = " + accessToken.getToken());
+	                    //Log.v("info", "token = " + accessToken.getToken());
 	                    e.putString(CDefines.TWITTER_PREF_KEY_SECRET, accessToken.getTokenSecret());
-	                    Log.v("info", "tokenSecret = " + accessToken.getTokenSecret());
+	                    //Log.v("info", "tokenSecret = " + accessToken.getTokenSecret());
 	                    e.commit();
 	    	        } catch (Exception e) { 
 		                Log.e("exception", e.getMessage());
@@ -436,13 +436,18 @@ public class TapGirlActivity extends CBaseActivity {
 			e.printStackTrace();
 		}
 	}
+	private void callSnsIntent(int snsType) {
+		Intent intent = new Intent(TapGirlActivity.this, CSendSNSActivity.class);
+		intent.putExtra(CDefines.INTENT_EXTRA_SNSTYPE, snsType);
+		startActivity(intent);		
+	}
     
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	Log.v("info", "TapGirlActivity#onCreate");
         super.onCreate(savedInstanceState);
-        assert(s_Instance == null);
+        //assert(s_Instance == null);
         s_Instance = this;
         //全画面表示
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -473,7 +478,7 @@ public class TapGirlActivity extends CBaseActivity {
         {
     		Uri uri = getIntent().getData();
     		if (uri != null) {
-    			Log.v("info", "onCreate uri = " + uri.toString());
+    			//Log.v("info", "onCreate uri = " + uri.toString());
     		}
     		if (uri != null && uri.toString().startsWith(CDefines.TWITTER_CALLBACK_URL)) {
         		{
@@ -483,6 +488,7 @@ public class TapGirlActivity extends CBaseActivity {
                     e.commit();
         		}
             	saveTwitterToken();
+            	mDoOpenSendSNS = true;
     		}
         }
     }
@@ -509,6 +515,7 @@ public class TapGirlActivity extends CBaseActivity {
 			s_Instance = null;
 		}
 	}
+	private boolean mDoOpenSendSNS = false;
 	@Override
 	protected void onResume()
 	{
@@ -517,6 +524,14 @@ public class TapGirlActivity extends CBaseActivity {
 		if (mGLSurfaceView != null)
 		{
 			mGLSurfaceView.onResume();
+		}
+		if (mDoOpenSendSNS) {
+			mDoOpenSendSNS = false;
+			/* Twitterの場合はアプリ承認のとき再起動され、その時のメッセージは送信されない
+			 * そのため再起動後にメッセージを送信する
+			 * */
+			callSnsIntent(CSendSNSActivity.SNS_Twitter);
+			// 
 		}
 	}
 	@Override
@@ -553,12 +568,10 @@ public class TapGirlActivity extends CBaseActivity {
 	@Override
 	public void onClick(View v) {
 		Log.v("info", "TapGirlActivity#onClick");
-		Intent intent = null;
 		int snsType = CSendSNSActivity.SNS_NONE;
 		if (v.equals(mBtnTweet)) {
 			Log.v("info", "tweet");
 			if (isConnected()) {
-				intent = new Intent(TapGirlActivity.this, CSendSNSActivity.class);
 				snsType = CSendSNSActivity.SNS_Twitter;
 			}
 			else {
@@ -568,6 +581,7 @@ public class TapGirlActivity extends CBaseActivity {
 					public void run() {
 						askOAuth();
 						Log.v("info", "to finish");
+						// アプリの再起動が必要
 						finish();
 						
 					}
@@ -579,7 +593,6 @@ public class TapGirlActivity extends CBaseActivity {
 			Log.v("info", "facebook");
 			// メッセージ投稿
 			//publishFacebookStory();
-			intent = new Intent(TapGirlActivity.this, CSendSNSActivity.class);
 			snsType = CSendSNSActivity.SNS_Facebook;
 		}
 		else if (v.equals(mBtnMoreApps)) {
@@ -587,9 +600,8 @@ public class TapGirlActivity extends CBaseActivity {
 		}
 		
 		{
-			if (intent != null) {
-				intent.putExtra(CDefines.INTENT_EXTRA_SNSTYPE, snsType);
-				startActivity(intent);
+			if (snsType != CSendSNSActivity.SNS_NONE) {
+				callSnsIntent(snsType);
 			}
 		}
 		
