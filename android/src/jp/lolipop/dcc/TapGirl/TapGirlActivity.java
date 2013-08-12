@@ -8,6 +8,8 @@ import java.nio.ByteBuffer;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.zip.CRC32;
 
+import com.facebook.Session;
+
 import twitter4j.AsyncTwitter;
 import twitter4j.AsyncTwitterFactory;
 import twitter4j.Status;
@@ -28,7 +30,9 @@ import jp.lolipop.dcc.*;
 
 import jp.lolipop.dcc.lib.IGLRenderer;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -570,6 +574,41 @@ public class TapGirlActivity extends FbActivity {
 			}
 		}
 		else if (v.equals(mBtnFacebook)) {
+			Session session = Session.getActiveSession();
+			if (session != null) {
+				if (session.isOpened()) {
+					
+				}
+				else {
+					Log.v("info", "session is closing");
+					AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+					alertBuilder.setTitle("確認");
+					alertBuilder.setMessage("メッセージ投稿にはFacebookへのログインが必要です。ログインしますか？");
+					alertBuilder.setPositiveButton("ログイン", new DialogInterface.OnClickListener() {
+						
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							// login
+							TapGirlActivity activity = TapGirlActivity.getInstance();
+							Session.openActiveSession(activity, true, getFbCallback());
+						}
+					});
+					alertBuilder.setNegativeButton("キャンセル", new DialogInterface.OnClickListener() {
+						
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							Log.v("info", "login cancel");
+							
+						}
+					});
+					alertBuilder.setCancelable(true);
+					AlertDialog alertDialog = alertBuilder.create();
+					alertDialog.show();
+				}
+			}
+			else {
+				Log.v("info", "no session");
+			}
 			Log.v("info", "facebook");
 		}
 		else if (v.equals(mBtnMoreApps)) {

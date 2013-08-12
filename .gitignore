@@ -823,3 +823,17 @@ facebook-android-sdk-3.0.2/samples/SessionLoginSample/bin/classes/com/facebook/s
 facebook-android-sdk-3.0.2/samples/SessionLoginSample/bin/classes/com/facebook/samples/sessionlogin/SessionLoginSampleActivity.class
 facebook-android-sdk-3.0.2/samples/HelloFacebookSample/bin/classes.dex
 facebook-android-sdk-3.0.2/samples/SessionLoginSample/bin/classes.dex
+android/bin/classes/com/facebook/android/R$attr.class
+android/bin/classes/com/facebook/android/R$color.class
+android/bin/classes/com/facebook/android/R$dimen.class
+android/bin/classes/com/facebook/android/R$drawable.class
+android/bin/classes/com/facebook/android/R$id.class
+android/bin/classes/com/facebook/android/R$layout.class
+android/bin/classes/com/facebook/android/R$string.class
+android/bin/classes/com/facebook/android/R$style.class
+android/bin/classes/com/facebook/android/R$styleable.class
+android/bin/classes/com/facebook/android/R.class
+android/bin/classes/jp/lolipop/dcc/TapGirl/FbActivity$1.class
+android/bin/classes/jp/lolipop/dcc/TapGirl/FbActivity$2.class
+android/bin/classes/jp/lolipop/dcc/TapGirl/FbActivity.class
+R.java
