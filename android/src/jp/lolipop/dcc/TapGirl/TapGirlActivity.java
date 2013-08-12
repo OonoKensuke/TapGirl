@@ -553,11 +553,13 @@ public class TapGirlActivity extends FbActivity {
 	@Override
 	public void onClick(View v) {
 		Log.v("info", "TapGirlActivity#onClick");
+		Intent intent = null;
+		int snsType = CSendSNSActivity.SNS_NONE;
 		if (v.equals(mBtnTweet)) {
 			Log.v("info", "tweet");
 			if (isConnected()) {
-				Intent intent = new Intent(TapGirlActivity.this, CSendSNSActivity.class);
-				startActivity(intent);
+				intent = new Intent(TapGirlActivity.this, CSendSNSActivity.class);
+				snsType = CSendSNSActivity.SNS_Twitter;
 			}
 			else {
 				Thread trd = new Thread(new Runnable() {
@@ -578,7 +580,9 @@ public class TapGirlActivity extends FbActivity {
 			if (session != null) {
 				if (session.isOpened()) {
 					// メッセージ投稿
-					publishFacebookStory();
+					//publishFacebookStory();
+					intent = new Intent(TapGirlActivity.this, CSendSNSActivity.class);
+					snsType = CSendSNSActivity.SNS_Facebook;
 				}
 				else {
 					Log.v("info", "session is closing");
@@ -614,6 +618,13 @@ public class TapGirlActivity extends FbActivity {
 		}
 		else if (v.equals(mBtnMoreApps)) {
 			showSite(CDefines.MORE_APPS_SITE);
+		}
+		
+		{
+			if (intent != null) {
+				intent.putExtra(CDefines.INTENT_EXTRA_SNSTYPE, snsType);
+				startActivity(intent);
+			}
 		}
 		
 	}

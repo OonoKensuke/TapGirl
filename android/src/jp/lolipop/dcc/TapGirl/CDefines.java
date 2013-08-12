@@ -60,7 +60,7 @@ static public final String SNS_APP_NAME =	"アプリ名";
 static public final String SNS_HASHTAG =	"ハッシュタグ";
 static final String SNS_TWEET_FORMAT = "アプリを%dcmこすった。%s #%s ";
 
-
+static final String INTENT_EXTRA_SNSTYPE = "SnsType";
 
 // mark -congratulations おめでとう画面
 //最後に数字の場所に表示するメッセージ

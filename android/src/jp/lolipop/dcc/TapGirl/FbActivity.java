@@ -79,6 +79,9 @@ public abstract class FbActivity extends CBaseActivity {
 				
 				@Override
 				public void onCompleted(Response response) {
+					if (response.getError() != null) {
+						Log.d("error", "Request.Callback " + response.getError().getErrorMessage());
+					}
 					JSONObject graphResponse = response.getGraphObject().getInnerJSONObject();
 					String postId = null;
 					try {
