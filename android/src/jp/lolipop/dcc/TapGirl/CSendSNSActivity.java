@@ -1,6 +1,7 @@
 package jp.lolipop.dcc.TapGirl;
 
 import com.facebook.Session;
+import com.facebook.SessionState;
 
 import twitter4j.AsyncTwitter;
 import twitter4j.AsyncTwitterFactory;
@@ -11,6 +12,8 @@ import twitter4j.TwitterMethod;
 import twitter4j.conf.ConfigurationBuilder;
 import jp.lolipop.dcc.lib.CBaseActivity;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -22,6 +25,11 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 public class CSendSNSActivity extends FbActivity implements View.OnClickListener {
+	private static CSendSNSActivity s_Instance = null;
+	protected static CSendSNSActivity getInstance() {
+		return s_Instance;
+	}
+	
 	public static final int SNS_NONE = 0;
 	public static final int SNS_Twitter = 1;
 	public static final int SNS_Facebook = 2;
@@ -86,10 +94,60 @@ public class CSendSNSActivity extends FbActivity implements View.OnClickListener
 		}
 	}
 	
+	/**
+	 * コールバックからの呼び出しがログインからなのかを判別する
+	 */
+	private boolean mIsLogin = false;
 	private void sendFacebook()
 	{
 		Log.v("info", "CSendSNSActivity#sendFacebook");
-		publishFacebookStory();
+		Session session = Session.getActiveSession();
+		if (session != null) {
+			if (session.isOpened()) {
+				publishFacebookStory();
+			}
+			else {
+				Log.v("info", "session is closing");
+				AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+				alertBuilder.setTitle("確認");
+				alertBuilder.setMessage("メッセージ投稿にはFacebookへのログインが必要です。ログインしてメッセージを送信しますか？");
+				alertBuilder.setPositiveButton("ログインして送信", new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// login
+						CSendSNSActivity activity = CSendSNSActivity.getInstance();
+						Session.openActiveSession(activity, true, getFbCallback());
+						mIsLogin = true;
+					}
+				});
+				alertBuilder.setNegativeButton("キャンセル", new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						Log.v("info", "login cancel");
+						
+					}
+				});
+				alertBuilder.setCancelable(true);
+				AlertDialog alertDialog = alertBuilder.create();
+				alertDialog.show();
+			}
+		}
+		else {
+			Log.v("info", "no session");
+		}
+	}
+	@Override
+	protected void onSessionStateChange(Session session, SessionState state, Exception exception) {
+		// ログインコールバックから呼び出される
+		super.onSessionStateChange(session, state, exception);
+		if (mIsLogin) {
+			mIsLogin = false;
+			if (state.isOpened()) {
+				publishFacebookStory();
+			}
+		}
 	}
 	@Override
 	protected String getPublishName() {
@@ -151,6 +209,7 @@ public class CSendSNSActivity extends FbActivity implements View.OnClickListener
     				break;
     		}
     	}
+    	s_Instance = this;
     }
 	@Override
 	public void onClick(View v) {
@@ -172,6 +231,14 @@ public class CSendSNSActivity extends FbActivity implements View.OnClickListener
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 		// TODO 自動生成されたメソッド・スタブ
 		
+	}
+	@Override
+	public void onPause()
+	{
+		super.onPause();
+		if (isFinishing()) {
+			s_Instance = null;
+		}
 	}
 
 }

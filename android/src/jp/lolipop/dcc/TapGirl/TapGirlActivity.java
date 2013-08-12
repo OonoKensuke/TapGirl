@@ -61,7 +61,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-public class TapGirlActivity extends FbActivity {
+public class TapGirlActivity extends CBaseActivity {
 	private GLSurfaceView mGLSurfaceView = null;
 	private MyRenderer mRenderer = null;
 
@@ -576,45 +576,11 @@ public class TapGirlActivity extends FbActivity {
 			}
 		}
 		else if (v.equals(mBtnFacebook)) {
-			Session session = Session.getActiveSession();
-			if (session != null) {
-				if (session.isOpened()) {
-					// メッセージ投稿
-					//publishFacebookStory();
-					intent = new Intent(TapGirlActivity.this, CSendSNSActivity.class);
-					snsType = CSendSNSActivity.SNS_Facebook;
-				}
-				else {
-					Log.v("info", "session is closing");
-					AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
-					alertBuilder.setTitle("確認");
-					alertBuilder.setMessage("メッセージ投稿にはFacebookへのログインが必要です。ログインしますか？");
-					alertBuilder.setPositiveButton("ログイン", new DialogInterface.OnClickListener() {
-						
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							// login
-							TapGirlActivity activity = TapGirlActivity.getInstance();
-							Session.openActiveSession(activity, true, getFbCallback());
-						}
-					});
-					alertBuilder.setNegativeButton("キャンセル", new DialogInterface.OnClickListener() {
-						
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							Log.v("info", "login cancel");
-							
-						}
-					});
-					alertBuilder.setCancelable(true);
-					AlertDialog alertDialog = alertBuilder.create();
-					alertDialog.show();
-				}
-			}
-			else {
-				Log.v("info", "no session");
-			}
 			Log.v("info", "facebook");
+			// メッセージ投稿
+			//publishFacebookStory();
+			intent = new Intent(TapGirlActivity.this, CSendSNSActivity.class);
+			snsType = CSendSNSActivity.SNS_Facebook;
 		}
 		else if (v.equals(mBtnMoreApps)) {
 			showSite(CDefines.MORE_APPS_SITE);
