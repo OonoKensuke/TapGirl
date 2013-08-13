@@ -149,6 +149,44 @@ public class TapGirlActivity extends CBaseActivity {
 	}
     android.os.Handler mHandler = null;
 	
+    // **********　Ads **********
+    private void initAds()
+    {
+    	boolean bUseNend = true;
+    	
+    	if (bUseNend) {
+            NendAdView nendAdView = new NendAdView(getApplicationContext(), CDefines._NEND_SPOT_ID, CDefines._NEND_ID);
+            // サンプルの方法だが左寄り
+            if (true)
+            {
+                // 中央下部表示の場合
+                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                        LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
+                params.addRule(RelativeLayout.CENTER_HORIZONTAL);
+                params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                getUILayout().addView(nendAdView, params);
+            }
+//            else
+//        	{
+//        		// サンプルよりはマシだが左寄り
+//                RelativeLayout.LayoutParams layoutNend = new RelativeLayout.LayoutParams(
+//                		RelativeLayout.LayoutParams.WRAP_CONTENT,
+//                		RelativeLayout.LayoutParams.WRAP_CONTENT);
+//                layoutNend.addRule(RelativeLayout.CENTER_HORIZONTAL);
+//                layoutNend.addRule(RelativeLayout.ALIGN_BOTTOM);
+//                float adsHeight = CDefines._NEND_ADS_HEIGHT * getDensity();
+//                float y = (float)getPixelsHeight() - adsHeight;
+//                float adsWidth = CDefines._NEND_ADS_WIDTH * getDensity();
+//                float x = ((float)getPixelsWidth() - adsWidth) / 2.0f;
+//                String strDebug = "ads margin x = " + x + " y = " + y;
+//                Log.v("info", strDebug);
+//                layoutNend.setMargins((int)x, (int)y, 0, 0);
+//                
+//                getUILayout().addView(nendAdView, layoutNend);
+//        	}
+            nendAdView.loadAd();
+    	}
+    }
 	
     // **********　Instance **********
 	
@@ -477,6 +515,7 @@ public class TapGirlActivity extends CBaseActivity {
         	assert(resultLoad);
         }
         initUI();
+        initAds();
         // *********** Twitter認証での再起動 **********
 		mSharedPreferences = getSharedPreferences(CDefines.TWITTER_PREFERENCE_NAME, MODE_PRIVATE);
         {
@@ -495,19 +534,6 @@ public class TapGirlActivity extends CBaseActivity {
             	mDoOpenSendSNS = true;
     		}
         }
-        // ********* Ads 初期化 **********
-        {
-            NendAdView nendAdView = new NendAdView(getApplicationContext(), CDefines._NEND_SPOT_ID, CDefines._NEND_ID);
-            RelativeLayout.LayoutParams layoutNend = new RelativeLayout.LayoutParams(
-            		RelativeLayout.LayoutParams.WRAP_CONTENT,
-            		RelativeLayout.LayoutParams.WRAP_CONTENT);
-            layoutNend.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            layoutNend.addRule(RelativeLayout.ALIGN_BOTTOM);
-            getUILayout().addView(nendAdView, layoutNend);
-//            Log.v("info", "w = " + String.valueOf(nendAdView.getWidth()) + " h = " + String.valueOf(nendAdView.getHeight()));
-            nendAdView.loadAd();
-        }
-        
     }
     @Override
 	public void onDestroy()
