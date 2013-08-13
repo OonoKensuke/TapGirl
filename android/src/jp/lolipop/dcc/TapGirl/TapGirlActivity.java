@@ -5,12 +5,15 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.nio.ByteBuffer;
+import java.util.Locale;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.zip.CRC32;
 
 import net.nend.android.NendAdView;
 
 import com.facebook.Session;
+import com.google.ads.AdSize;
+import com.google.ads.AdView;
 
 import twitter4j.AsyncTwitter;
 import twitter4j.AsyncTwitterFactory;
@@ -150,9 +153,18 @@ public class TapGirlActivity extends CBaseActivity {
     android.os.Handler mHandler = null;
 	
     // **********　Ads **********
+    com.google.ads.AdView mAdmobView = null;
     private void initAds()
     {
-    	boolean bUseNend = true;
+    	boolean bUseNend = false;
+    	// 日本語環境ならNend(App Bank)
+		Locale locale = Locale.getDefault();
+		Log.v("info", "locale is " + locale.toString());
+    	if (locale.equals(Locale.JAPAN)) {
+    		// Admobのテストをしたいときは、端末を日本語以外にするか
+    		// この値を一時的にfalseにしてください
+    		bUseNend = true;
+    	}
     	
     	if (bUseNend) {
             NendAdView nendAdView = new NendAdView(getApplicationContext(), CDefines._NEND_SPOT_ID, CDefines._NEND_ID);
@@ -185,6 +197,16 @@ public class TapGirlActivity extends CBaseActivity {
 //                getUILayout().addView(nendAdView, layoutNend);
 //        	}
             nendAdView.loadAd();
+    	}
+    	else {
+			mAdmobView = new com.google.ads.AdView(this, AdSize.BANNER, CDefines._ADMOB_PUBLISHER_ID);
+            // 中央下部表示の場合
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                    LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
+            params.addRule(RelativeLayout.CENTER_HORIZONTAL);
+            params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+            getUILayout().addView(mAdmobView, params);
+            mAdmobView.loadAd(new com.google.ads.AdRequest());
     	}
     }
 	
@@ -539,6 +561,9 @@ public class TapGirlActivity extends CBaseActivity {
 	public void onDestroy()
     {
     	Log.v("info", "TapGirlActivity#onDestroy");
+    	if (mAdmobView != null) {
+    		mAdmobView.destroy();
+    	}
     	s_Instance = null;
     	super.onDestroy();
     }
