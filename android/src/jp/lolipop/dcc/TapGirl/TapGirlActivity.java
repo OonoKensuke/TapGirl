@@ -8,6 +8,8 @@ import java.nio.ByteBuffer;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.zip.CRC32;
 
+import net.nend.android.NendAdView;
+
 import com.facebook.Session;
 
 import twitter4j.AsyncTwitter;
@@ -58,6 +60,7 @@ import android.widget.ImageView.ScaleType;
 import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -474,6 +477,7 @@ public class TapGirlActivity extends CBaseActivity {
         	assert(resultLoad);
         }
         initUI();
+        // *********** Twitter認証での再起動 **********
 		mSharedPreferences = getSharedPreferences(CDefines.TWITTER_PREFERENCE_NAME, MODE_PRIVATE);
         {
     		Uri uri = getIntent().getData();
@@ -491,6 +495,19 @@ public class TapGirlActivity extends CBaseActivity {
             	mDoOpenSendSNS = true;
     		}
         }
+        // ********* Ads 初期化 **********
+        {
+            NendAdView nendAdView = new NendAdView(getApplicationContext(), CDefines._NEND_SPOT_ID, CDefines._NEND_ID);
+            RelativeLayout.LayoutParams layoutNend = new RelativeLayout.LayoutParams(
+            		RelativeLayout.LayoutParams.WRAP_CONTENT,
+            		RelativeLayout.LayoutParams.WRAP_CONTENT);
+            layoutNend.addRule(RelativeLayout.CENTER_HORIZONTAL);
+            layoutNend.addRule(RelativeLayout.ALIGN_BOTTOM);
+            getUILayout().addView(nendAdView, layoutNend);
+//            Log.v("info", "w = " + String.valueOf(nendAdView.getWidth()) + " h = " + String.valueOf(nendAdView.getHeight()));
+            nendAdView.loadAd();
+        }
+        
     }
     @Override
 	public void onDestroy()

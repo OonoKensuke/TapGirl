@@ -19,9 +19,9 @@ static public final String FACEBOOK_DESCRIPTION =	"アプリ説明";
 //Admob用の広告枠コード
 static public final String _ADMOB_PUBLISHER_ID =  "a150ff2a3b55ce0";
 //App Bankの広告枠コード、広告ID
-static public final String _NEND_ID =	"a6eca9dd074372c898dd1df549301f277c53f2b9";
+static public final String _NEND_ID =	"193cea093d4446046661b286d1aa8fc81b526932";
 //App Bankの広告枠コード、SpotID
-static public final String _NEND_SPOT_ID =	"3172";
+static public final int _NEND_SPOT_ID =	54520;
 //**********必ずアプリ専用のものに書き換える**********
 
 static public final String NAME_SAVE_FILE = "tapgirlsavedata";
