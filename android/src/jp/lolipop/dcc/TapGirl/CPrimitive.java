@@ -3,6 +3,7 @@ package jp.lolipop.dcc.TapGirl;
 import java.nio.FloatBuffer;
 
 import android.opengl.GLES20;
+import android.util.Log;
 
 import jp.lolipop.dcc.lib.*;
 
@@ -34,15 +35,33 @@ public class CPrimitive {
 	void testSetUp(float x, float y)
 	{
 		TapGirlActivity activity = TapGirlActivity.getInstance();
-		float wSize = (CDefines.IOS_SCREEN_WIDTH * TapGirlActivity.getMagRatio()) / (float)(activity.getPixelsWidth());
-		float ratio = ((CDefines.IOS_SCREEN_HEIGHT - CDefines.IOS_ADS_HEIGHT) / CDefines.IOS_SCREEN_HEIGHT);
-		float hSize = wSize * ratio;
-		float yAdjust = 1.0f - hSize;
+		float wSize =0.0f;
+		float ratio =0.0f;
+		float hSize =0.0f;
+		float yAdjust =0.0f;
+
+		ratio = ((CDefines.IOS_SCREEN_HEIGHT - CDefines.IOS_ADS_HEIGHT) / CDefines.IOS_SCREEN_HEIGHT);
+		if (TapGirlActivity.isUseWRatio())
+		{
+			// 最初に横幅を求め、それにあわせて縦幅を決める
+			wSize = (CDefines.IOS_SCREEN_WIDTH * TapGirlActivity.getMagRatio()) / (float)(activity.getPixelsWidth());
+			hSize = wSize * ratio;
+		}
+		else {
+			// 最初に縦幅を求め、それにあわせて横幅を決める
+			hSize = ((CDefines.IOS_SCREEN_HEIGHT - CDefines.IOS_ADS_HEIGHT) * TapGirlActivity.getMagRatio()) / (float)(activity.getPixelsHeight());
+			wSize = hSize / ratio;
+		}
+		yAdjust = 1.0f - hSize;
+		String strDebug = "wSize = " + wSize + " hSize = " + hSize + " ratio = " + ratio;
+		Log.v("info", strDebug);
 		//boolean isWRatio = TapGirlActivity.isUseWRatio();
 
 		float u = (CDefines.IOS_SCREEN_WIDTH * CDefines.IOS_RETINA_RATIO) / CDefines.TEXTURE_WIDTH;
 		float texturePixelsOfY = (CDefines.IOS_SCREEN_HEIGHT - CDefines.IOS_ADS_HEIGHT) * CDefines.IOS_RETINA_RATIO;
 		float v = texturePixelsOfY / CDefines.TEXTURE_HEIGHT;
+		strDebug = "u = " + u + " v = " + v;
+		Log.v("info", strDebug);
 		mFloatBuffer = MyGLUtil.makeFloatBuffer(new float[] {
 				x - wSize, y + hSize + yAdjust,  0.0f, 0.0f,
 				x - wSize, y - hSize + yAdjust,  0.0f, v,
