@@ -40,6 +40,88 @@ public class CSendSNSActivity extends FbActivity implements View.OnClickListener
 	
 	private int mSnsType = SNS_NONE;
 	
+    android.os.Handler mHandler = null;
+    private enum ALERT_MODE {
+    	NONE,
+    	TWITTER_OK,
+    	TWITTER_ERROR,
+    	FACEBOOK_LOGIN,
+    	FACEBOOK_OK,
+    	FACEBOOK_ERROR,
+    };
+    private ALERT_MODE mAlertMode = ALERT_MODE.NONE;
+	private ALERT_MODE getAlertMode() {
+		return mAlertMode;
+	}
+
+	private void setAlertMode(ALERT_MODE alertMode) {
+		mAlertMode = alertMode;
+	}
+
+	private Runnable mRunSetAlert;
+    
+    private void showAlert(String strTitle, String strMessage, String strPositive, String strNegative)
+    {
+    	AlertDialog.Builder alertBuiler = new AlertDialog.Builder(CSendSNSActivity.this);
+    	alertBuiler.setTitle(strTitle);
+    	alertBuiler.setMessage(strMessage);
+    	alertBuiler.setPositiveButton(strPositive, new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				switch (getAlertMode()) {
+					case FACEBOOK_LOGIN:
+						CSendSNSActivity activity = CSendSNSActivity.getInstance();
+						Session.openActiveSession(activity, true, getFbCallback());
+						break;
+				}
+				setAlertMode(ALERT_MODE.NONE);
+			}
+		});
+    	alertBuiler.setNegativeButton(strNegative, new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				switch (getAlertMode()) {
+					case FACEBOOK_LOGIN:
+						Log.v("info", "login cancel");
+						CSendSNSActivity activity = CSendSNSActivity.getInstance();
+						activity.finish();
+						break;
+				}
+				setAlertMode(ALERT_MODE.NONE);
+			}
+		});
+    	alertBuiler.setCancelable(true);
+    	AlertDialog alertDialog = alertBuiler.create();
+    	alertDialog.show();
+    }
+    
+    private void callShowAlert(final String strTitle, final String strMessage, final String strPositive, final String strNegative)
+    {
+		try {
+			if (Thread.currentThread().getName().equalsIgnoreCase("main"))
+			{
+				showAlert(strTitle, strMessage, strPositive, strNegative);
+			}
+			else if (mHandler != null) {
+				mRunSetAlert = new Runnable() {
+					
+					@Override
+					public void run() {
+						showAlert(strTitle, strMessage, strPositive, strNegative);
+					}
+				};
+			}
+			else {
+				assert(false);
+			}
+		}
+		catch (Exception exp) {
+			Log.d("exception", exp.getMessage());
+		}
+    }
+	
 	private void sendTwitter()
 	{
 		if (mMainActivity.getAtomTweet().get() > 0)
@@ -72,6 +154,8 @@ public class CSendSNSActivity extends FbActivity implements View.OnClickListener
 						Log.v("info", "Successfully updated the status to [" +
 		                        status.getText() + "].");
 						mMainActivity.getAtomTweet().decrementAndGet();
+						String strThreadName = Thread.currentThread().getName();
+						Log.v("info", "thrad = " + strThreadName);
 					}
 					@Override
 					public void onException(TwitterException exp, twitter4j.TwitterMethod method)
@@ -93,7 +177,7 @@ public class CSendSNSActivity extends FbActivity implements View.OnClickListener
 			}
 		}
 	}
-	private boolean mDoLogin = false;
+	//private boolean mDoLogin = false;
 	private void sendFacebook()
 	{
 		Log.v("info", "CSendSNSActivity#sendFacebook");
@@ -173,13 +257,14 @@ public class CSendSNSActivity extends FbActivity implements View.OnClickListener
     				}
     				else {
     					Log.v("info", "close");
-    					mDoLogin = true;
+    					setAlertMode(ALERT_MODE.FACEBOOK_LOGIN);
     				}
     			}
     				break;
     		}
     	}
     	s_Instance = this;
+    	mHandler  = new android.os.Handler();
     }
 	@Override
 	public void onClick(View v) {
@@ -213,33 +298,40 @@ public class CSendSNSActivity extends FbActivity implements View.OnClickListener
 	@Override
 	public void onResume() {
 		super.onResume();
-		if (mDoLogin)
+		if (getAlertMode() == ALERT_MODE.FACEBOOK_LOGIN)
 		{
-			mDoLogin = false;
-			AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
-			alertBuilder.setTitle("確認");
-			alertBuilder.setMessage("メッセージ投稿にはFacebookへのログインが必要です。Facebookにログインしますか？");
-			alertBuilder.setPositiveButton("ログイン", new DialogInterface.OnClickListener() {
-				
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					// login
-					CSendSNSActivity activity = CSendSNSActivity.getInstance();
-					Session.openActiveSession(activity, true, getFbCallback());
-				}
-			});
-			alertBuilder.setNegativeButton("キャンセル", new DialogInterface.OnClickListener() {
-				
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					Log.v("info", "login cancel");
-					CSendSNSActivity activity = CSendSNSActivity.getInstance();
-					activity.finish();
-				}
-			});
-			alertBuilder.setCancelable(true);
-			AlertDialog alertDialog = alertBuilder.create();
-			alertDialog.show();
+			if (true) {
+				callShowAlert("確認",
+						"メッセージ投稿にはFacebookへのログインが必要です。Facebookにログインしますか？",
+						"ログイン", "キャンセル");
+			}
+			else {
+//				mDoLogin = false;
+				AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+				alertBuilder.setTitle("確認");
+				alertBuilder.setMessage("メッセージ投稿にはFacebookへのログインが必要です。Facebookにログインしますか？");
+				alertBuilder.setPositiveButton("ログイン", new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// login
+						CSendSNSActivity activity = CSendSNSActivity.getInstance();
+						Session.openActiveSession(activity, true, getFbCallback());
+					}
+				});
+				alertBuilder.setNegativeButton("キャンセル", new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						Log.v("info", "login cancel");
+						CSendSNSActivity activity = CSendSNSActivity.getInstance();
+						activity.finish();
+					}
+				});
+				alertBuilder.setCancelable(true);
+				AlertDialog alertDialog = alertBuilder.create();
+				alertDialog.show();
+			}
 		}
 	}
 
