@@ -1,5 +1,6 @@
 package jp.lolipop.dcc.TapGirl;
 
+import com.facebook.FacebookRequestError;
 import com.facebook.Session;
 import com.facebook.SessionState;
 
@@ -74,25 +75,31 @@ public class CSendSNSActivity extends FbActivity implements View.OnClickListener
 						CSendSNSActivity activity = CSendSNSActivity.getInstance();
 						Session.openActiveSession(activity, true, getFbCallback());
 						break;
-				}
-				setAlertMode(ALERT_MODE.NONE);
-			}
-		});
-    	alertBuiler.setNegativeButton(strNegative, new DialogInterface.OnClickListener() {
-			
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				switch (getAlertMode()) {
-					case FACEBOOK_LOGIN:
-						Log.v("info", "login cancel");
-						CSendSNSActivity activity = CSendSNSActivity.getInstance();
-						activity.finish();
+					case FACEBOOK_ERROR:
+					case FACEBOOK_OK:
+						finish();
 						break;
 				}
 				setAlertMode(ALERT_MODE.NONE);
 			}
 		});
-    	alertBuiler.setCancelable(true);
+    	if (strNegative != null) {
+        	alertBuiler.setNegativeButton(strNegative, new DialogInterface.OnClickListener() {
+    			
+    			@Override
+    			public void onClick(DialogInterface dialog, int which) {
+    				switch (getAlertMode()) {
+    					case FACEBOOK_LOGIN:
+    						Log.v("info", "login cancel");
+    						CSendSNSActivity activity = CSendSNSActivity.getInstance();
+    						activity.finish();
+    						break;
+    				}
+    				setAlertMode(ALERT_MODE.NONE);
+    			}
+    		});
+    	}
+    	alertBuiler.setCancelable(false);
     	AlertDialog alertDialog = alertBuiler.create();
     	alertDialog.show();
     }
@@ -102,9 +109,11 @@ public class CSendSNSActivity extends FbActivity implements View.OnClickListener
 		try {
 			if (Thread.currentThread().getName().equalsIgnoreCase("main"))
 			{
+				Log.v("info", "alert from main");
 				showAlert(strTitle, strMessage, strPositive, strNegative);
 			}
 			else if (mHandler != null) {
+				Log.v("info", "alert from Not main");
 				mRunSetAlert = new Runnable() {
 					
 					@Override
@@ -219,6 +228,20 @@ public class CSendSNSActivity extends FbActivity implements View.OnClickListener
 	protected String getPublishLink() {
 		return CDefines.SNS_URL;
 	}
+	@Override
+	protected void onPublishFail(FacebookRequestError error, Activity activity)
+	{
+		setAlertMode(ALERT_MODE.FACEBOOK_OK);
+		callShowAlert("お知らせ", "Facebookへの投稿に失敗しました。", "閉じる", null);
+	}
+	@Override
+	protected void onPublishSucceed(String postId, Activity activity)
+	{
+		setAlertMode(ALERT_MODE.FACEBOOK_ERROR);
+		callShowAlert("お知らせ", "Facebookにメッセージを投稿しました。", "閉じる", null);
+	}
+
+	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
