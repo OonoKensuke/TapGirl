@@ -77,6 +77,8 @@ public class CSendSNSActivity extends FbActivity implements View.OnClickListener
 						break;
 					case FACEBOOK_ERROR:
 					case FACEBOOK_OK:
+					case TWITTER_OK:
+					case TWITTER_ERROR:
 						finish();
 						break;
 				}
@@ -121,6 +123,7 @@ public class CSendSNSActivity extends FbActivity implements View.OnClickListener
 						showAlert(strTitle, strMessage, strPositive, strNegative);
 					}
 				};
+				mHandler.post(mRunSetAlert);
 			}
 			else {
 				assert(false);
@@ -165,6 +168,9 @@ public class CSendSNSActivity extends FbActivity implements View.OnClickListener
 						mMainActivity.getAtomTweet().decrementAndGet();
 						String strThreadName = Thread.currentThread().getName();
 						Log.v("info", "thrad = " + strThreadName);
+						
+						setAlertMode(ALERT_MODE.TWITTER_OK);
+						callShowAlert("お知らせ", "Twitterにメッセージを投稿しました。", "閉じる", null);
 					}
 					@Override
 					public void onException(TwitterException exp, twitter4j.TwitterMethod method)
@@ -178,6 +184,8 @@ public class CSendSNSActivity extends FbActivity implements View.OnClickListener
 							mMainActivity.getAtomTweet().decrementAndGet();
 							throw new AssertionError("Should not happen");
 						}
+						setAlertMode(ALERT_MODE.TWITTER_ERROR);
+						callShowAlert("お知らせ", "Twitterへの投稿に失敗しました。", "閉じる", null);
 					}
 				});
 				Log.v("info", "before update");
